@@ -13,6 +13,7 @@ Juniper = "2ddba703-00a4-53a7-87a5-e8b9971dde84"
 PowerModels = "c36e90e8-916a-50a6-bd94-075b64ef4655"
 
 [compat]
+Juniper = "0.7"
 julia = "1.1"
 
 [extras]

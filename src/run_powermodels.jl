@@ -30,10 +30,10 @@ function run_powermodels(json_path)
         # pm["bus"]["4"]["vmax"] = 1.1
         # pm["bus"]["4"]["vmin"] = 0.9
 
-        result = PowerModels._run_opf_cl(pm, model, solver,
+        result = _PM._run_opf_cl(pm, model, solver,
                                         setting = Dict("output" => Dict("branch_flows" => true)))
     else
-        result = PowerModels.run_opf(pm, model, solver,
+        result = _PM.run_opf(pm, model, solver,
                                         setting = Dict("output" => Dict("branch_flows" => true)))
     end
 
@@ -50,7 +50,7 @@ function run_powermodels_tnep(json_path)
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
     # function to run transmission network expansion optimization of powermodels.jl
-    result = PowerModels.run_tnep(pm, model, solver,
+    result = _PM.run_tnep(pm, model, solver,
                         setting = Dict("output" => Dict("branch_flows" => true)))
     return result
 end
@@ -64,11 +64,11 @@ function run_powermodels_powerflow(json_path)
     solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
-    result = PowerModels.run_pf(pm, model, solver)
+    result = _PM.run_pf(pm, model, solver)
     # add branch flows
-    PowerModels.update_data!(pm, result["solution"])
-    flows = PowerModels.calc_branch_flow_ac(pm)
-    PowerModels.update_data!(result["solution"], flows)
+    _PM.update_data!(pm, result["solution"])
+    flows = _PM.calc_branch_flow_ac(pm)
+    _PM.update_data!(result["solution"], flows)
     return result
 end
 
@@ -81,7 +81,7 @@ function run_powermodels_ots(json_path)
     solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
-    result = PowerModels.run_ots(pm, model, solver,
+    result = _PM.run_ots(pm, model, solver,
                         setting = Dict("output" => Dict("branch_flows" => true)))
     return result
 end
@@ -121,7 +121,7 @@ function run_powermodels_mn_storage(json_path)
     pm = load_pm_from_json(json_path)
     # copy network n_time_steps time step times
     n_time_steps = pm["n_time_steps"]
-    mn = PowerModels.replicate(pm, pm["n_time_steps"])
+    mn = _PM.replicate(pm, pm["n_time_steps"])
     mn["time_elapsed"] = pm["time_elapsed"]
     # set P, Q values of loads and generators from time series
     if isfile("/tmp/timeseries.json")
@@ -134,7 +134,7 @@ function run_powermodels_mn_storage(json_path)
     ipopt_solver = JuMP.with_optimizer(Ipopt.Optimizer, print_level = 0)
 
     # run multinetwork storage opf
-    result = PowerModels._run_mn_strg_opf(mn, PowerModels.ACPPowerModel, ipopt_solver)
+    result = _PM._run_mn_strg_opf(mn, _PM.ACPPowerModel, ipopt_solver)
     print_summary(result)
     return result
 end

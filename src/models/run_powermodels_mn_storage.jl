@@ -1,8 +1,11 @@
 
+using Gurobi
+
+
 function read_time_series(json_path)
     time_series = Dict()
     open(json_path, "r") do f
-        time_series = JSON.parse(f)
+        time_series = JSON.parse(f)  # parse and transform data
     end
     return time_series
 end
@@ -14,10 +17,17 @@ function set_pq_values_from_timeseries(mn, time_series)
     # iterate over networks (which represent the time steps)
     for (t, network) in mn["nw"]
         t_j = string(parse(Int64,t) - 1)
+        # iterate over all loads for this network
         for (i, load) in network["load"]
+            # update variables from time series here
+#             print("\nload before: ")
+#             print(load["pd"])
             load["pd"] = time_series[t_j][parse(Int64,i)] / mn["baseMVA"]
+#             print("\nload after: ")
+#             print(load["pd"])
         end
     end
+
     return mn
 end
 
@@ -26,7 +36,7 @@ function run_powermodels_mn_storage(json_path)
     pm = load_pm_from_json(json_path)
     # copy network n_time_steps time step times
     n_time_steps = pm["n_time_steps"]
-    mn = replicate(pm, pm["n_time_steps"])
+    mn = _PM.replicate(pm, pm["n_time_steps"])
     mn["time_elapsed"] = pm["time_elapsed"]
     # set P, Q values of loads and generators from time series
     if isfile("/tmp/timeseries.json")
@@ -39,7 +49,7 @@ function run_powermodels_mn_storage(json_path)
     ipopt_solver = JuMP.with_optimizer(Ipopt.Optimizer, print_level = 0)
 
     # run multinetwork storage opf
-    result = _run_mn_strg_opf(mn, _PM.ACPPowerModel, ipopt_solver)
-
+    result = _PM._run_mn_strg_opf(mn, _PM.ACPPowerModel, ipopt_solver)
+    print_summary(result)
     return result
 end

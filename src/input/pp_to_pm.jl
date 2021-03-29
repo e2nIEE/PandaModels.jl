@@ -6,7 +6,7 @@ function get_model(model_type)
     see: https://lanl-ansi.github.io/PowerModels.jl/stable/formulation-details/
     """
     s = Symbol(model_type)
-    return getfield(Main, s)
+    return getfield(_PM, s)
 end
 
 function get_solver(optimizer::String, nl::String="ipopt", mip::String="cbc",

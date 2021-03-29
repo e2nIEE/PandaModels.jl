@@ -1,4 +1,5 @@
 
+
 function run_powermodels_powerflow(json_path)
     pm = load_pm_from_json(json_path)
 
@@ -8,12 +9,9 @@ function run_powermodels_powerflow(json_path)
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
     result = _PM.run_pf(pm, model, solver)
-
+    # add branch flows
     _PM.update_data!(pm, result["solution"])
-
     flows = _PM.calc_branch_flow_ac(pm)
-
     _PM.update_data!(result["solution"], flows)
-    
     return result
 end

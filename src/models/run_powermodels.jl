@@ -1,11 +1,11 @@
 
+
 function run_powermodels(json_path)
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
-
+    # @info "run get_model $(model)"
     solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
-                        pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"],
-                        pm["pm_mip_time_limit"])
+    pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
     if haskey(pm["branch"]["1"],"c_rating_a")
         for (key, value) in pm["gen"]
@@ -27,6 +27,9 @@ function run_powermodels(json_path)
            value["qd"] *= 0.01
         end
 
+        # pm["bus"]["4"]["vmax"] = 1.1
+        # pm["bus"]["4"]["vmin"] = 0.9
+
         result = _PM._run_opf_cl(pm, model, solver,
                                         setting = Dict("output" => Dict("branch_flows" => true)))
     else
@@ -34,5 +37,15 @@ function run_powermodels(json_path)
                                         setting = Dict("output" => Dict("branch_flows" => true)))
     end
 
+
     return result
 end
+
+
+# json_path = "C:/Users/fmeier/pandapower/pandapower/test/opf/case5_clm_matfile_va.json"
+# # #@enter run_powermodels(json_path)
+# #
+# result = run_powermodels(json_path)
+# println(result["termination_status"] == LOCALLY_SOLVED)
+# println(isapprox(result["objective"], 17015.5; atol = 1e0))
+# mit eingeschränkter slack spannung: 17082.819507648066

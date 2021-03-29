@@ -6,9 +6,9 @@ import JSON
 import PowerModels
 const _PM = PowerModels
 
-using Cbc
-using Ipopt
-using Juniper
+import Cbc
+import Ipopt
+import Juniper
 
 try
     import Gurobi
@@ -27,7 +27,7 @@ export run_powermodels,
 
 include("input/pp_to_pm.jl")
 
-include("run_powermodels.jl")
+include("models/call_powermodels.jl")
 
 # include("../src/pm_models/run_powermodels.jl")
 # include("../src/pm_models/run_powermodels_mn_storage.jl")

@@ -29,13 +29,21 @@ solvers:
 
 To install and develop `PandaModels`:
 
-1. Clone the repository into your local folder
+1. Clone[PandaModels](https://github.com/e2nIEE/PandaModels.jl) repository into your local machine: ::
+
+
+git clone https://github.com/e2nIEE/PandaModels.jl.git
+
+
 2. In `Julia REPL`, type:
+
 ```julia
-]
-(@v1.5) pkg> add path/to/your/local/PandaModels.jl
-(@v1.5) pkg> dev PandaModels
+import Pkg
+Pkg.add(path = "path/to/your/local/PandaModels.jl") 
+Pkg.dev("PandaModels")
+
 ```
+
 3. Check if your package is in develop mode:
 ```julia
 import PandaModels

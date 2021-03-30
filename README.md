@@ -26,7 +26,28 @@ solvers:
  * [Cbc.jl](https://github.com/jump-dev/Cbc.jl)
  * [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
 
+
+To install and develop `PandaModels`:
+
+1. Clone the repository into your local folder
+2. In `Julia REPL`, type:
+```julia
+]
+(@v1.5) pkg> add path/to/your/local/PandaModels.jl
+(@v1.5) pkg> dev PandaModels
+```
+3. Check if your package is in develop mode:
+```julia
+import PandaModels
+pathof(PandaModels)
+```
+   The result should be
+```julia
+~/.julia/dev/PandaModels/src/PandaModels.jl"
+```
 <!-- **Instructions:**
+
+
 
 **Running the Code:**
 

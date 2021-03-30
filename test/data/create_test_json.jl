@@ -2,9 +2,9 @@ using PyCall
 
 py"""
 import os
+import pathlib
 import numpy as np
 import pandas as pd
-import pathlib
 # import simbench as sb
 import pandapower as pp
 from pandapower.converter.powermodels.to_pm import convert_pp_to_pm
@@ -81,17 +81,16 @@ def create_test_pp_net():
 
     return net
 
-def convert_net_to_json(model="DCPPowerModel", solver="ipopt", mip_solver="cbc", nl_solver="ipopt"):
+def convert_net_to_json(problem = "opf", model="DCPPowerModel", solver="ipopt", mip_solver="cbc", nl_solver="ipopt"):
 
     net = create_test_pp_net()
     pp.runpp(net)
 
-    test_file = os.path.join(os.getcwd(), "test", "data", str(model[:-10]+"_"+solver+".json"))
-    print(test_file)
+    test_file = os.path.join(os.getcwd(), "test", "data", str(problem +"_"+model[:-10]+"_"+solver+".json"))
 
-    test_net = convert_pp_to_pm(net, pm_file_path=test_file, correct_pm_network_data=True, calculate_voltage_angles=True,
-        ac=True, trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True, pp_to_pm_callback=None,
-        pm_model="DCPPowerModel", pm_solver="ipopt", pm_mip_solver="cbc", pm_nl_solver="ipopt")
+    test_net = convert_pp_to_pm(net, pm_file_path = test_file, correct_pm_network_data = True, calculate_voltage_angles = True,
+        ac = True, trafo_model = "t", delta = 1e-8, trafo3w_losses = "hv", check_connectivity = True, pp_to_pm_callback = None,
+        pm_model = model, pm_solver = solver, pm_mip_solver = mip_solver, pm_nl_solver = nl_solver)
 
 if __name__ == "__main__":
 
@@ -103,9 +102,12 @@ if __name__ == "__main__":
             "SOCWRConic", "QCRM", "QCLS", "SOCBF", "SOCBFConic", "SDPWRM", "SparseSDPWRM"]
 
     solvers = ["ipopt", "gurobi", "juniper", "cbc"]
-    # problems = ["ots" , "tnep"]
+
+    problems = ["pf", "opf", "opb", "ots", "tnep"]
+
     for m in models:
         for s in solvers:
-            convert_net_to_json(model = str(m+"PowerModel"), solver = s)
+            for p in problems:
+                convert_net_to_json(problem = p, model = str(m+"PowerModel"), solver = s);
 
 """

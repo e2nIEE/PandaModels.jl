@@ -1,6 +1,7 @@
 # Call run_powermodels functions:
 # run_powermodels_powerflow
-# run_powermodels
+# run_powermodels #TODO: change the name: run_powermodels_opf
+# run_powermodels_custom
 # run_powermodels_tnep
 # run_powermodels_ots
 # run_powermodels_mn_storage
@@ -14,10 +15,12 @@ function run_powermodels_powerflow(json_path)
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
     result = _PM.run_pf(pm, model, solver)
-    # add branch flows
+    
+    # add line flow to result
     _PM.update_data!(pm, result["solution"])
-    flows = _PM.calc_branch_flow_ac(pm)
-    _PM.update_data!(result["solution"], flows)
+    line_flow = _PM.calc_branch_flow_ac(pm)
+    _PM.update_data!(result["solution"], line_flow)
+
     return result
 end
 

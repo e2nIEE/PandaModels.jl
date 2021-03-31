@@ -66,8 +66,10 @@ julia> pathof(PandaModels)
 
 To install and develop [PandaModels](https://github.com/e2nIEE/PandaModels.jl) directly from `python`:
 
-1. call `julia` in `python`:
+1. call `Julia` in `python`:
 
+* before running the following codes please set the `Julia/python` interface by following the steps [here](https://syl1.gitbook.io/julia-language-a-concise-tutorial/language-core/interfacing-julia-with-other-languages).
+  
   ```python
   import julia
   from julia import Main 
@@ -96,7 +98,6 @@ To install and develop [PandaModels](https://github.com/e2nIEE/PandaModels.jl) d
    ```pathon
    "~/.julia/dev/PandaModels/src/PandaModels.jl"
    ```
-
 
 
 

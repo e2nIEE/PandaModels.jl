@@ -61,6 +61,20 @@ function run_powermodels(json_path)
     return result
 end
 
+
+function run_powermodels_custom(json_path)
+    pm = load_pm_from_json(json_path)
+
+    _PM.correct_network_data!(pm)
+
+    ipopt_solver = JuMP.with_optimizer(Ipopt.Optimizer, print_level=0)
+
+    result = _PM.run_ac_opf(pm, ipopt_solver,
+                                    setting = Dict("output" => Dict("branch_flows" => true)))
+    return result
+end
+
+
 function run_powermodels_tnep(json_path)
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])

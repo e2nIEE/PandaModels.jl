@@ -40,7 +40,7 @@ git clone https://github.com/e2nIEE/PandaModels.jl.git
 ```julia
 import Pkg
 Pkg.add(path = "path/to/your/local/PandaModels.jl") 
-Pkg.dev("PandaModels")
+Pkg.develop("PandaModels")
 
 ```
 

@@ -27,32 +27,80 @@ solvers:
  * [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
 
 
-To install and develop `PandaModels`:
+To install and develop [PandaModels](https://github.com/e2nIEE/PandaModels.jl) from `Git Bash`:
 
-1. Clone[PandaModels](https://github.com/e2nIEE/PandaModels.jl) repository into your local machine: ::
+1. Clone [PandaModels](https://github.com/e2nIEE/PandaModels.jl) repository into your local machine: ::
 
-
-git clone https://github.com/e2nIEE/PandaModels.jl.git
-
-
-2. In `Julia REPL`, type:
-
-```julia
-import Pkg
-Pkg.add(path = "path/to/your/local/PandaModels.jl") 
-Pkg.develop("PandaModels")
-
+```bash
+$ git clone https://github.com/e2nIEE/PandaModels.jl.git
 ```
+
+2. open `Julia REPL` in `Git Bash`:
+
+```bash
+$ julia
+```
+
+3. In `Julia REPL`, type:
+
+```bash
+julia> import Pkg
+julia> # path to cloned repository
+julia> Pkg.add(path = "path/to/your/local/PandaModels.jl") 
+julia> Pkg.develop("PandaModels")
+julia> Pkg.build("PandaModels")
+julia> Pkg.resolve()
+```
+
+4. Check if your package is in develop mode:
+```bash
+julia> import PandaModels
+julia> pathof(PandaModels)
+```
+   The result should be:
+   
+```julia
+"~/.julia/dev/PandaModels/src/PandaModels.jl"
+```
+
+
+To install and develop [PandaModels](https://github.com/e2nIEE/PandaModels.jl) directly from `python`:
+
+1. call `julia` in `python`:
+
+  ```python
+  import julia
+  from julia import Main 
+  from julia import Pkg
+  ```
+
+2. install `PandaModels` and build the develop mode:
+
+  ```python
+  # add PandaModels in "~/.julia/packages/PandaModels"
+  Pkg.add(url = "https://github.com/e2nIEE/PandaModels.jl") 
+  Pkg.develop("PandaModels")
+  Pkg.build("PandaModels")
+  Pkg.resolve()
+  ``` 
+
+
 
 3. Check if your package is in develop mode:
-```julia
-import PandaModels
-pathof(PandaModels)
-```
-   The result should be
-```julia
-~/.julia/dev/PandaModels/src/PandaModels.jl"
-```
+  ```python
+  from julia import Base
+  Base.find_package("PandaModels")
+  ```
+   The result should be:
+   
+   ```pathon
+   "~/.julia/dev/PandaModels/src/PandaModels.jl"
+   ```
+
+
+
+
+
 <!-- **Instructions:**
 
 

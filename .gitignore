@@ -1,7 +1,6 @@
 *.jl.*.cov
 *.jl.cov
 *.jl.mem
-/docs/build/
-/test/data/*.json
+/docs/build/*.json
+/test/data
 .DS_Store
-

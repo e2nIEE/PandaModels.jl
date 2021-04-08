@@ -1,17 +1,26 @@
-using PandaModels
-const _PdM = PandaModels
+using Pkg
+Pkg.activate(".")
+
 using Test
+using PyCall
+using PandaModels
+
+const _PdM = PandaModels
+
+py"""
+import pandapower.test
+pandapower.test.run_all_tests()
+"""
 
 # TODO: change test file to pass all executive tests
-
-test_path=joinpath(pwd(), "data")
-
-# test_net = joinpath(test_path, "pm_test.json")
-# test_ipopt = joinpath(test_path, "test_ipopt.json")
-# test_Gurobi = joinpath(test_path, "test_Gurobi.json") #use gurobi to solve
-# test_ots = joinpath(test_path, "test_ots.json")
-# test_tnep = joinpath(test_path, "test_tnep.json")
+# test_path=joinpath(pwd(), "data")
 #
+# # test_net = joinpath(test_path, "pm_test.json")
+# # test_ipopt = joinpath(test_path, "test_ipopt.json")
+# # test_Gurobi = joinpath(test_path, "test_Gurobi.json") #use gurobi to solve
+# # test_ots = joinpath(test_path, "test_ots.json")
+# # test_tnep = joinpath(test_path, "test_tnep.json")
+# #
 # @testset "PandaModels.jl" begin
 #         @testset "test internal functions" begin
 #                 # simbench grid 1-HV-urban--0-sw with ipopt solver
@@ -52,15 +61,15 @@ test_path=joinpath(pwd(), "data")
 #                 end
 #         end
 # end
-
-# result=run_powermodels_mn_storage(test_Gurobi)
-# @test isa(result, Dict{String,Any})
-# @test result["solve_time"]>=0
-# result=run_powermodels_ots(test_ots)
-# @test isa(result, Dict{String,Any})
-# string(result["termination_status"]) == "LOCALLY_SOLVED"
-# @test result["solve_time"]>=0
-# result=run_powermodels_tnep(test_tnep)
-# @test isa(result, Dict{String,Any})
-# string(result["termination_status"]) == "LOCALLY_SOLVED"
-# @test result["solve_time"]>=0
+#
+# # result=run_powermodels_mn_storage(test_Gurobi)
+# # @test isa(result, Dict{String,Any})
+# # @test result["solve_time"]>=0
+# # result=run_powermodels_ots(test_ots)
+# # @test isa(result, Dict{String,Any})
+# # string(result["termination_status"]) == "LOCALLY_SOLVED"
+# # @test result["solve_time"]>=0
+# # result=run_powermodels_tnep(test_tnep)
+# # @test isa(result, Dict{String,Any})
+# # string(result["termination_status"]) == "LOCALLY_SOLVED"
+# # @test result["solve_time"]>=0

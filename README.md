@@ -10,45 +10,113 @@
 
 [PandaModels](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/)/[JuMP](https://github.com/JuliaOpt/JuMP.jl) package which containing supplementary data and codes to prepare [pandapower](https://github.com/e2nIEE/pandapower) networks in a compatible format for [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) to run and calculate optimal Power Flow.
 
-**Dependencies:**
+### Dependencies
 
 * [JuMP.jl](https://github.com/JuliaOpt/JuMP.jl)
 * [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl)
 
 i/o:
-
-  * [JSON.jl](https://github.com/JuliaIO/JSON.jl)
+* [JSON.jl](https://github.com/JuliaIO/JSON.jl)
 
 solvers:
+* [Ipopt.jl](https://github.com/jump-dev/Ipopt.jl)
+* [Juniper.jl](https://github.com/lanl-ansi/Juniper.jl)
+* [Cbc.jl](https://github.com/jump-dev/Cbc.jl)
+* [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
 
- * [Ipopt.jl](https://github.com/jump-dev/Ipopt.jl)
- * [Juniper.jl](https://github.com/lanl-ansi/Juniper.jl)
- * [Cbc.jl](https://github.com/jump-dev/Cbc.jl)
- * [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
+#### Gurobi Installation
+
+* To use [Gurobi](https://www.gurobi.com/):
+
+    1. Download and install from [Gurobi Download Center](https://www.gurobi.com/downloads/)
+
+    1. Get the Gurobi license, activate it and add its path to the local PATH environment variables by following the steps from [Gurobi License Center](https://www.gurobi.com/downloads/licenses/)
+
+        * for `linux` users: open `.bashrc` file with , e.g., `nano .bashrc` in your home folder and add:
+        ```bash
+        # gurobi
+        export GUROBI_HOME="/opt/gurobi_VERSION/linux64"
+        export PATH="${PATH}:${GUROBI_HOME}/bin"
+        export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
+        export GRB_LICENSE_FILE="/PATH_TO_YOUR_LICENSE_DIR/gurobi.lic"
+        ```
+
+    1. Add the package to `Julia` by following the installation Instructions from [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
 
 
-To install and develop `PandaModels`:
+### Add and Develop PandaModels
 
-1. Clone the repository into your local folder
-2. In `Julia REPL`, type:
-```julia
-]
-(@v1.5) pkg> add path/to/your/local/PandaModels.jl
-(@v1.5) pkg> dev PandaModels
+To install and develop, as-for-yet unregistered, [PandaModels](https://github.com/e2nIEE/PandaModels.jl) from `Git Bash`:
+
+1. Clone [PandaModels](https://github.com/e2nIEE/PandaModels.jl) repository into your local machine: ::
+```bash
+$ git clone https://github.com/e2nIEE/PandaModels.jl.git
 ```
-3. Check if your package is in develop mode:
+
+1. open `Julia REPL` in `Git Bash`:
+```bash
+$ julia
+```
+
+1. In `Julia REPL`, type:
+```julia
+import Pkg
+# path to cloned repository
+Pkg.add(path = "path/to/your/local/PandaModels.jl")
+Pkg.develop("PandaModels")
+Pkg.build("PandaModels")
+Pkg.resolve()
+```
+
+1. Check if your package is in develop mode:
 ```julia
 import PandaModels
 pathof(PandaModels)
 ```
-   The result should be
-```julia
-~/.julia/dev/PandaModels/src/PandaModels.jl"
+> The result should be:
+>```julia
+>"~/.julia/dev/PandaModels/src/PandaModels.jl"
+>```
+
+To install and develop [PandaModels](https://github.com/e2nIEE/PandaModels.jl) directly from `python`:
+
+1. call `Julia` in `python`:
+
+* before running the following codes please set the `Julia/python` interface by following the steps [here](https://syl1.gitbook.io/julia-language-a-concise-tutorial/language-core/interfacing-julia-with-other-languages).
+
+```python
+import julia
+from julia import Main
+from julia import Pkg
 ```
-<!-- **Instructions:**
+
+2. install `PandaModels` and build the develop mode:
+```python
+# add PandaModels in "~/.julia/packages/PandaModels"
+Pkg.add(url = "https://github.com/e2nIEE/PandaModels.jl")
+Pkg.develop("PandaModels")
+Pkg.build("PandaModels")
+Pkg.resolve()
+```
+3. Check if your package is in develop mode:
+```python
+from julia import Base
+Base.find_package("PandaModels")
+```
+> The result should be:
+> ```python
+> "~/.julia/dev/PandaModels/src/PandaModels.jl"
+> ```
 
 
 
-**Running the Code:**
+> Note: [PyJulia](https://pyjulia.readthedocs.io/en/latest/) crashes on Julia new released version 1.6.0, please install the older versions.
 
-**Example and TestCase:** -->
+### Test pandapower
+
+All changes in [PandaModels](https://github.com/e2nIEE/PandaModels.jl) should be synced to [pandapower](https://github.com/e2nIEE/pandapower). To test the changes, first checkout to `julia_pkg` branch in [pandapower](https://github.com/e2nIEE/pandapower) and run pandapower test:
+
+```python
+import pandapower.test
+pandapower.test.run_all_tests()
+```

@@ -137,13 +137,6 @@ pp.runpm(net, pm_model="SDPWRMPowerModel", pm_solver="gurobi", pm_nl_solver="gur
 
 Also for Exact DC and Exact AC OPF, you can use `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively.
 
-```python
-pandapower.runpm_dc_opf(net, pp_to_pm_callback=None, calculate_voltage_angles=True, trafo_model='t', delta=1e-08, trafo3w_losses='hv', check_connectivity=True, correct_pm_network_data=True, pm_model='DCPPowerModel', pm_solver='ipopt', pm_time_limits=None, pm_log_level=0, **kwargs)
-
-pandapower.runpm_ac_opf(net, pp_to_pm_callback=None, calculate_voltage_angles=True, trafo_model='t', delta=1e-08, trafo3w_losses='hv', check_connectivity=True, pm_model='ACPPowerModel', pm_solver='ipopt', correct_pm_network_data=True, pm_time_limits=None, pm_log_level=0, pm_file_path=None, delete_buffer_file=True, opf_flow_lim='S', **kwargs)
-
-```
-
 For example:
 
 ```python

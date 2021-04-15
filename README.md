@@ -135,7 +135,7 @@ net = nw.example_simple()
 pp.runpm(net, pm_model="SDPWRMPowerModel", pm_solver="gurobi", pm_nl_solver="gurobi")
 ```
 
-Also for Exact DC and Exact AC OPF, you can use `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively.
+Also for DC and AC OPF, you can use `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively.
 
 For example:
 

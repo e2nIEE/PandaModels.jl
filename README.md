@@ -48,31 +48,32 @@ solvers:
 
 To install and develop, as-for-yet unregistered, [PandaModels](https://github.com/e2nIEE/PandaModels.jl) from `Git Bash`:
 
+
 1. Clone [PandaModels](https://github.com/e2nIEE/PandaModels.jl) repository into your local machine: ::
-```bash
-$ git clone https://github.com/e2nIEE/PandaModels.jl.git
-```
-
-1. open `Julia REPL` in `Git Bash`:
-```bash
-$ julia
-```
-
+    ```bash
+    $ git clone https://github.com/e2nIEE/PandaModels.jl.git
+    ```
+1. open `Julia REPL` in `Git Bash`: 
+    ```bash
+    $ julia
+    ```
+    
 1. In `Julia REPL`, type:
-```julia
-import Pkg
-# path to cloned repository
-Pkg.add(path = "path/to/your/local/PandaModels.jl")
-Pkg.develop("PandaModels")
-Pkg.build("PandaModels")
-Pkg.resolve()
-```
+    ```julia
+    import Pkg
+    # path to cloned repository
+    Pkg.add(path = "path/to/your/local/PandaModels.jl")
+    Pkg.develop("PandaModels")
+    Pkg.build("PandaModels")
+    Pkg.resolve()
+    ```
 
 1. Check if your package is in develop mode:
-```julia
-import PandaModels
-pathof(PandaModels)
-```
+    ```julia
+    import PandaModels
+    pathof(PandaModels)
+    ```
+    
 > The result should be:
 >```julia
 >"~/.julia/dev/PandaModels/src/PandaModels.jl"
@@ -98,6 +99,7 @@ Pkg.develop("PandaModels")
 Pkg.build("PandaModels")
 Pkg.resolve()
 ```
+
 3. Check if your package is in develop mode:
 ```python
 from julia import Base
@@ -109,8 +111,54 @@ Base.find_package("PandaModels")
 > ```
 
 
-
 > Note: [PyJulia](https://pyjulia.readthedocs.io/en/latest/) crashes on Julia new released version 1.6.0, please install the older versions.
+
+
+### Optimization Tool
+
+In `python`, for any net in [pandapower](https://github.com/e2nIEE/pandapower) or [SimBench](https://github.com/e2nIEE/simbench) format, simply by calling `pandapower.runpm` function you are able to solve wide range of available OPF [models](https://lanl-ansi.github.io/PowerModels.jl/stable/formulation-details/), from [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) with different approximations and relaxations via different [solvers](https://jump.dev/JuMP.jl/dev/installation/).
+
+```python
+runpm(net, julia_file=None, pp_to_pm_callback=None, calculate_voltage_angles=True,
+          trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
+          correct_pm_network_data=True, pm_model="ACPPowerModel", pm_solver="ipopt",
+          pm_mip_solver="cbc", pm_nl_solver="ipopt", pm_time_limits=None, pm_log_level=0,
+          delete_buffer_file=True, pm_file_path = None, opf_flow_lim="S", **kwargs)
+```
+For example to run semi-definite relaxation of AC OPF with :
+
+```python
+import pandapower as pp
+import pandapower.networks as nw
+
+net = nw.example_simple()
+pp.runpm(net, pm_model="SDPWRMPowerModel", pm_solver="gurobi", pm_nl_solver="gurobi")
+```
+
+Also for DC and AC OPF, you can use `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively.
+
+For example:
+
+```python
+import pandapower as pp
+import pandapower.networks as nw
+
+net = nw.example_simple()
+pp.runpm_ac_opf(net)
+```
+
+for more  details about the settings please see [here](https://pandapower.readthedocs.io/en/v2.6.0/opf/powermodels.html#usage), also the detailed tutorial is available [here](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/opf_powermodels.ipynb).
+
+
+<!-- ### Developing:
+##### Add New Optimization Model to PowerModels
+
+
+
+### Use pandapower Directly in Julia -->
+
+
+
 
 ### Test pandapower
 

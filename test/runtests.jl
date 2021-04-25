@@ -1,5 +1,5 @@
-using Pkg
-Pkg.activate(".")
+# using Pkg
+# Pkg.activate(".")
 
 using Test
 using PyCall
@@ -25,28 +25,28 @@ test_path = abspath(joinpath(pathof(_PdM),"..","..","test"))
 
 if ! occursin(".julia/dev/PandaModels", pathof(_PdM))
         include(joinpath(test_path, "create_test_json.jl")) #TODO:should produce following files
+        json_path = tempdir()
 else
-        test_path = joinpath(test_path, "data")
+        json_path = joinpath(test_path, "data")
 end
 
-test_pm = joinpath(test_path, "test_pm.json") # 1gen, 82bus, 116branch, 177load, DCPPowerModel, solver:Ipopt
-test_powerflow = joinpath(test_path, "test_powerflow.json")
-test_powermodels = joinpath(test_path, "test_powermodels.json")
-test_custom = joinpath(test_path, "test_powermodels_custom.json")
-test_ots = joinpath(test_path, "test_ots.json")
-test_tnep = joinpath(test_path, "test_tnep.json")
-test_mn_storage = joinpath(test_path, "test_mn_storage.json")
+test_pm = joinpath(json_path, "test_pm.json") # 1gen, 82bus, 116branch, 177load, DCPPowerModel, solver:Ipopt
+test_powerflow = joinpath(json_path, "test_powerflow.json")
+test_powermodels = joinpath(json_path, "test_powermodels.json")
+test_custom = joinpath(json_path, "test_powermodels_custom.json")
+test_ots = joinpath(json_path, "test_ots.json")
+test_tnep = joinpath(json_path, "test_tnep.json")
+test_mn_storage = joinpath(json_path, "test_mn_storage.json")
 # #
 @testset "PandaModels.jl" begin
         @testset "test internal functions" begin
                 # simbench grid 1-HV-urban--0-sw with ipopt solver
-                json_path = test_powermodels
-                pm = _PdM.load_pm_from_json(json_path)
+                pm = _PdM.load_pm_from_json(test_pm)
 
-                @test length(pm["bus"]) == 82
-                @test length(pm["gen"]) == 1
-                @test length(pm["branch"]) == 116
-                @test length(pm["load"]) == 177
+                @test length(pm["bus"]) == 4
+                @test length(pm["gen"]) == 3
+                @test length(pm["branch"]) == 3
+                @test length(pm["load"]) == 3
 
                 model =_PdM.get_model(pm["pm_model"])
                 @test string(model) == "PowerModels.DCPPowerModel"
@@ -60,48 +60,42 @@ test_mn_storage = joinpath(test_path, "test_mn_storage.json")
 
         @testset "test exported executive functions" begin
                 @testset "test for run_powermodels" begin
-                        json_path = test_powermodels
-                        result=run_powermodels(json_path)
+                        result=run_powermodels(test_powermodels)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
-                        @test isapprox(result["objective"], -96.1; atol = 1e0)
+                        @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
+                        @test isapprox(result["objective"], 401.96; atol = 1e0)
                         @test result["solve_time"] >= 0
                 end
                 @testset "test for run_powermodels_powerflow" begin
-                        json_path = test_powerflow
-                        result=run_powermodels_powerflow(json_path)
+                        result=run_powermodels_powerflow(test_powerflow)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "OPTIMAL"
+                        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
                         @test isapprox(result["objective"], 0; atol = 1e0)
                         @test result["solve_time"]>=0
                 end
                 @testset "test for powermodels_custom" begin
-                        json_path = test_custom
-                        result=run_powermodels_custom(json_path)
+                        result=run_powermodels_custom(test_custom)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "OPTIMAL"
+                        @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
                         # @test isapprox(result["objective"], 0; atol = 1e0)
                         @test result["solve_time"]>=0
                 end
                 @testset "test for powermodels_tnep" begin
-                        json_path = test_tnep
-                        result=run_powermodels_custom(json_path)
+                        result=run_powermodels_tnep(test_tnep)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "OPTIMAL"
+                        @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
                         # @test isapprox(result["objective"], 0; atol = 1e0)
                         @test result["solve_time"]>=0
                 end
                 @testset "test for powermodels_ots" begin
-                        json_path = test_ots
-                        result=run_powermodels_custom(json_path)
+                        result=run_powermodels_ots(test_ots)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "OPTIMAL"
+                        @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
                         # @test isapprox(result["objective"], 0; atol = 1e0)
                         @test result["solve_time"]>=0
                 end
                 @testset "test for powermodels_mn_storage" begin
-                        json_path = test_mn_storage
-                        result=run_powermodels_custom(json_path)
+                        result=run_powermodels_mn_storage(test_mn_storage)
                         @test isa(result, Dict{String,Any})
                         @test string(result["termination_status"]) == "OPTIMAL"
                         # @test isapprox(result["objective"], 0; atol = 1e0)
@@ -109,12 +103,12 @@ test_mn_storage = joinpath(test_path, "test_mn_storage.json")
                 end
         end
         if ! occursin(".julia/dev/PandaModels", pathof(_PdM))
-                files =[test_pm, test_powerflow, test_powermodels, test_custom, test_ots, test_tnep test_mn_storage]
+                files = [test_pm, test_powerflow, test_powermodels, test_custom, test_ots, test_tnep, test_mn_storage]
                 @testset "remove temp files" begin
-                for fl in files
-                        rm(fl, force=true)
-                        @test !isfile(fl)
-                end
+                        for fl in files
+                                rm(fl, force=true)
+                                @test !isfile(fl)
+                        end
                 end
         end
 

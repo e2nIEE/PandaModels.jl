@@ -15,7 +15,7 @@ function run_powermodels_powerflow(json_path)
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
     result = _PM.run_pf(pm, model, solver)
-    
+
     # add line flow to result
     _PM.update_data!(pm, result["solution"])
     line_flow = _PM.calc_branch_flow_ac(pm)

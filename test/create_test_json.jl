@@ -1,5 +1,11 @@
 using PyCall
 
+# or use python file
+# scriptdir = @__DIR__
+# pushfirst!(PyVector(pyimport("sys")."path"), scriptdir)
+# mytest = pyimport("create_test_json")
+
+
 py"""
 import os
 import pathlib

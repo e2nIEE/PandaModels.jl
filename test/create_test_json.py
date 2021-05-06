@@ -2,15 +2,20 @@ import os
 import pathlib
 import tempfile
 import pandas as pd
+import numpy as np
 import simbench as sb
 import pandapower as pp
+import pandapower.networks as pn
 # from pandapower import pp_dir
-from pandapower.converter.powermodels.to_pm import convert_pp_to_pm
+from pandapower.converter.powermodels.to_pm import convert_pp_to_pm, init_ne_line
 
-types = ["pm", "powerflow", "powermodels", "custom", "ots", "tnep", "mn_storage"]
+types = ["pm", "powerflow", "powermodels", "custom"]
 
 net = {type: pp.create_empty_network() 
         for type in types}
+net["tnep"] = pn.create_cigre_network_mv()
+net["ots"] = pn.case5()
+net["mn_storage"] = pn.create_cigre_network_mv("pv_wind")
 
 min_vm_pu = 0.95
 max_vm_pu = 1.05
@@ -68,6 +73,25 @@ for type in types:
 
     pp.runpp(net[type])
 
+
+net["tnep"]["bus"].loc[:, "min_vm_pu"] = 0.95
+net["tnep"]["bus"].loc[:, "max_vm_pu"] = 1.05
+net["tnep"]["line"].loc[:, "max_loading_percent"] = 60.
+
+
+net["tnep"]["line"] = pd.concat([net["tnep"]["line"]] * 2, ignore_index=True)
+net["tnep"]["line"].loc[max(net["tnep"]["line"].index) + 1:, "in_service"] = False
+new_lines = net["tnep"]["line"].loc[max(net["tnep"]["line"].index) + 1:].index
+init_ne_line(net["tnep"], new_lines, construction_costs=np.ones(len(new_lines)))
+pp.runpp(net["tnep"])
+
+net["mn_storage"]["bus"].loc[:, "min_vm_pu"] = min_vm_pu
+net["mn_storage"]["bus"].loc[:, "max_vm_pu"] = max_vm_pu
+net["mn_storage"]["line"].loc[:, "max_loading_percent"] = 100.
+net["mn_storage"].switch.loc[:, "closed"] = True
+pp.create_storage(net["mn_storage"], 10, p_mw=0.5, max_e_mwh=.2, soc_percent=0., q_mvar=0., controllable=True)
+##TODO: add time series to mn_storage
+
 # pkg_dir = pathlib.Path(pp_dir, "pandapower", "opf", "PpPmInterface", "test", "data")
 # # pkg_dir = pathlib.Path(pathlib.Path.home(), "GitHub", "pandapower", "pandapower", "opf", "PpPmInterface")
 # json_path = os.path.join(pkg_dir, "test" , "data", "test_tnep.json")
@@ -87,6 +111,7 @@ test_powermodels_json = os.path.join(json_path, "test_powermodels.json")
 test_custom_json = os.path.join(json_path, "test_powermodels_custom.json")
 test_ots_json = os.path.join(json_path, "test_ots.json")
 test_tnep_json = os.path.join(json_path, "test_tnep.json")
+test_gurobi_json = os.path.join(json_path, "test_gurobi.json")
 test_mn_storage_json = os.path.join(json_path, "test_mn_storage.json")
 
 test_pm = convert_pp_to_pm(net["pm"], pm_file_path=test_pm_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=False,
@@ -111,12 +136,17 @@ test_custom = convert_pp_to_pm(net["custom"], pm_file_path=test_custom_json, cor
                     
 test_ots = convert_pp_to_pm(net["ots"], pm_file_path=test_ots_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,
                      trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
-                     pp_to_pm_callback=None, pm_model="ACPPowerModel", pm_solver="ipopt",
+                     pp_to_pm_callback=None, pm_model="DCPPowerModel", pm_solver="juniper",
                      pm_mip_solver="cbc", pm_nl_solver="ipopt")
                     
 test_tnep = convert_pp_to_pm(net["tnep"], pm_file_path=test_tnep_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,
                      trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
-                     pp_to_pm_callback=None, pm_model="ACPPowerModel", pm_solver="ipopt",
+                     pp_to_pm_callback=None, pm_model="ACPPowerModel", pm_solver="juniper",
+                     pm_mip_solver="cbc", pm_nl_solver="ipopt")
+
+test_gurobi = convert_pp_to_pm(net["tnep"], pm_file_path=test_gurobi_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,
+                     trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
+                     pp_to_pm_callback=None, pm_model="DCPPowerModel", pm_solver="gurobi",
                      pm_mip_solver="cbc", pm_nl_solver="ipopt")
                     
 test_mn_storage = convert_pp_to_pm(net["mn_storage"], pm_file_path=test_mn_storage_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,

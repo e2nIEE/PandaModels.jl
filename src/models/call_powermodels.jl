@@ -73,7 +73,7 @@ function run_powermodels_custom(json_path)
     ipopt_solver = JuMP.with_optimizer(Ipopt.Optimizer, print_level=0)
 
     result = _PM.run_ac_opf(pm, ipopt_solver,
-                                    setting = Dict("output" => Dict("branch_flows" => true)))
+                            setting = Dict("output" => Dict("branch_flows" => true)))
     return result
 end
 

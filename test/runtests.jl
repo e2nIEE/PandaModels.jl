@@ -36,6 +36,7 @@ test_powermodels = joinpath(json_path, "test_powermodels.json")
 test_custom = joinpath(json_path, "test_powermodels_custom.json")
 test_ots = joinpath(json_path, "test_ots.json")
 test_tnep = joinpath(json_path, "test_tnep.json")
+test_gurobi = joinpath(json_path, "test_gurobi.json")
 test_mn_storage = joinpath(json_path, "test_mn_storage.json")
 # #
 @testset "PandaModels.jl" begin
@@ -64,35 +65,44 @@ test_mn_storage = joinpath(json_path, "test_mn_storage.json")
                         @test isa(result, Dict{String,Any})
                         @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
                         @test isapprox(result["objective"], 401.96; atol = 1e0)
-                        @test result["solve_time"] >= 0
+                        @test result["solve_time"] > 0
                 end
                 @testset "test for run_powermodels_powerflow" begin
                         result=run_powermodels_powerflow(test_powerflow)
                         @test isa(result, Dict{String,Any})
                         @test string(result["termination_status"]) == "LOCALLY_SOLVED"
                         @test isapprox(result["objective"], 0; atol = 1e0)
-                        @test result["solve_time"]>=0
+                        @test result["solve_time"] > 0
                 end
                 @testset "test for powermodels_custom" begin
                         result=run_powermodels_custom(test_custom)
                         @test isa(result, Dict{String,Any})
                         @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
                         # @test isapprox(result["objective"], 0; atol = 1e0)
-                        @test result["solve_time"]>=0
+                        @test result["solve_time"] > 0
                 end
                 @testset "test for powermodels_tnep" begin
                         result=run_powermodels_tnep(test_tnep)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
-                        # @test isapprox(result["objective"], 0; atol = 1e0)
-                        @test result["solve_time"]>=0
+                        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+                        @test isapprox(result["objective"], 0; atol = 1e0)
+                        @test result["solve_time"] > 0
+                end
+                if Base.find_package("Gurobi") != nothing
+                        @testset "test for Gurobi" begin
+                                result=run_powermodels_tnep(test_gurobi)
+                                @test isa(result, Dict{String,Any})
+                                @test string(result["termination_status"]) == "OPTIMAL"
+                                @test isapprox(result["objective"], 0; atol = 1e0)
+                                @test result["solve_time"] > 0
+                        end
                 end
                 @testset "test for powermodels_ots" begin
                         result=run_powermodels_ots(test_ots)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
-                        # @test isapprox(result["objective"], 0; atol = 1e0)
-                        @test result["solve_time"]>=0
+                        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+                        @test isapprox(result["objective"], 14810.0; atol = 100)
+                        @test result["solve_time"] > 0
                 end
                 @testset "test for powermodels_mn_storage" begin
                         result=run_powermodels_mn_storage(test_mn_storage)

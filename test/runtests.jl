@@ -7,6 +7,10 @@ using PandaModels
 
 const _PdM = PandaModels
 
+test_path = joinpath(pwd(), "test")
+# test_net = joinpath(test_path, "pm_test.json")
+
+
 
 # py"""
 # from pandapower import pp_dir
@@ -20,6 +24,9 @@ const _PdM = PandaModels
 #     status = py"sta.value"
 #     @test status == 0
 # end
+#
+# test_path = abspath(joinpath(pathof(_PdM),"..","..","test"))
+data_path = joinpath(pwd(), "test", "data")
 
 # test_path = abspath(joinpath(pathof(_PdM),"..","..","test"))
 test_path = joinpath(pwd(), "test")
@@ -56,7 +63,6 @@ time_series = joinpath(json_path, "timeseries.json")
 
                 solver = _PdM.get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
                 pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
-
                 @test string(solver.optimizer_constructor) == "Ipopt.Optimizer"
 
         end

@@ -23,6 +23,8 @@ function run_powermodels_powerflow(json_path)
 
     return result
 end
+
+
 function run_powermodels(json_path)
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
@@ -37,7 +39,7 @@ function run_powermodels(json_path)
     return result
 end
 
-
+# TODO: define new model for run_opf_with cl
 # function run_powermodels(json_path)
 #     pm = load_pm_from_json(json_path)
 #     model = get_model(pm["pm_model"])

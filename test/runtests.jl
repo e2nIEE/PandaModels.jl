@@ -21,7 +21,8 @@ const _PdM = PandaModels
 #     @test status == 0
 # end
 
-test_path = abspath(joinpath(pathof(_PdM),"..","..","test"))
+# test_path = abspath(joinpath(pathof(_PdM),"..","..","test"))
+test_path = joinpath(pwd(), "test")
 
 if ! occursin(".julia/dev/PandaModels", pathof(_PdM))
         include(joinpath(test_path, "create_test_json.jl")) #TODO:should produce following files
@@ -38,6 +39,7 @@ test_ots = joinpath(json_path, "test_ots.json")
 test_tnep = joinpath(json_path, "test_tnep.json")
 test_gurobi = joinpath(json_path, "test_gurobi.json")
 test_mn_storage = joinpath(json_path, "test_mn_storage.json")
+time_series = joinpath(json_path, "timeseries.json")
 # #
 @testset "PandaModels.jl" begin
         @testset "test internal functions" begin
@@ -105,7 +107,7 @@ test_mn_storage = joinpath(json_path, "test_mn_storage.json")
                         @test result["solve_time"] > 0
                 end
                 @testset "test for powermodels_mn_storage" begin
-                        result=run_powermodels_mn_storage(test_mn_storage)
+                        result=run_powermodels_mn_storage(test_mn_storage, time_series)
                         @test isa(result, Dict{String,Any})
                         @test string(result["termination_status"]) == "OPTIMAL"
                         # @test isapprox(result["objective"], 0; atol = 1e0)

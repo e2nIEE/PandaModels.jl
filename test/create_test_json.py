@@ -1,4 +1,5 @@
 import os
+import json
 import pathlib
 import tempfile
 import pandas as pd
@@ -7,7 +8,22 @@ import simbench as sb
 import pandapower as pp
 import pandapower.networks as pn
 # from pandapower import pp_dir
-from pandapower.converter.powermodels.to_pm import convert_pp_to_pm, init_ne_line
+from pandapower.converter.powermodels.to_pm import convert_pp_to_pm, init_ne_line, dump_pm_json, convert_to_pm_structure
+from pandapower.auxiliary import _add_ppc_options, _add_opf_options
+from pandapower.opf.pm_storage import add_storage_opf_settings
+
+# pkg_dir = pathlib.Path(pp_dir, "pandapower", "opf", "PpPmInterface", "test", "data")
+# # pkg_dir = pathlib.Path(pathlib.Path.home(), "GitHub", "pandapower", "pandapower", "opf", "PpPmInterface")
+# json_path = os.path.join(pkg_dir, "test" , "data", "test_tnep.json")
+jul_path = pathlib.PurePath(pathlib.Path.home(), ".julia")
+if not os.path.exists(jul_path):
+    raise KeyError("julia failed. Check julia install!")
+dev_path = pathlib.PurePath(jul_path, "dev", "PandaModels")
+if os.path.exists(dev_path):
+    Warning("PandaModels is in development mode.")
+    json_path = pathlib.PurePath(dev_path, "test", "data")
+else:
+    json_path = tempfile.gettempdir()
 
 types = ["pm", "powerflow", "powermodels", "custom"]
 
@@ -74,11 +90,9 @@ for type in types:
     pp.runpp(net[type])
 
 
-net["tnep"]["bus"].loc[:, "min_vm_pu"] = 0.95
-net["tnep"]["bus"].loc[:, "max_vm_pu"] = 1.05
+net["tnep"]["bus"].loc[:, "min_vm_pu"] = min_vm_pu
+net["tnep"]["bus"].loc[:, "max_vm_pu"] = max_vm_pu
 net["tnep"]["line"].loc[:, "max_loading_percent"] = 60.
-
-
 net["tnep"]["line"] = pd.concat([net["tnep"]["line"]] * 2, ignore_index=True)
 net["tnep"]["line"].loc[max(net["tnep"]["line"].index) + 1:, "in_service"] = False
 new_lines = net["tnep"]["line"].loc[max(net["tnep"]["line"].index) + 1:].index
@@ -88,22 +102,32 @@ pp.runpp(net["tnep"])
 net["mn_storage"]["bus"].loc[:, "min_vm_pu"] = min_vm_pu
 net["mn_storage"]["bus"].loc[:, "max_vm_pu"] = max_vm_pu
 net["mn_storage"]["line"].loc[:, "max_loading_percent"] = 100.
-net["mn_storage"].switch.loc[:, "closed"] = True
+net["mn_storage"]["switch"].loc[:, "closed"] = True
 pp.create_storage(net["mn_storage"], 10, p_mw=0.5, max_e_mwh=.2, soc_percent=0., q_mvar=0., controllable=True)
-##TODO: add time series to mn_storage
+ts = pd.DataFrame(data=range(96), index=range(96), columns=["timestep"])
+ts["pv"] = np.random.uniform(0.0, 0.15, ts.shape[0])
+ts["wind"] = np.random.uniform(0.0, 1.0, ts.shape[0])
+ts["residential"] = np.random.uniform(0.0, 1.0, ts.shape[0])
+net["mn_storage"]["load"].loc[:, "type"] = "residential"
+net["mn_storage"]["sgen"].loc[:, "type"] = "pv"
+net["mn_storage"]["sgen"].loc[8, "type"] = "wind"
+n_timesteps = ts.shape[0]
+n_load = len(net["mn_storage"].load)
+n_sgen = len(net["mn_storage"].sgen)
+p_timeseries = np.zeros((n_timesteps, n_load + n_sgen), dtype=float)
+load_p = net["mn_storage"]["load"].loc[:, "p_mw"].values
+sgen_p = net["mn_storage"]["sgen"].loc[:7, "p_mw"].values
+wind_p = net["mn_storage"]["sgen"].loc[8, "p_mw"]
+p_timeseries_dict = dict()
+for t in range(n_timesteps):
+    p_timeseries[t, :n_load] = load_p * ts.at[t, "residential"]
+    p_timeseries[t, n_load:-1] = - sgen_p * ts.at[t, "pv"]
+    p_timeseries[t, -1] = - wind_p * ts.at[t, "wind"]
+    p_timeseries_dict[t] = p_timeseries[t, :].tolist()
+time_series_file = os.path.join(json_path, "timeseries.json")
+with open(time_series_file, 'w') as fp:
+    json.dump(p_timeseries_dict, fp)
 
-# pkg_dir = pathlib.Path(pp_dir, "pandapower", "opf", "PpPmInterface", "test", "data")
-# # pkg_dir = pathlib.Path(pathlib.Path.home(), "GitHub", "pandapower", "pandapower", "opf", "PpPmInterface")
-# json_path = os.path.join(pkg_dir, "test" , "data", "test_tnep.json")
-jul_path = pathlib.PurePath(pathlib.Path.home(), ".julia")
-if not os.path.exists(jul_path):
-    raise KeyError("julia failed. Check julia install!")
-dev_path = pathlib.PurePath(jul_path, "dev", "PandaModels")
-if os.path.exists(dev_path):
-    Warning("PandaModels is in development mode.")
-    json_path = pathlib.PurePath(dev_path, "test", "data")
-else:
-    json_path = pathlib.PurePath(tempfile.TemporaryDirectory().name).parent
 
 test_pm_json = os.path.join(json_path, "test_pm.json") # 1gen, 82bus, 116branch, 177load, DCPPowerModel, solver:Ipopt
 test_powerflow_json = os.path.join(json_path, "test_powerflow.json")
@@ -149,10 +173,23 @@ test_gurobi = convert_pp_to_pm(net["tnep"], pm_file_path=test_gurobi_json, corre
                      pp_to_pm_callback=None, pm_model="DCPPowerModel", pm_solver="gurobi",
                      pm_mip_solver="cbc", pm_nl_solver="ipopt")
                     
-test_mn_storage = convert_pp_to_pm(net["mn_storage"], pm_file_path=test_mn_storage_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,
-                     trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
-                     pp_to_pm_callback=None, pm_model="ACPPowerModel", pm_solver="ipopt",
-                     pm_mip_solver="cbc", pm_nl_solver="ipopt")
+net["mn_storage"]._options = {}
+_add_ppc_options(net["mn_storage"], calculate_voltage_angles=True,
+                     trafo_model="t", check_connectivity=True,
+                     mode="opf", switch_rx_ratio=2, init_vm_pu="flat", init_va_degree="flat",
+                     enforce_q_lims=True, recycle=dict(_is_elements=False, ppc=False, Ybus=False),
+                     voltage_depend_loads=False, delta=1e-8, trafo3w_losses="hv")
+_add_opf_options(net["mn_storage"], trafo_loading='power', ac=True, init="flat", numba=True,
+                     pp_to_pm_callback=add_storage_opf_settings, julia_file="run_powermodels_mn_storage",
+                     correct_pm_network_data=False, pm_model="ACPPowerModel", pm_time_limits=None,
+                     pm_log_level=0)
+net["mn_storage"]._options["n_time_steps"] = n_timesteps
+net["mn_storage"]._options["time_elapsed"] = 24 / n_timesteps
+net["mn_storage"]._options["opf_flow_lim"] = "S"
+net["mn_storage"], pm, ppc, ppci = convert_to_pm_structure(net["mn_storage"])
+pm["baseMVA"]=1.0
+net["mn_storage"]._options["pp_to_pm_callback"](net["mn_storage"], ppci, pm)
+test_mn_storage = dump_pm_json(pm, test_mn_storage_json)
                     
 
 

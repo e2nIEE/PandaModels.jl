@@ -48,31 +48,32 @@ solvers:
 
 To install and develop, as-for-yet unregistered, [PandaModels](https://github.com/e2nIEE/PandaModels.jl) from `Git Bash`:
 
-1. Clone [PandaModels](https://github.com/e2nIEE/PandaModels.jl) repository into your local machine: ::
-```bash
-$ git clone https://github.com/e2nIEE/PandaModels.jl.git
-```
 
+1. Clone [PandaModels](https://github.com/e2nIEE/PandaModels.jl) repository into your local machine: ::
+    ```bash
+    $ git clone https://github.com/e2nIEE/PandaModels.jl.git
+    ```
 1. open `Julia REPL` in `Git Bash`:
-```bash
-$ julia
-```
+    ```bash
+    $ julia
+    ```
 
 1. In `Julia REPL`, type:
-```julia
-import Pkg
-# path to cloned repository
-Pkg.add(path = "path/to/your/local/PandaModels.jl")
-Pkg.develop("PandaModels")
-Pkg.build("PandaModels")
-Pkg.resolve()
-```
+    ```julia
+    import Pkg
+    # path to cloned repository
+    Pkg.add(path = "path/to/your/local/PandaModels.jl")
+    Pkg.develop("PandaModels")
+    Pkg.build("PandaModels")
+    Pkg.resolve()
+    ```
 
 1. Check if your package is in develop mode:
-```julia
-import PandaModels
-pathof(PandaModels)
-```
+    ```julia
+    import PandaModels
+    pathof(PandaModels)
+    ```
+
 > The result should be:
 >```julia
 >"~/.julia/dev/PandaModels/src/PandaModels.jl"
@@ -98,6 +99,7 @@ Pkg.develop("PandaModels")
 Pkg.build("PandaModels")
 Pkg.resolve()
 ```
+
 3. Check if your package is in develop mode:
 ```python
 from julia import Base
@@ -107,7 +109,6 @@ Base.find_package("PandaModels")
 > ```python
 > "~/.julia/dev/PandaModels/src/PandaModels.jl"
 > ```
-
 
 
 > Note: [PyJulia](https://pyjulia.readthedocs.io/en/latest/) crashes on Julia new released version 1.6.0, please install the older versions.
@@ -134,7 +135,9 @@ net = nw.example_simple()
 pp.runpm(net, pm_model="SDPWRMPowerModel", pm_solver="gurobi", pm_nl_solver="gurobi")
 ```
 
-Also for Exact DC and Exact AC OPF, you can use `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively:
+Also for DC and AC OPF, you can use `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively.
+
+For example:
 
 ```python
 import pandapower as pp

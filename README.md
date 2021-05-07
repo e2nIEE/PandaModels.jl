@@ -116,17 +116,7 @@ Base.find_package("PandaModels")
 
 ### Optimization Tool
 
-In `python`, for any net in [pandapower](https://github.com/e2nIEE/pandapower) or [SimBench](https://github.com/e2nIEE/simbench) format, simply by calling `pandapower.runpm` function you are able to solve wide range of available OPF [models](https://lanl-ansi.github.io/PowerModels.jl/stable/formulation-details/), from [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) with different approximations and relaxations via different [solvers](https://jump.dev/JuMP.jl/dev/installation/).
-
-
-| exact non-convex model  | linear approximations | quadratic approximations | quadratic relaxations | sdp relaxations |
-| ------------- | ------------- |------------- | ------------- | ------------- |
-| ACPPowerModel | DCPPowerModel | DCPLLPowerModel | SOCWRPowerModel | SDPWRMPowerModel |
-| ACRPowerModel | DCMPPowerModel | LPACCPowerModel | SOCWRConicPowerModel | SparseSDPWRMPowerModel |
-| ACTPowerModel | BFAPowerModel | | SOCBFPowerModel | |
-| IVRPowerModel | NFAPowerModel | | SOCBFConicPowerModel | | 
-| | | | QCRMPowerModel | |
-| | | | QCLSPowerModel | |
+In `python`, for any net in [pandapower](https://github.com/e2nIEE/pandapower) or [SimBench](https://github.com/e2nIEE/simbench) format, simply by calling `pandapower.runpm` function you are able to solve wide range of available OPF [models, approximations and relaxations](https://lanl-ansi.github.io/PowerModels.jl/stable/formulation-details/), from [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl).
 
 ```python
 runpm(net, julia_file=None, pp_to_pm_callback=None, calculate_voltage_angles=True,
@@ -144,6 +134,29 @@ import pandapower.networks as nw
 net = nw.example_simple()
 pp.runpm(net, pm_model="SDPWRMPowerModel", pm_solver="gurobi", pm_nl_solver="gurobi")
 ```
+
+| exact non-convex model  | linear approximations | quadratic approximations | quadratic relaxations | sdp relaxations |
+| ------------- | ------------- |------------- | ------------- | ------------- |
+| ACPPowerModel | DCPPowerModel | DCPLLPowerModel | SOCWRPowerModel | SDPWRMPowerModel |
+| ACRPowerModel | DCMPPowerModel | LPACCPowerModel | SOCWRConicPowerModel | SparseSDPWRMPowerModel |
+| ACTPowerModel | BFAPowerModel | | SOCBFPowerModel | |
+| IVRPowerModel | NFAPowerModel | | SOCBFConicPowerModel | |
+| | | | QCRMPowerModel | |
+| | | | QCLSPowerModel | |
+
+
+Different solver options are availabe in [PandaModels](https://github.com/e2nIEE/PandaModels.jl). For more information please check the supported solvers by [JuMP.jl](https://github.com/JuliaOpt/JuMP.jl) in [here](https://jump.dev/JuMP.jl/dev/installation/).
+
+
+| solvers  | support | license |
+| ------------- | ------------- | ------------- | 
+| Juniper | (MI)SOCP, (MI)NLP | MIT |  
+| Ipopt | LP, QP, NLP | EPL |
+| Cbc | (MI)LP | EPL |
+| SCIP | (MI)LP, (MI)NLP | ZIB |
+| Gurobi | (MI)LP, (MI)SOCP | Comm. |
+| KNITRO | (MI)LP, (MI)SOCP, (MI)NLP | Comm. |
+
 
 Also for DC and AC OPF, you can use `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively.
 

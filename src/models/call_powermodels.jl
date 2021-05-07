@@ -24,7 +24,6 @@ function run_powermodels_powerflow(json_path)
     return result
 end
 
-
 function run_powermodels(json_path)
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
@@ -32,55 +31,12 @@ function run_powermodels(json_path)
     solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
-        result = _PM.run_opf(pm, model, solver,
-                                        setting = Dict("output" => Dict("branch_flows" => true)))
+    result = _PM.run_opf(pm, model, solver,
+                                   setting = Dict("output" => Dict("branch_flows" => true)))
     end
 
     return result
 end
-
-# TODO: define new model for run_opf_with cl
-# function run_powermodels(json_path)
-#     pm = load_pm_from_json(json_path)
-#     model = get_model(pm["pm_model"])
-#
-#     solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
-#     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
-#
-#     if haskey(pm["branch"]["1"],"c_rating_a")
-#         for (key, value) in pm["gen"]
-#            # value["pmin"] = 0
-#            value["pmax"] *= 0.01
-#            value["qmax"] *= 0.01
-#            value["qmin"] *= 0.01
-#            value["pg"] *= 0.01
-#            value["qg"] *= 0.01
-#            value["cost"] *= 100
-#         end
-#
-#         for (key, value) in pm["branch"]
-#            value["c_rating_a"] *= 0.01
-#         end
-#
-#         for (key, value) in pm["load"]
-#            value["pd"] *= 0.01
-#            value["qd"] *= 0.01
-#         end
-#
-#         # pm["bus"]["4"]["vmax"] = 1.1
-#         # pm["bus"]["4"]["vmin"] = 0.9
-#
-#         result = _PM._run_opf_cl(pm, model, solver,
-#                                         setting = Dict("output" => Dict("branch_flows" => true)))
-#     else
-#
-#         result = _PM.run_opf(pm, model, solver,
-#                                         setting = Dict("output" => Dict("branch_flows" => true)))
-#     end
-#
-#     return result
-# end
-
 
 function run_powermodels_custom(json_path)
     pm = load_pm_from_json(json_path)
@@ -90,7 +46,7 @@ function run_powermodels_custom(json_path)
     ipopt_solver = JuMP.with_optimizer(Ipopt.Optimizer, print_level=0)
 
     result = _PM.run_ac_opf(pm, ipopt_solver,
-                                    setting = Dict("output" => Dict("branch_flows" => true)))
+                            setting = Dict("output" => Dict("branch_flows" => true)))
     return result
 end
 
@@ -146,16 +102,20 @@ function set_pq_values_from_timeseries(mn, time_series)
     return mn
 end
 
-function run_powermodels_mn_storage(json_path)
+function run_powermodels_mn_storage(json_path, ts_file=nothing)
     # load converted pandapower network
     pm = load_pm_from_json(json_path)
     # copy network n_time_steps time step times
     n_time_steps = pm["n_time_steps"]
     mn = _PM.replicate(pm, pm["n_time_steps"])
     mn["time_elapsed"] = pm["time_elapsed"]
+    mn["baseMVA"] = pm["baseMVA"]
     # set P, Q values of loads and generators from time series
-    if isfile("/tmp/timeseries.json")
-        time_series = read_time_series("/tmp/timeseries.json")
+    if !isnothing(ts_file)
+        time_series = read_time_series(ts_file)
+        mn = set_pq_values_from_timeseries(mn, time_series)
+    elseif isfile(joinpath(tempdir(), "timeseries.json"))
+        time_series = read_time_series(joinpath(tempdir(), "timeseries.json"))
         mn = set_pq_values_from_timeseries(mn, time_series)
     else
         print("Running storage without time series")

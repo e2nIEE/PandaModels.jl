@@ -158,7 +158,9 @@ Different solver options are availabe in [PandaModels](https://github.com/e2nIEE
 | KNITRO | (MI)LP, (MI)SOCP, (MI)NLP | Comm. |
 
 
-Also for DC and AC OPF, you can use `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively.
+
+For DC and AC OPF, you can directly call `pandapower.runpm_dc_opf` and `pandapower.runpm_ac_opf`, respectively.
+
 
 For example:
 

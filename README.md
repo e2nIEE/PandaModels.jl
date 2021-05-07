@@ -118,6 +118,16 @@ Base.find_package("PandaModels")
 
 In `python`, for any net in [pandapower](https://github.com/e2nIEE/pandapower) or [SimBench](https://github.com/e2nIEE/simbench) format, simply by calling `pandapower.runpm` function you are able to solve wide range of available OPF [models](https://lanl-ansi.github.io/PowerModels.jl/stable/formulation-details/), from [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) with different approximations and relaxations via different [solvers](https://jump.dev/JuMP.jl/dev/installation/).
 
+
+| exact non-convex model  | linear approximations | quadratic approximations | quadratic relaxations | sdp relaxations |
+| ------------- | ------------- |------------- | ------------- | ------------- |
+| ACPPowerModel | DCPPowerModel | DCPLLPowerModel | SOCWRPowerModel | SDPWRMPowerModel |
+| ACRPowerModel | DCMPPowerModel | LPACCPowerModel | SOCWRConicPowerModel | SparseSDPWRMPowerModel |
+| ACTPowerModel | BFAPowerModel | | SOCBFPowerModel | |
+| IVRPowerModel | NFAPowerModel | | SOCBFConicPowerModel | | 
+| | | | QCRMPowerModel | |
+| | | | QCLSPowerModel | |
+
 ```python
 runpm(net, julia_file=None, pp_to_pm_callback=None, calculate_voltage_angles=True,
           trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,

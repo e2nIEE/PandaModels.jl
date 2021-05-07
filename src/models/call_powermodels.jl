@@ -15,7 +15,7 @@ function run_powermodels_powerflow(json_path)
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
     result = _PM.run_pf(pm, model, solver)
-    
+
     # add line flow to result
     _PM.update_data!(pm, result["solution"])
     line_flow = _PM.calc_branch_flow_ac(pm)
@@ -73,7 +73,7 @@ function run_powermodels_custom(json_path)
     ipopt_solver = JuMP.with_optimizer(Ipopt.Optimizer, print_level=0)
 
     result = _PM.run_ac_opf(pm, ipopt_solver,
-                                    setting = Dict("output" => Dict("branch_flows" => true)))
+                            setting = Dict("output" => Dict("branch_flows" => true)))
     return result
 end
 
@@ -129,16 +129,20 @@ function set_pq_values_from_timeseries(mn, time_series)
     return mn
 end
 
-function run_powermodels_mn_storage(json_path)
+function run_powermodels_mn_storage(json_path, ts_file=nothing)
     # load converted pandapower network
     pm = load_pm_from_json(json_path)
     # copy network n_time_steps time step times
     n_time_steps = pm["n_time_steps"]
     mn = _PM.replicate(pm, pm["n_time_steps"])
     mn["time_elapsed"] = pm["time_elapsed"]
+    mn["baseMVA"] = pm["baseMVA"]
     # set P, Q values of loads and generators from time series
-    if isfile("/tmp/timeseries.json")
-        time_series = read_time_series("/tmp/timeseries.json")
+    if !isnothing(ts_file)
+        time_series = read_time_series(ts_file)
+        mn = set_pq_values_from_timeseries(mn, time_series)
+    elseif isfile(joinpath(tempdir(), "timeseries.json"))
+        time_series = read_time_series(joinpath(tempdir(), "timeseries.json"))
         mn = set_pq_values_from_timeseries(mn, time_series)
     else
         print("Running storage without time series")

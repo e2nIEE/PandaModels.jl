@@ -1,10 +1,5 @@
-
+# TODO:update it for all other pkgs, not only for PM
 function get_model(model_type)
-    """
-    gets the model function
-    model_type (str) - examples: "ACPPowerModel", "DCPPowerModel", "SOCWRPowerModel"...
-    see: https://lanl-ansi.github.io/PowerModels.jl/stable/formulation-details/
-    """
     s = Symbol(model_type)
     return getfield(_PM, s)
 end
@@ -68,6 +63,7 @@ function get_solver(optimizer::String, nl::String="ipopt", mip::String="cbc",
 
 end
 
+# TODO: update the func: PM updates its func, no need to call JSON
 function load_pm_from_json(json_path)
     pm = Dict()
     open(json_path, "r") do f

@@ -35,7 +35,7 @@ end
 #     const GRB_ENV = Gurobi.Env()
 # end
 
-export run_powermodels,
+export run_powermodels_opf,
     run_powermodels_ots,
     run_powermodels_tnep,
     run_powermodels_powerflow,

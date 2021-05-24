@@ -76,7 +76,7 @@ for type in types:
 
 net["tnep"]["bus"].loc[:, "min_vm_pu"] = min_vm_pu
 net["tnep"]["bus"].loc[:, "max_vm_pu"] = max_vm_pu
-net["tnep"]["line"].loc[:, "max_loading_percent"] = 60.
+net["tnep"]["line"].loc[:, "max_loading_percent"] = 80.
 net["tnep"]["line"] = pd.concat([net["tnep"]["line"]] * 2, ignore_index=True)
 net["tnep"]["line"].loc[max(net["tnep"]["line"].index) + 1:, "in_service"] = False
 

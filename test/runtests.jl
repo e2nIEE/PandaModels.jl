@@ -12,8 +12,8 @@ using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
 _PM.silence()
 
-data_path = joinpath(pwd(), "test", "data")
-test_path = joinpath(pwd(), "test")
+data_path = joinpath(pwd(), "data")
+test_path = pwd()
 
 push!(pyimport("sys")."path", test_path)
 pyimport("create_test_json")
@@ -21,12 +21,12 @@ pyimport("create_test_json")
 if ! occursin(joinpath(homedir(), ".julia", "dev", "PandaModels"), pathof(_PdM))
         json_path = tempdir()
 else
-        json_path = joinpath(test_path, "data")
+        json_path = data_path
 end
 
 test_pm = joinpath(json_path, "test_pm.json") # 1gen, 82bus, 116branch, 177load, DCPPowerModel, solver:Ipopt
 test_powerflow = joinpath(json_path, "test_powerflow.json")
-test_powermodels = joinpath(json_path, "test_powermodels.json")
+test_powermodels_opf = joinpath(json_path, "test_powermodels_opf.json")
 test_custom = joinpath(json_path, "test_powermodels_custom.json")
 test_ots = joinpath(json_path, "test_ots.json")
 test_tnep = joinpath(json_path, "test_tnep.json")
@@ -56,9 +56,9 @@ ts_path = joinpath(json_path, "timeseries.json")
         @testset "test internal functions" begin
                 pm = _PdM.load_pm_from_json(test_pm)
 
-                @test length(pm["bus"]) == 4
+                @test length(pm["bus"]) == 6
                 @test length(pm["gen"]) == 3
-                @test length(pm["branch"]) == 3
+                @test length(pm["branch"]) == 7
                 @test length(pm["load"]) == 3
 
                 model =_PdM.get_model(pm["pm_model"])
@@ -73,10 +73,10 @@ ts_path = joinpath(json_path, "timeseries.json")
 
         @testset "test exported executive functions" begin
                 @testset "test for run_powermodels" begin
-                        result=run_powermodels(test_powermodels)
+                        result=run_powermodels_opf(test_powermodels_opf)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
-                        @test isapprox(result["objective"], 401.96; atol = 1e0)
+                        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+                        @test isapprox(result["objective"], 144.85; atol = 1e0)
                         @test result["solve_time"] > 0
                 end
                 @testset "test for run_powermodels_powerflow" begin
@@ -89,8 +89,8 @@ ts_path = joinpath(json_path, "timeseries.json")
                 @testset "test for powermodels_custom" begin
                         result=run_powermodels_custom(test_custom)
                         @test isa(result, Dict{String,Any})
-                        @test string(result["termination_status"]) == "LOCALLY_INFEASIBLE"
-                        # @test isapprox(result["objective"], 0; atol = 1e0)
+                        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+                        @test isapprox(result["objective"], 144.85; atol = 1e0)
                         @test result["solve_time"] > 0
                 end
                 @testset "test for powermodels_tnep" begin

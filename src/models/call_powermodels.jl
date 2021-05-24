@@ -23,8 +23,8 @@ function run_powermodels_powerflow(json_path)
     return result
 end
 
-# TODO: change the name: run_powermodels_opf
-function run_powermodels(json_path)
+
+function run_powermodels_opf(json_path)
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
 

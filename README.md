@@ -7,9 +7,9 @@
 [![Coverage](https://codecov.io/gh/e2nIEE/PandaModels.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/e2nIEE/PandaModels.jl)
 [![Coverage](https://coveralls.io/repos/github/e2nIEE/PandaModels.jl/badge.svg?branch=master)](https://coveralls.io/github/e2nIEE/PandaModels.jl?branch=master)
 
+[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://github.com/e2nIEE/pandapower) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) to run and calculate steady-state power network optimization. These packages use [JuMP](https://github.com/JuliaOpt/JuMP.jl) as optimization environment which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html).
 
-[PandaModels](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/)/[JuMP](https://github.com/JuliaOpt/JuMP.jl) package which containing supplementary data and codes to prepare [pandapower](https://github.com/e2nIEE/pandapower) networks in a compatible format for [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) to run and calculate optimal Power Flow.
-
+<!--
 ### Dependencies
 
 * [JuMP.jl](https://github.com/JuliaOpt/JuMP.jl)
@@ -113,8 +113,9 @@ Base.find_package("PandaModels")
 
 > Note: [PyJulia](https://pyjulia.readthedocs.io/en/latest/) crashes on Julia new released version 1.6.0, please install the older versions.
 
+-->
 
-### Optimization Tool
+<!--### Optimization Tool
 
 In `python`, for any net in [pandapower](https://github.com/e2nIEE/pandapower) or [SimBench](https://github.com/e2nIEE/simbench) format, simply by calling `pandapower.runpm` function you are able to solve wide range of available OPF [models, approximations and relaxations](https://lanl-ansi.github.io/PowerModels.jl/stable/formulation-details/), from [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl).
 
@@ -149,7 +150,7 @@ Different solver options are availabe in [PandaModels](https://github.com/e2nIEE
 
 
 | solvers  | support | license |
-| ------------- | ------------- | ------------- | 
+| ------------- | ------------- | ------------- |
 | Juniper | (MI)SOCP, (MI)NLP | MIT |  
 | Ipopt | LP, QP, NLP | EPL |
 | Cbc | (MI)LP | EPL |
@@ -173,14 +174,14 @@ pp.runpm_ac_opf(net)
 ```
 
 for more  details about the settings please see [here](https://pandapower.readthedocs.io/en/v2.6.0/opf/powermodels.html#usage), also the detailed tutorial is available [here](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/opf_powermodels.ipynb).
-
+-->
 
 <!-- ### Developing:
 ##### Add New Optimization Model to PowerModels
 
 
 
-### Use pandapower Directly in Julia -->
+### Use pandapower Directly in Julia
 
 
 
@@ -193,3 +194,4 @@ All changes in [PandaModels](https://github.com/e2nIEE/PandaModels.jl) should be
 import pandapower.test
 pandapower.test.run_all_tests()
 ```
+-->

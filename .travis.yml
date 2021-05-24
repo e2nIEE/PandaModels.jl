@@ -28,11 +28,13 @@ jobs:
       os: osx
   include:
     - stage: Documentation
-      julia: 1
+      julia: 1.5
+      os: linix
       script: |
         julia --project=docs -e '
           using Pkg
           Pkg.develop(PackageSpec(path=pwd()))
+          Pkg.build("PandaModels")
           Pkg.instantiate()
           using Documenter: doctest
           using PandaModels

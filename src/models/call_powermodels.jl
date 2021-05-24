@@ -14,14 +14,12 @@ function run_powermodels_powerflow(json_path)
     solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
 
-    result = _PM.run_pf(pm, model, solver)
-
-    # add line flow to result
-    _PM.update_data!(pm, result["solution"])
-    line_flow = _PM.calc_branch_flow_ac(pm)
-    _PM.update_data!(result["solution"], line_flow)
-
-    # FIXME: instead, use: result = _PM.run_pf(pm, model, solver, setting = Dict("output" => Dict("branch_flows" => true)))
+    # result = _PM.run_pf(pm, model, solver)
+    # _PM.update_data!(pm, result["solution"])
+    # line_flow = _PM.calc_branch_flow_ac(pm)
+    # _PM.update_data!(result["solution"], line_flow)
+    result = _PM.run_pf(pm, model, solver,
+                                setting = Dict("output" => Dict("branch_flows" => true)))
     return result
 end
 

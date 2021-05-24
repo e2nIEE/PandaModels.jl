@@ -62,17 +62,17 @@ for type in types:
     g3 = pp.create_gen(net[type], bus3, p_mw=92.375601, min_p_mw=0, max_p_mw=200, vm_pu=1.01)
     pp.create_poly_cost(net[type], g3, 'gen', cp1_eur_per_mw=3)
 
-    net[type].line["max_loading_percent"] = 20
+    net[type].line["max_loading_percent"] = 100
 
         # possible new lines (set out of service in line DataFrame)
     l1 = pp.create_line(net[type], bus1, bus4, 10., std_type="305-AL1/39-ST1A 110.0", name="new_line1",
-                            max_loading_percent=20., in_service=False)
+                            max_loading_percent=100., in_service=False)
     l2 = pp.create_line(net[type], bus2, bus4, 20., std_type="149-AL1/24-ST1A 110.0", name="new_line2",
-                            max_loading_percent=20., in_service=False)
+                            max_loading_percent=100., in_service=False)
     l3 = pp.create_line(net[type], bus3, bus4, 30., std_type='149-AL1/24-ST1A 110.0', name="new_line3",
-                            max_loading_percent=20., in_service=False)
+                            max_loading_percent=100., in_service=False)
     l4 = pp.create_line(net[type], bus3, bus4, 40., std_type='149-AL1/24-ST1A 110.0', name="new_line4",
-                            max_loading_percent=20., in_service=False)
+                            max_loading_percent=100., in_service=False)
 
     new_line_index = [l1, l2, l3, l4]
     construction_costs = [10., 20., 30., 45.]
@@ -107,11 +107,13 @@ net["mn_storage"]["switch"].loc[:, "closed"] = True
 
 pp.create_storage(net["mn_storage"], 10, p_mw=0.5, max_e_mwh=.2, soc_percent=0., q_mvar=0., controllable=True)
 
-ts = pd.DataFrame(data=range(96), index=range(96), columns=["timestep"])
+# ts = pd.DataFrame(data=range(96), index=range(96), columns=["timestep"])
+#
+# ts["pv"] = np.random.uniform(0.0, 0.15, ts.shape[0])
+# ts["wind"] = np.random.uniform(0.0, 1.0, ts.shape[0])
+# ts["residential"] = np.random.uniform(0.0, 1.0, ts.shape[0])
 
-ts["pv"] = np.random.uniform(0.0, 0.15, ts.shape[0])
-ts["wind"] = np.random.uniform(0.0, 1.0, ts.shape[0])
-ts["residential"] = np.random.uniform(0.0, 1.0, ts.shape[0])
+ts = pd.read_json(os.path.join(json_path, "timeseries.json"))
 
 net["mn_storage"]["load"].loc[:, "type"] = "residential"
 net["mn_storage"]["sgen"].loc[:, "type"] = "pv"
@@ -131,16 +133,15 @@ wind_p = net["mn_storage"]["sgen"].loc[8, "p_mw"]
 p_timeseries_dict = dict()
 
 for t in range(n_timesteps):
-    p_timeseries[t, :n_load] = load_p * ts.at[t, "residential"]
-    p_timeseries[t, n_load:-1] = - sgen_p * ts.at[t, "pv"]
-    p_timeseries[t, -1] = - wind_p * ts.at[t, "wind"]
+    p_timeseries[t, :n_load] = load_p * ts.loc[range(n_load), t] #ts.at[t, "residential"]
+    p_timeseries[t, n_load:-1] = - sgen_p * ts.loc[n_load:n_load+n_sgen-2, t] #ts.at[t, "pv"]
+    p_timeseries[t, -1] = - wind_p * ts.loc[n_load+n_sgen-1, t] #ts.at[t, "wind"]
     p_timeseries_dict[t] = p_timeseries[t, :].tolist()
 
-time_series_file = os.path.join(json_path, "timeseries.json")
-
-with open(time_series_file, 'w') as fp:
-    json.dump(p_timeseries_dict, fp)
-
+# time_series_file = os.path.join(json_path, "timeseries.json")
+#
+# with open(time_series_file, 'w') as fp:
+#     json.dump(p_timeseries_dict, fp)
 
 test_pm_json = os.path.join(json_path, "test_pm.json") # 1gen, 82bus, 116branch, 177load, DCPPowerModel, solver:Ipopt
 test_powerflow_json = os.path.join(json_path, "test_powerflow.json")
@@ -195,7 +196,7 @@ _add_ppc_options(net["mn_storage"], calculate_voltage_angles=True,
 
 _add_opf_options(net["mn_storage"], trafo_loading='power', ac=True, init="flat", numba=True,
                      pp_to_pm_callback=add_storage_opf_settings, julia_file="run_powermodels_mn_storage",
-                     correct_pm_network_data=False, pm_model="ACPPowerModel", pm_solver="ipopt",
+                     correct_pm_network_data=False, pm_model="SOCWRPowerModel", pm_solver="ipopt",
                      pm_mip_solver="cbc", pm_nl_solver="ipopt", pm_time_limits=None,
                      pm_log_level=0)
 

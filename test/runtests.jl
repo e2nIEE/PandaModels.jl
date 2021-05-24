@@ -124,13 +124,13 @@ ts_path = joinpath(json_path, "timeseries.json")
                 #         @test result["solve_time"] > 0
                 # end
                 # FIXME: fix mn storage test
-                # @testset "test for powermodels_mn_storage" begin
-                #         result=run_powermodels_mn_storage(test_mn_storage, ts_path)
-                #         @test isa(result, Dict{String,Any})
-                #         @test string(result["termination_status"]) == "OPTIMAL"
-                #         # @test isapprox(result["objective"], 0; atol = 1e0)
-                #         @test result["solve_time"]>=0
-                # end
+                @testset "test for powermodels_mn_storage" begin
+                        result=run_powermodels_mn_storage(test_mn_storage, ts_path)
+                        @test isa(result, Dict{String,Any})
+                        @test string(result["termination_status"]) == "OPTIMAL"
+                        # @test isapprox(result["objective"], 0; atol = 1e0)
+                        @test result["solve_time"]>=0
+                end
         end
         if ! occursin(".julia/dev/PandaModels", pathof(_PdM))
                 files = [test_pm, test_powerflow, test_powermodels, test_custom, test_ots, test_tnep, test_mn_storage]

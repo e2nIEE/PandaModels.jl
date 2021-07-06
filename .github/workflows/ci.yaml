@@ -2,10 +2,8 @@ name: CI
 on:
   push:
   pull_request:
-
 jobs:
   test:
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
     name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -22,7 +20,7 @@ jobs:
         arch:
           - x64
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
         with:
           version: ${{ matrix.version }}
@@ -45,10 +43,3 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           file: lcov.info
-          with:
-    token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-    files: ./coverage1.xml,./coverage2.xml # optional
-    flags: unittests # optional
-    name: codecov-umbrella # optional
-    fail_ci_if_error: true # optional (default = false)
-    verbose: true # optional (default = false)

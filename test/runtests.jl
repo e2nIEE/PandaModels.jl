@@ -1,15 +1,24 @@
-using Pkg
-Pkg.activate(".")
+# using Pkg
+# Pkg.activate(".")
 # Pkg.instantiate()
-# Pkg.add("InfrastructureModels")
-# Pkg.add("Memento")
-# Pkg.build()
-# Pkg.resolve
 
 using Test
 using PyCall
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
+
+try
+    import Gurobi
+catch e
+    if isa(e, ArgumentError)
+        println("Cannot import Gurobi. That's fine if you do not plan to use it")
+    end
+end
+
+# if !(@isdefined GRB_ENV)
+#     const GRB_ENV = Gurobi.Env()
+# end
+
 _PM.silence()
 
 data_path = joinpath(pwd(), "test", "data")
@@ -100,15 +109,15 @@ ts_path = joinpath(json_path, "timeseries.json")
                         @test isapprox(result["objective"], 0.0; atol = 1e0)
                         @test result["solve_time"] > 0.0
                 end
-                if Base.find_package("Gurobi") != nothing
-                        @testset "test for Gurobi" begin
-                                result=run_powermodels_tnep(test_gurobi)
-                                @test isa(result, Dict{String,Any})
-                                @test string(result["termination_status"]) == "OPTIMAL"
-                                @test isapprox(result["objective"], 0.0; atol = 1e0)
-                                @test result["solve_time"] > 0.0
-                        end
-                end
+                # if Base.find_package("Gurobi") != nothing
+                #         @testset "test for Gurobi" begin
+                #                 result=run_powermodels_tnep(test_gurobi)
+                #                 @test isa(result, Dict{String,Any})
+                #                 @test string(result["termination_status"]) == "OPTIMAL"
+                #                 @test isapprox(result["objective"], 0.0; atol = 1e0)
+                #                 @test result["solve_time"] > 0.0
+                #         end
+                # end
                 @testset "test for powermodels_ots" begin
                         result=run_powermodels_ots(test_ots)
                         @test isa(result, Dict{String,Any})

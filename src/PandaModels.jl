@@ -27,10 +27,10 @@ export run_powermodels_opf,
     # run_powermodels_vd # FIXME: fix the model
 
 include("input/pp_to_pm.jl")
-include("input/time_series.jl")
+# include("input/time_series.jl")
 include("input/tools.jl")
 
-include("models/vd.jl") # FIXME
+# include("models/vd.jl") # FIXME
 
 include("models/call_powermodels.jl")
 

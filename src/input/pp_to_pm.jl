@@ -95,15 +95,3 @@ function load_pm_from_json(json_path)
     end
     return pm
 end
-
-function read_ts_from_json(ts_path)
-    if isfile(ts_path)
-        ts = Dict()
-        open(ts_path, "r") do f
-            ts = JSON.parse(f)
-        end
-    else
-        @error "no time series data is available at $(ts_path)"
-    end
-    return ts
-end

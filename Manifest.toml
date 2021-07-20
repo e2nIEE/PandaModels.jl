@@ -465,12 +465,6 @@ uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
 deps = ["LinearAlgebra", "Random"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
-[[SpecialFunctions]]
-deps = ["ChainRulesCore", "LogExpFunctions", "OpenSpecFun_jll"]
-git-tree-sha1 = "a50550fa3164a8c46747e62063b4d774ac1bcf49"
-uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
-version = "1.5.1"
-
 [[Static]]
 deps = ["IfElse"]
 git-tree-sha1 = "62701892d172a2fa41a1f829f66d2b0db94a9a63"

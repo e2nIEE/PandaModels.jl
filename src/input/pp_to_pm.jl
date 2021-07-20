@@ -1,26 +1,12 @@
-# TODO:update it for all other pkgs, not only for PM
+
 function get_model(model_type)
-# function get_model(pm)
-#     model_type = pm["pm_model"]
     s = Symbol(model_type)
     return getfield(_PM, s)
 end
 
-# function get_slover(pm)
 function get_solver(optimizer::String, nl::String="ipopt", mip::String="cbc",
     log_level::Int=0, time_limit::Float64=Inf, nl_time_limit::Float64=Inf,
     mip_time_limit::Float64=Inf, ipopt_tol::Float64=1e-8)
-
-    # optimizer = pm["pm_solver"]
-    #
-    # nl = haskey(pm , "pm_nl_solver") ?  pm["pm_nl_solver"] : "ipopt"
-    # mip = haskey(pm , "pm_mip_solver") ?  pm["pm_mip_solver"] : "cbc"
-    #
-    # log_level = haskey(pm , "pm_log_level") ?  pm["pm_log_level"] : 0
-    #
-    # time_limit = haskey(pm , "pm_time_limit") ?  pm["pm_time_limit"] : Inf
-    # nl_time_limit = haskey(pm , "pm_nl_time_limit") ?  pm["pm_nl_time_limit"] : Inf
-    # mip_time_limit = haskey(pm , "pm_mip_time_limit") ?  pm["pm_mip_time_limit"] : Inf
 
     if optimizer == "gurobi"
             solver = JuMP.optimizer_with_attributes(Gurobi.Optimizer, "TimeLimit" => time_limit, "OutputFlag" => log_level)
@@ -78,11 +64,10 @@ function get_solver(optimizer::String, nl::String="ipopt", mip::String="cbc",
 
 end
 
-# TODO: update the func: PM updates its func, no need to call JSON
 function load_pm_from_json(json_path)
     pm = Dict()
     open(json_path, "r") do f
-        pm = JSON.parse(f)  # parse and transform data
+        pm = JSON.parse(f)
     end
 
     for (idx, gen) in pm["gen"]
@@ -94,16 +79,4 @@ function load_pm_from_json(json_path)
         _PM.correct_network_data!(pm)
     end
     return pm
-end
-
-function read_ts_from_json(ts_path)
-    if isfile(ts_path)
-        ts = Dict()
-        open(ts_path, "r") do f
-            ts = JSON.parse(f)
-        end
-    else
-        @error "no time series data is available at $(ts_path)"
-    end
-    return ts
 end

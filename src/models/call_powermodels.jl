@@ -37,6 +37,48 @@ function run_powermodels_opf(json_path)
     return result
 end
 
+# TODO: check the application
+# function run_powermodels(json_path)
+#     pm = PP2PM.load_pm_from_json(json_path)
+#     model = PP2PM.get_model(pm["pm_model"])
+#     #
+#     solver = PP2PM.get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
+#     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
+#
+#     if haskey(pm["branch"]["1"],"c_rating_a")
+#         for (key, value) in pm["gen"]
+#            # value["pmin"] = 0
+#            value["pmax"] *= 0.01
+#            value["qmax"] *= 0.01
+#            value["qmin"] *= 0.01
+#            value["pg"] *= 0.01
+#            value["qg"] *= 0.01
+#            value["cost"] *= 100
+#         end
+#
+#         for (key, value) in pm["branch"]
+#            value["c_rating_a"] *= 0.01
+#         end
+#
+#         for (key, value) in pm["load"]
+#            value["pd"] *= 0.01
+#            value["qd"] *= 0.01
+#         end
+#
+#         # pm["bus"]["4"]["vmax"] = 1.1
+#         # pm["bus"]["4"]["vmin"] = 0.9
+#
+#         result = PowerModels._run_opf_cl(pm, model, solver,
+#                                         setting = Dict("output" => Dict("branch_flows" => true)))
+#     else
+#         result = PowerModels.run_opf(pm, model, solver,
+#                                         setting = Dict("output" => Dict("branch_flows" => true)))
+#     end
+#
+#
+#     return result
+# end
+
 # TODO: usage?
 function run_powermodels_custom(json_path)
     pm = load_pm_from_json(json_path)
@@ -49,7 +91,6 @@ function run_powermodels_custom(json_path)
                             setting = Dict("output" => Dict("branch_flows" => true)))
     return result
 end
-
 
 function run_powermodels_tnep(json_path)
     pm = load_pm_from_json(json_path)
@@ -88,37 +129,32 @@ end
 #     return result
 # end
 
-function run_powermodels_mn_storage(json_path, ts_file=nothing)
-    pm = load_pm_from_json(json_path)
-    model = get_model(pm["pm_model"])
-
-    solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
-    pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
-
-    # copy network n_time_steps time step times
-    n_time_steps = pm["n_time_steps"]
-    mn = _PM.replicate(pm, pm["n_time_steps"])
-    mn["time_elapsed"] = pm["time_elapsed"]
-    mn["baseMVA"] = pm["baseMVA"]
-
-    # set P, Q values of loads and generators from time series
-    if !isnothing(ts_file)
-        ts_data = read_time_series(ts_file)
-        mn = set_pq_values_from_timeseries(mn, ts_data)
-    elseif isfile(joinpath(tempdir(), "timeseries.json"))
-        ts_data = read_time_series(joinpath(tempdir(), "timeseries.json"))
-        mn = set_pq_values_from_timeseries(mn, ts_data)
-    else
-        print("Running storage without time series") # TODO: raise error
-    end
-
-    # TODO:why only ipopt and ac?
-    ipopt_solver = JuMP.optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0)
-
-    # run multinetwork storage opf
-    # result = _PM.run_mn_opf_strg(mn, _PM.ACPPowerModel, ipopt_solver)
-    result = _PM.run_mn_opf_strg(mn, model, solver)
-    # TODO: set this as an option
-    # print_summary(result)
-    return result
-end
+# FIXME: the test doesnt pass!
+# function run_powermodels_mn_storage(files)
+#
+#     pm = load_pm_from_json(files["net"])
+#     model = get_model(pm["pm_model"])
+#
+#     solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
+#     pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
+#
+#     steps = pm["n_time_steps"]
+#
+#     mn = _PM.replicate(pm, steps)
+#
+#     for key in keys(files)
+#         if key != "net"
+#             ts_data = read_time_series(files[key])
+#             if key == "load_p"
+#                 mn = set_pq_from_timeseries!(mn, ts_data, "pd")
+#             elseif key == "load_q"
+#                 mn = set_pq_from_timeseries!(mn, ts_data, "qd")
+#             end
+#         end
+#     end
+#
+#     result = _PM.run_mn_opf_strg(mn, model, solver, setting = Dict("output" => Dict("branch_flows" => true)))
+#
+#     # pm_res = get_result_for_pandapower(result)
+#     return result
+# end

@@ -2,6 +2,5 @@
 *.jl.cov
 *.jl.mem
 /docs/build
-/test/data/
 .DS_Store
 test/__pycache__/

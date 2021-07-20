@@ -1,23 +1,22 @@
-function read_time_series(json_path)
-    time_series = Dict()
-    open(json_path, "r") do f
-        time_series = JSON.parse(f)
+function read_ts_from_json(ts_path)
+    if isfile(ts_path)
+        time_series  = Dict()
+        open(ts_path, "r") do f
+            time_series  = JSON.parse(f)
+        end
+    else
+        @error "no time series data is available at $(ts_path)"
     end
     return time_series
 end
 
-function set_pq_values_from_timeseries(mn, time_series)
+function set_pq_from_timeseries!(mn, ts_data, variable)
     # This function iterates over multinetwork entries and sets p, q values
     # of loads and "sgens" (which are loads with negative P and Q values)
-    #
-    # iterate over networks (which represent the time steps)
-    for (t, network) in mn["nw"]
-        t_j = string(parse(Int64,t) - 1)
-        # iterate over all loads for this network
-        for (i, load) in network["load"]
-
-            load["pd"] = time_series[t_j][parse(Int64,i)] / mn["baseMVA"]
-
+    for step in 1:steps
+        network = mn["nw"]["$(step)"]
+        for idx in keys(ts_data)
+            network["load"][idx][variable] = ts_data [idx]["$(step-1)"] / network["baseMVA"]
         end
     end
     return mn

@@ -15,6 +15,9 @@ PowerModels = "c36e90e8-916a-50a6-bd94-075b64ef4655"
 
 [compat]
 InfrastructureModels = "0.6"
+Ipopt = "0.7"
+JSON = "0.21"
+Juniper = "0.7"
 julia = "1.1"
 
 [extras]

@@ -1,7 +1,6 @@
-import Pkg
-Pkg.activate(".")
-Pkg.rm("PyCall")
-Pkg.resolve()
+# import Pkg
+# Pkg.activate(".")
+
 using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels

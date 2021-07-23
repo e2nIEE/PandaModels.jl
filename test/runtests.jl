@@ -1,22 +1,21 @@
-import Pkg
-Pkg.activate(".")
-Pkg.rm("PyCall")
-Pkg.resolve()
+# import Pkg
+# Pkg.activate(".")
+
 using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
 
 _PM.silence()
 
-json_path = joinpath(pwd(), "test", "data")
-test_path = joinpath(pwd(), "test")
+pdm_path = joinpath(dirname(pathof(PandaModels)), "..")
+data_path = joinpath(pdm_path, "test", "data")
 
-case_pm = joinpath(json_path, "test_pm.json")
-case_pf = joinpath(json_path, "test_pf.json")
-case_opf = joinpath(json_path, "test_opf.json")
-case_custom = joinpath(json_path, "test_custom.json")
-case_ots = joinpath(json_path, "test_ots.json")
-case_tnep = joinpath(json_path, "test_tnep.json")
+case_pm =  joinpath(data_path, "test_pm.json")
+case_pf = joinpath(data_path, "test_pf.json")
+case_opf = joinpath(data_path, "test_opf.json")
+case_custom = joinpath(data_path, "test_custom.json")
+case_ots = joinpath(data_path, "test_ots.json")
+case_tnep = joinpath(data_path, "test_tnep.json")
 
 @testset "PandaModels.jl" begin
         @testset "test internal functions" begin

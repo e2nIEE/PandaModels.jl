@@ -14,7 +14,7 @@ function set_pq_from_timeseries!(mn, ts_data, variable)
     for step in 1:steps
         network = mn["nw"]["$(step)"]
         for idx in keys(ts_data)
-            network["load"][idx][variable] = ts_data [idx]["$(step-1)"] / network["baseMVA"]
+            network["load"][idx][variable] = ts_data[idx]["$(step-1)"] / network["baseMVA"]
         end
     end
     return mn

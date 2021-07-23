@@ -42,7 +42,6 @@ function run_powermodels_opf(json_path)
         result = PowerModels.run_opf(pm, model, solver,
                                         setting = Dict("output" => Dict("branch_flows" => true)))
     end
-
     return result
 end
 

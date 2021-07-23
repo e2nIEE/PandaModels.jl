@@ -28,9 +28,9 @@ types = ["pm", "powerflow", "opf", "custom"]
 
 net = {type: pp.create_empty_network()
         for type in types}
+
 net["tnep"] = pn.create_cigre_network_mv()
 net["ots"] = pn.case5()
-net["mn_storage"] = pn.create_cigre_network_mv("pv_wind")
 
 min_vm_pu = 0.95
 max_vm_pu = 1.05
@@ -85,56 +85,13 @@ init_ne_line(net["tnep"], new_lines, construction_costs=np.ones(len(new_lines)))
 
 pp.runpp(net["tnep"])
 
-# net["mn_storage"]["bus"].loc[:, "min_vm_pu"] = min_vm_pu
-# net["mn_storage"]["bus"].loc[:, "max_vm_pu"] = max_vm_pu
-# net["mn_storage"]["line"].loc[:, "max_loading_percent"] = 100.
-# net["mn_storage"]["switch"].loc[:, "closed"] = True
-
-# pp.create_storage(net["mn_storage"], 10, p_mw=0.5, max_e_mwh=.2, soc_percent=0., q_mvar=0., controllable=True)
-
-# ts = pd.DataFrame(data=range(96), index=range(96), columns=["timestep"])
-
-# ts["pv"] = np.random.uniform(0.0, 0.15, ts.shape[0])
-# ts["wind"] = np.random.uniform(0.0, 1.0, ts.shape[0])
-# ts["residential"] = np.random.uniform(0.0, 1.0, ts.shape[0])
-
-# net["mn_storage"]["load"].loc[:, "type"] = "residential"
-# net["mn_storage"]["sgen"].loc[:, "type"] = "pv"
-# net["mn_storage"]["sgen"].loc[8, "type"] = "wind"
-
-# n_timesteps = ts.shape[0]
-
-# n_load = len(net["mn_storage"].load)
-# n_sgen = len(net["mn_storage"].sgen)
-
-# p_timeseries = np.zeros((n_timesteps, n_load + n_sgen), dtype=float)
-
-# load_p = net["mn_storage"]["load"].loc[:, "p_mw"].values
-# sgen_p = net["mn_storage"]["sgen"].loc[:7, "p_mw"].values
-# wind_p = net["mn_storage"]["sgen"].loc[8, "p_mw"]
-
-# p_timeseries_dict = dict()
-
-# for t in range(n_timesteps):
-#     p_timeseries[t, :n_load] = load_p * ts.at[t, "residential"]
-#     p_timeseries[t, n_load:-1] = - sgen_p * ts.at[t, "pv"]
-#     p_timeseries[t, -1] = - wind_p * ts.at[t, "wind"]
-#     p_timeseries_dict[t] = p_timeseries[t, :].tolist()
-
-# time_series_file = os.path.join(json_path, "timeseries.json")
-
-# with open(time_series_file, 'w') as fp:
-#     json.dump(p_timeseries_dict, fp)
-
-
 test_pm_json = os.path.join(json_path, "test_pm.json") # 1gen, 82bus, 116branch, 177load, DCPPowerModel, solver:Ipopt
-test_powerflow_opf_json = os.path.join(json_path, "test_powerflow.json")
-test_powermodels_json = os.path.join(json_path, "test_powermodels_opf.json")
-test_custom_json = os.path.join(json_path, "test_powermodels_custom.json")
+test_powerflow_opf_json = os.path.join(json_path, "test_pf.json")
+test_powermodels_json = os.path.join(json_path, "test_opf.json")
+test_custom_json = os.path.join(json_path, "test_custom.json")
 test_ots_json = os.path.join(json_path, "test_ots.json")
 test_tnep_json = os.path.join(json_path, "test_tnep.json")
-test_gurobi_json = os.path.join(json_path, "test_gurobi.json")
-test_mn_storage_json = os.path.join(json_path, "test_mn_storage.json")
+
 
 test_pm = convert_pp_to_pm(net["pm"], pm_file_path=test_pm_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=False,
                      trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
@@ -157,46 +114,12 @@ test_custom = convert_pp_to_pm(net["custom"], pm_file_path=test_custom_json, cor
                      pm_mip_solver="cbc", pm_nl_solver="ipopt")
 
 test_ots = convert_pp_to_pm(net["ots"], pm_file_path=test_ots_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,
-                     trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
-                     pp_to_pm_callback=None, pm_model="DCPPowerModel", pm_solver="juniper",
-                     pm_mip_solver="cbc", pm_nl_solver="ipopt")
+                      trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
+                      pp_to_pm_callback=None, pm_model="DCPPowerModel", pm_solver="juniper",
+                      pm_mip_solver="cbc", pm_nl_solver="ipopt")
 
 test_tnep = convert_pp_to_pm(net["tnep"], pm_file_path=test_tnep_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,
-                     trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
-                     pp_to_pm_callback=None, pm_model="ACPPowerModel", pm_solver="juniper",
-                     pm_mip_solver="cbc", pm_nl_solver="ipopt")
+                      trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
+                      pp_to_pm_callback=None, pm_model="ACPPowerModel", pm_solver="juniper",
+                      pm_mip_solver="cbc", pm_nl_solver="ipopt")
 
-test_gurobi = convert_pp_to_pm(net["tnep"], pm_file_path=test_gurobi_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,
-                     trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
-                     pp_to_pm_callback=None, pm_model="DCPPowerModel", pm_solver="gurobi",
-                     pm_mip_solver="cbc", pm_nl_solver="ipopt")
-
-# net["mn_storage"]._options = {}
-# _add_ppc_options(net["mn_storage"], calculate_voltage_angles=True,
-#                      trafo_model="t", check_connectivity=True,
-#                      mode="opf", switch_rx_ratio=2, init_vm_pu="flat", init_va_degree="flat",
-#                      enforce_q_lims=True, recycle=dict(_is_elements=False, ppc=False, Ybus=False),
-#                      voltage_depend_loads=False, delta=1e-8, trafo3w_losses="hv")
-
-# _add_opf_options(net["mn_storage"], trafo_loading='power', ac=True, init="flat", numba=True,
-#                      pp_to_pm_callback=add_storage_opf_settings, julia_file="run_powermodels_mn_storage",
-#                      correct_pm_network_data=False, pm_model="ACPPowerModel", pm_solver="ipopt",
-#                      pm_mip_solver="cbc", pm_nl_solver="ipopt", pm_time_limits=None,
-#                      pm_log_level=0)
-
-# net["mn_storage"]._options["n_time_steps"] = n_timesteps
-# net["mn_storage"]._options["time_elapsed"] = 24 / n_timesteps
-# net["mn_storage"]._options["opf_flow_lim"] = "S"
-# net["mn_storage"], pm, ppc, ppci = convert_to_pm_structure(net["mn_storage"])
-# net["mn_storage"]._options["pp_to_pm_callback"](net["mn_storage"], ppci, pm)
-# pm["baseMVA"]=1.0
-
-# test_mn_storage = dump_pm_json(pm, test_mn_storage_json)
-
-# net["mn_storage"]._options = {}
-# net["mn_storage"]._options["n_time_steps"] = n_timesteps
-# net["mn_storage"]._options["time_elapsed"] = 24 / n_timesteps
-# test_mn_storage = convert_pp_to_pm(net["mn_storage"], pm_file_path=test_mn_storage_json, correct_pm_network_data=True, calculate_voltage_angles=True, ac=True,
-#                      trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
-#                      pp_to_pm_callback=None, pm_model="ACPPowerModel", pm_solver="ipopt",
-#                      pm_mip_solver="cbc", pm_nl_solver="ipopt")

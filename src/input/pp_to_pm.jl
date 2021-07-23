@@ -78,11 +78,11 @@ function get_solver(optimizer::String, nl::String="ipopt", mip::String="cbc",
 
 end
 
-# TODO: update the func: PM updates its func, no need to call JSON
+
 function load_pm_from_json(json_path)
     pm = Dict()
     open(json_path, "r") do f
-        pm = JSON.parse(f)  # parse and transform data
+        pm = JSON.parse(f)  
     end
 
     for (idx, gen) in pm["gen"]

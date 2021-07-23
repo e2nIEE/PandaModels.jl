@@ -11,8 +11,6 @@ function read_ts_from_json(ts_path)
 end
 
 function set_pq_from_timeseries!(mn, ts_data, variable)
-    # This function iterates over multinetwork entries and sets p, q values
-    # of loads and "sgens" (which are loads with negative P and Q values)
     for step in 1:steps
         network = mn["nw"]["$(step)"]
         for idx in keys(ts_data)

@@ -1,6 +1,3 @@
-# import Pkg
-# Pkg.activate(".")
-
 using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
@@ -16,6 +13,7 @@ case_opf = joinpath(data_path, "test_opf.json")
 case_custom = joinpath(data_path, "test_custom.json")
 case_ots = joinpath(data_path, "test_ots.json")
 case_tnep = joinpath(data_path, "test_tnep.json")
+
 
 @testset "PandaModels.jl" begin
         @testset "test internal functions" begin

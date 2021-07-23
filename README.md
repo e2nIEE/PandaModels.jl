@@ -1,11 +1,11 @@
 # PandaModels
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://e2nIEE.github.io/PandaModels.jl/stable)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://e2nIEE.github.io/PandaModels.jl/dev)
-[![Build Status](https://travis-ci.com/e2nIEE/PandaModels.jl.svg?branch=master)](https://travis-ci.com/e2nIEE/PandaModels.jl)
+[![Stable](https://img.shields.io/badge/docs-stable-blue)](https://juliahub.com/docs/PandaModels/lPFae/)
+[![Dev](https://img.shields.io/badge/docs-dev-blue)](https://juliahub.com/docs/PandaModels/lPFae/dev)
+[![CI](https://github.com/e2nIEE/PandaModels.jl/workflows/CI/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions?query=workflow%3ACI)
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/e2nIEE/PandaModels.jl?svg=true)](https://ci.appveyor.com/project/e2nIEE/PandaModels-jl)
-[![Coverage](https://codecov.io/gh/e2nIEE/PandaModels.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/e2nIEE/PandaModels.jl)
-[![Coverage](https://coveralls.io/repos/github/e2nIEE/PandaModels.jl/badge.svg?branch=master)](https://coveralls.io/github/e2nIEE/PandaModels.jl?branch=master)
+[![codecov](https://codecov.io/gh/e2nIEE/PandaModels.jl/branch/master/graph/badge.svg?label=codecov)](https://codecov.io/gh/e2nIEE/PandaModels.jl)
+[![coveralls](https://coveralls.io/repos/github/e2nIEE/PandaModels.jl/badge.svg?branch=master)](https://coveralls.io/github/e2nIEE/PandaModels.jl?branch=master)
 
 [PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://github.com/e2nIEE/pandapower) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) to run and calculate steady-state power network optimization. These packages use [JuMP](https://github.com/JuliaOpt/JuMP.jl) as optimization environment which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html).
 

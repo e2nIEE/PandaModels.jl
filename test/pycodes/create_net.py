@@ -85,7 +85,7 @@ init_ne_line(net["tnep"], new_lines, construction_costs=np.ones(len(new_lines)))
 
 pp.runpp(net["tnep"])
 
-test_pm_json = os.path.join(json_path, "test_pm.json") # 1gen, 82bus, 116branch, 177load, DCPPowerModel, solver:Ipopt
+test_pm_json = os.path.join(json_path, "test_pm.json") 
 test_powerflow_opf_json = os.path.join(json_path, "test_pf.json")
 test_powermodels_json = os.path.join(json_path, "test_opf.json")
 test_custom_json = os.path.join(json_path, "test_custom.json")
@@ -122,4 +122,3 @@ test_tnep = convert_pp_to_pm(net["tnep"], pm_file_path=test_tnep_json, correct_p
                       trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
                       pp_to_pm_callback=None, pm_model="ACPPowerModel", pm_solver="juniper",
                       pm_mip_solver="cbc", pm_nl_solver="ipopt")
-

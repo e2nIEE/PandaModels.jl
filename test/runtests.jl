@@ -1,26 +1,21 @@
-import Pkg
-Pkg.activate(".")
+# import Pkg
+# Pkg.activate(".")
 
 using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
 
 _PM.silence()
-# Memento.setlevel!(Memento.getlogger(InfrastructureModels), "error")
-_PM.logger_config!("error")
 
 pdm_path = joinpath(dirname(pathof(PandaModels)), "..")
-json_path = joinpath(pdm_path, "test", "data")
+data_path = joinpath(pdm_path, "test", "data")
 
-# json_path = joinpath(pwd(), "test", "data")
-# test_path = joinpath(pwd(), "test")
-
-case_pm = joinpath(json_path, "test_pm.json")
-case_pf = joinpath(json_path, "test_pf.json")
-case_opf = joinpath(json_path, "test_opf.json")
-case_custom = joinpath(json_path, "test_custom.json")
-case_ots = joinpath(json_path, "test_ots.json")
-case_tnep = joinpath(json_path, "test_tnep.json")
+case_pm =  joinpath(data_path, "test_pm.json")
+case_pf = joinpath(data_path, "test_pf.json")
+case_opf = joinpath(data_path, "test_opf.json")
+case_custom = joinpath(data_path, "test_custom.json")
+case_ots = joinpath(data_path, "test_ots.json")
+case_tnep = joinpath(data_path, "test_tnep.json")
 
 @testset "PandaModels.jl" begin
         @testset "test internal functions" begin

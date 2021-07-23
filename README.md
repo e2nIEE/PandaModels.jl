@@ -2,7 +2,7 @@
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue)](https://juliahub.com/docs/PandaModels/lPFae/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue)](https://juliahub.com/docs/PandaModels/lPFae/dev)
-[![Build Status](https://travis-ci.com/e2nIEE/PandaModels.jl.svg?branch=main)](https://travis-ci.com/e2nIEE/PandaModels.jl)
+[![CI](https://github.com/e2nIEE/PandaModels.jl/workflows/CI/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions?query=workflow%3ACI)
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/e2nIEE/PandaModels.jl?svg=true)](https://ci.appveyor.com/project/e2nIEE/PandaModels-jl)
 [![codecov](https://codecov.io/gh/e2nIEE/PandaModels.jl/branch/master/graph/badge.svg?label=codecov)](https://codecov.io/gh/e2nIEE/PandaModels.jl)
 [![coveralls](https://coveralls.io/repos/github/e2nIEE/PandaModels.jl/badge.svg?branch=master)](https://coveralls.io/github/e2nIEE/PandaModels.jl?branch=master)

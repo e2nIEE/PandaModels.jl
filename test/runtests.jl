@@ -1,14 +1,19 @@
-# import Pkg
-# Pkg.activate(".")
+import Pkg
+Pkg.activate(".")
 
 using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
 
 _PM.silence()
+# Memento.setlevel!(Memento.getlogger(InfrastructureModels), "error")
+_PM.logger_config!("error")
 
-json_path = joinpath(pwd(), "test", "data")
-test_path = joinpath(pwd(), "test")
+pdm_path = joinpath(dirname(pathof(PandaModels)), "..")
+json_path = joinpath(pdm_path, "test", "data")
+
+# json_path = joinpath(pwd(), "test", "data")
+# test_path = joinpath(pwd(), "test")
 
 case_pm = joinpath(json_path, "test_pm.json")
 case_pf = joinpath(json_path, "test_pf.json")

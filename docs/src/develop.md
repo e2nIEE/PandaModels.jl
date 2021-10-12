@@ -16,7 +16,7 @@ In `Julia REPL`, add the as-for-yet unregistered, package:
 ```julia
 import Pkg
 # add package
-Pkg.add(url = "https://github.com/e2nIEE/PandaModels.jl")
+Pkg.add("PandaModels")
 # develop-mode
 Pkg.develop("PandaModels")
 Pkg.build("PandaModels")

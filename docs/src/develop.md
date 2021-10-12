@@ -46,7 +46,7 @@ import julia
 from julia import Main
 from julia import Pkg
 # add package
-Pkg.add(url = "https://github.com/e2nIEE/PandaModels.jl")
+Pkg.add("PandaModels")
 # develop-mode
 Pkg.develop("PandaModels")
 Pkg.build("PandaModels")
@@ -76,7 +76,6 @@ optimization environment:
 infrastructure-based packages:
 * [InfrastructureModels.jl](https://github.com/lanl-ansi/InfrastructureModels.jl)
 * [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl)
-* [PowerModelsDistribution.jl](https://github.com/lanl-ansi/PowerModelsDistribution.jl)
 
 logger:
 * [Memento.jl](https://github.com/invenia/Memento.jl)
@@ -88,7 +87,6 @@ solvers:
 * [Ipopt.jl](https://github.com/jump-dev/Ipopt.jl)
 * [Juniper.jl](https://github.com/lanl-ansi/Juniper.jl)
 * [Cbc.jl](https://github.com/jump-dev/Cbc.jl)
-* [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
 
 
 Open `Julia REPL` in `Git Bash`:

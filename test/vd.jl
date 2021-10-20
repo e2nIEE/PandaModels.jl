@@ -1,9 +1,10 @@
 function check_vd_status(sol, params)
     for (idx,val) in sol["bus"]
-        if idx in keys(params[:thereshold_v])
+        if idx in keys(params[:threshold_v])
             println(idx)
         end
     end
+    # @test
 end
 
 @testset "test for voltage deviation" begin

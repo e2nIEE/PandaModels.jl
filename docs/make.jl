@@ -1,13 +1,13 @@
 using Documenter, PandaModels
 
-makedocs(;
+makedocs(
     modules=[PandaModels],
     authors="e2nIEE",
     repo="https://github.com/e2nIEE/PandaModels.jl/blob/{commit}{path}#L{line}",
     sitename="PandaModels.jl",
-    format=Documenter.HTML(;
-        prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://e2nIEE.github.io/PandaModels.jl",
+    format=Documenter.HTML(
+        prettyurls=get(ENV, "CI", nothing) == "true",
+        canonical="https://e2nIEE.github.io/PandaModels.jl/stable/",
         assets=String[],
     ),
     pages=[
@@ -33,8 +33,6 @@ makedocs(;
         ],
     ],
 
-    # repo = "https://github.com/e2nIEE/PandaModels.jl/blob/{commit}{path}#L{line}",
-    # sitename = "PandaModels.jl",
     doctest = true,
     linkcheck = true,
     # format = Documenter.HTML(
@@ -45,7 +43,7 @@ makedocs(;
     #     )
 )
 
-deploydocs(;
+deploydocs(
     repo="github.com/e2nIEE/PandaModels.jl",
     # push_preview = true
 )

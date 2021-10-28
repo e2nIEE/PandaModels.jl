@@ -21,11 +21,14 @@ export run_powermodels_opf,
     run_powermodels_tnep,
     run_powermodels_powerflow,
     run_powermodels_mn_storage,
-    run_powermodels_custom
+    run_powermodels_custom,
+    run_vd
 
 include("input/pp_to_pm.jl")
 # include("input/time_series.jl")
-# include("input/tools.jl")
+include("input/tools.jl")
+
+include("models/vd.jl")
 include("models/call_powermodels.jl")
 
 end

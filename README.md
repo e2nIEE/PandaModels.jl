@@ -1,8 +1,6 @@
 # PandaModels
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue)](https://juliahub.com/docs/PandaModels/lPFae/)
-[![Dev](https://img.shields.io/badge/docs-dev-blue)](https://juliahub.com/docs/PandaModels/lPFae/dev)
-[![Documentation](https://github.com/e2nIEE/PandaModels.jl/workflows/Documentation/badge.svg)](https://e2nIEE.github.io/PandaModels.jl/stable/)
 [![CI](https://github.com/e2nIEE/PandaModels.jl/workflows/CI/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/e2nIEE/PandaModels.jl/branch/master/graph/badge.svg?label=codecov)](https://codecov.io/gh/e2nIEE/PandaModels.jl)
 [![coveralls](https://coveralls.io/repos/github/e2nIEE/PandaModels.jl/badge.svg?branch=master)](https://coveralls.io/github/e2nIEE/PandaModels.jl?branch=master)

@@ -1,4 +1,5 @@
 function run_powermodels_powerflow(json_path)
+    _PM.silence()
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
 
@@ -11,6 +12,7 @@ function run_powermodels_powerflow(json_path)
 end
 
 function run_powermodels_opf(json_path)
+    _PM.silence()
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
 
@@ -36,16 +38,17 @@ function run_powermodels_opf(json_path)
            value["qd"] *= 0.01
         end
 
-        result = PowerModels._run_opf_cl(pm, model, solver,
+        result = _PM._run_opf_cl(pm, model, solver,
                                         setting = Dict("output" => Dict("branch_flows" => true)))
     else
-        result = PowerModels.run_opf(pm, model, solver,
+        result = _PM.run_opf(pm, model, solver,
                                         setting = Dict("output" => Dict("branch_flows" => true)))
     end
     return result
 end
 
 function run_powermodels_custom(json_path)
+    _PM.silence()
     pm = load_pm_from_json(json_path)
 
     _PM.correct_network_data!(pm)
@@ -58,6 +61,7 @@ function run_powermodels_custom(json_path)
 end
 
 function run_powermodels_tnep(json_path)
+    _PM.silence()
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
 
@@ -70,6 +74,7 @@ function run_powermodels_tnep(json_path)
 end
 
 function run_powermodels_ots(json_path)
+    _PM.silence()
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
 
@@ -78,5 +83,19 @@ function run_powermodels_ots(json_path)
 
     result = _PM.run_ots(pm, model, solver,
                         setting = Dict("output" => Dict("branch_flows" => true)))
+    return result
+end
+
+function run_vd(json_path)
+    _PM.silence()
+    pm = load_pm_from_json(json_path)
+    model = get_model(pm["pm_model"])
+
+    solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
+    pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
+
+    result = _run_vd(pm, model, solver,
+                        setting = Dict("output" => Dict("branch_flows" => true)),
+                        ext = extract_params!(pm))
     return result
 end

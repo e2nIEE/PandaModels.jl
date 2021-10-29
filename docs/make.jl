@@ -7,7 +7,7 @@ makedocs(
     sitename = "PandaModels.jl",
     format = Documenter.HTML(
         prettyurls = get(ENV, "CI", nothing) == "true",
-        canonical="https://e2nIEE.github.io/PandaModels.jl/stable/",
+        canonical="https://mmajidi137.github.io/PandaModels.jl/stable/",
         assets = String[],
     ),
     pages = [

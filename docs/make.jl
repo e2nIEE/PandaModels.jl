@@ -2,9 +2,10 @@ using Documenter, PandaModels
 
 makedocs(
     modules = [PandaModels],
-    authors = "e2nIEE",
-    repo = "https://github.com/e2nIEE/PandaModels.jl/blob/{commit}{path}#L{line}",
+    authors = "MMajidi137",
+    repo = "https://github.com/MMajidi137/PandaModels.jl/blob/{commit}{path}#L{line}",
     sitename = "PandaModels.jl",
+    modules = [PandaModels]
     format = Documenter.HTML(
         prettyurls = get(ENV, "CI", nothing) == "true",
         canonical="https://mmajidi137.github.io/PandaModels.jl/stable/",

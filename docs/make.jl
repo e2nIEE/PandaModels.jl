@@ -41,6 +41,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/e2nIEE/PandaModels.jl",
+    repo = "github.com/MMajidi137/PandaModels.git",
     push_preview = true
 )

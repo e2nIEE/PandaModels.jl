@@ -1,4 +1,3 @@
-
 function get_model(model_type)
     s = Symbol(model_type)
     return getfield(_PM, s)
@@ -69,7 +68,6 @@ function load_pm_from_json(json_path)
     open(json_path, "r") do f
         pm = JSON.parse(f)
     end
-
     for (idx, gen) in pm["gen"]
         if gen["model"] == 1
             pm["gen"][idx]["cost"] = convert(Array{Float64,1}, gen["cost"])

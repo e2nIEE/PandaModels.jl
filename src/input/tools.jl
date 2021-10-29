@@ -1,9 +1,10 @@
 function extract_params!(pm)
     if haskey(pm, "user_defined_params")
-        user_defined_params = pm["user_defined_params"]
-        pm = delete!(pm, "user_defined_params")
-    # else
-    #     user_defined_param = NaN
+        params = Dict{Symbol,Dict{String,Any}}()
+        for key in keys(pm["user_defined_params"])
+            params[Symbol(key)] = pm["user_defined_params"][key]
+        end
+        delete!(pm, "user_defined_params")
     end
-    return pm, user_defined_param
+    return params
 end

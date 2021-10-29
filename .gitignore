@@ -1,6 +1,8 @@
 *.jl.*.cov
 *.jl.cov
 *.jl.mem
-/docs/build
 .DS_Store
-test/__pycache__/
+Manifest.toml
+/docs/build
+/test/__pycache__/
+/test/pycodes

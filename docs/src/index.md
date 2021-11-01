@@ -13,7 +13,7 @@ CurrentModule = PandaModels
 ### Install Julia
 If you are not yet using Julia, install it. Note that you need a version that is supported PowerModels, PyCall and pyjulia for the interface to work. Currently, [Julia 1.5](https://julialang.org/downloads/)  is the most recent stable version of Julia that supports all these packages.
 
-You don't necessarily need a Julia IDE if you are using PowerModels through pandapower, but it might help for debugging to install an IDE such as [Juno](http://docs.junolab.org/latest/man/installation). Also, PyCharm has a Julia Plugin.
+You don't necessarily need a Julia IDE if you are using PowerModels through pandapower, but it might help for debugging to install an IDE such as [Juno](http://docs.junolab.org/latest/man/installation). Also, [PyCharm](https://www.jetbrains.com/pycharm/) has a Julia Plugin.
 
 Add the Julia binary folder (e.g. /Julia-1.5.0/bin) to the [system variable PATH](https://www.computerhope.com/issues/ch000549.htm) Providing the path is correct, you can now enter the `Julia` prompt by executing:
 

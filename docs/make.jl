@@ -2,7 +2,7 @@ using Documenter, PandaModels
 
 makedocs(
     modules = [PandaModels],
-    authors = "MMajidi137",
+    authors = "e2nIEE",
     # repo = "https://github.com/MMajidi137/PandaModels.jl/blob/{commit}{path}#L{line}",
     sitename = "PandaModels.jl",
     format = Documenter.HTML(),
@@ -41,6 +41,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/MMajidi137/PandaModels.git",
+    repo = "github.com/e2nIEE/PandaModels.git",
     # push_preview = true
 )

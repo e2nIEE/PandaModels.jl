@@ -1,7 +1,7 @@
 # PandaModels.jl
 
 ```@autodocs
-Modules = PandaModels
+Modules = [PandaModels]
 ```
 
 ## Overview

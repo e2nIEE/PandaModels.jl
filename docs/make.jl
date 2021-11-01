@@ -3,7 +3,6 @@ using Documenter, PandaModels
 makedocs(
     modules = [PandaModels],
     authors = "e2nIEE",
-    # repo = "https://github.com/e2nIEE/PandaModels.jl/blob/{commit}{path}#L{line}",
     sitename = "PandaModels",
     format = Documenter.HTML(
         prettyurls = get(ENV, "CI", nothing) == "true",
@@ -18,9 +17,9 @@ makedocs(
             "Optimal Power Flow" => "opf.md",
             "Optimal Transmission Switching" => "ots.md",
             # "Timeseries and Multinetwork" => "ts_mn.md",
-            "Optimal MultiNetwork Storage" => "omns.md",
+            # "Optimal MultiNetwork Storage" => "omns.md",
             "Transmission Network Expansion Planning" => "tnep.md",
-            # "Optimal Voltage Deviation" => "vd.md",
+            "Optimal Voltage Deviation" => "vd.md",
             # "Radial Distribution Network" => "rds.md",
         ],
         "Developer" => [
@@ -32,16 +31,12 @@ makedocs(
     ],
     doctest = true,
     linkcheck = true,
-    # format = Documenter.HTML(
-    #     # See https://github.com/JuliaDocs/Documenter.jl/issues/868
-    #     prettyurls = get(ENV, "CI", nothing) == "true",
-    #     analytics = "UA-178297470-1",
-    #     collapselevel = 1,
-    #     )
 )
 
 deploydocs(
     repo = "github.com/e2nIEE/PandaModels.jl.git",
     push_preview = true,
-    devbranch = "main"
+    devbranch = "main",
+    # devurl = "dev",
+    # versions = ["stable" => "v^", "v#.#", devurl => devurl]
 )

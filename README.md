@@ -1,10 +1,13 @@
 # PandaModels
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue)](https://juliahub.com/docs/PandaModels/lPFae/)
+[![Dev](https://img.shields.io/badge/docs-dev-blue)](https://e2niee.github.io/PandaModels.jl/dev/)
+
 [![CI](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/ci.yml)
 [![Documentation](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/documentation.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/documentation.yml)
 [![CompatHelper](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/CompatHelper.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/CompatHelper.yml)
 [![TagBot](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/TagBot.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/TagBot.yml)
+
 [![codecov](https://codecov.io/gh/e2nIEE/PandaModels.jl/branch/master/graph/badge.svg?label=codecov)](https://codecov.io/gh/e2nIEE/PandaModels.jl)
 [![coveralls](https://coveralls.io/repos/github/e2nIEE/PandaModels.jl/badge.svg?branch=master)](https://coveralls.io/github/e2nIEE/PandaModels.jl?branch=master)
 

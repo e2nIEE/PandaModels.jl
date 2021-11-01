@@ -6,14 +6,14 @@ CurrentModule = PandaModels
 
 ## Overview
 
-[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://github.com/e2nIEE/pandapower) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) to run and calculate steady-state power network optimization. These packages use [JuMP](https://github.com/JuliaOpt/JuMP.jl) as optimization environment which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html).
+[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://pandapower.readthedocs.io/en/latest/index.html) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) to run and calculate steady-state power network optimization. These packages use [JuMP](https://jump.dev/JuMP.jl/stable/) as optimization environment which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html).
 
 ## Installation
 
 ### Install Julia
 If you are not yet using Julia, install it. Note that you need a version that is supported PowerModels, PyCall and pyjulia for the interface to work. Currently, [Julia 1.5](https://julialang.org/downloads/)  is the most recent stable version of Julia that supports all these packages.
 
-You don't necessarily need a Julia IDE if you are using PowerModels through pandapower, but it might help for debugging to install an IDE such as [Juno](http://docs.junolab.org/latest/man/installation). Also, PyCharm has a Julia Plugin.
+You don't necessarily need a Julia IDE if you are using PowerModels through pandapower, but it might help for debugging to install an IDE such as [Juno](http://docs.junolab.org/latest/man/installation). Also, [PyCharm](https://www.jetbrains.com/pycharm/) has a Julia Plugin.
 
 Add the Julia binary folder (e.g. /Julia-1.5.0/bin) to the [system variable PATH](https://www.computerhope.com/issues/ch000549.htm) Providing the path is correct, you can now enter the `Julia` prompt by executing:
 

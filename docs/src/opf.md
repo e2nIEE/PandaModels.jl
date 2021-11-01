@@ -1,25 +1,25 @@
 # Run Optimal Power Flow
 
-pandapower now has an interface to PowerModels.jl that can be used for efficient power system optimization.
+pandapower now has an interface to [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) that can be used for efficient power system optimization.
 
 ### What is PowerModels.jl and why should I use it?
 
 - [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) is  a package for steady-state power network optimization
 - It is based on the relatively new language [Julia](https://julialang.org/) which is gaining popularity in scientific applications
-- PowerModels uses Julia/JuMP for the optimization, which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html)
+- [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) uses Julia/JuMP for the optimization, which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html)
 - PowerModels has a great modular design that allows you to define [different formulations for optimization problems](https://lanl-ansi.github.io/PowerModels.jl/stable/specifications/) based on different [network formulations](https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/) as well as use several [relaxation schemes](https://lanl-ansi.github.io/PowerModels.jl/stable/relaxations/). You can then solve the problem using many open source as well as commercial solvers through [JuMP](http://www.juliaopt.org/JuMP.jl/0.18/installation.html#getting-solvers)
 
 ### Well then why do I still need pandapower?
 
-Because pandapower:
+Because [pandapower](https://pandapower.readthedocs.io/en/latest/index.html):
 
 - allows you to easily define power systems with nameplate parameters and standard types
-- comes with thouroughly validated element models of transformers with tap changers, three-winding transformers, switches/breakers, extended ward equivalents and many more    
-- keeps all data in tables (pandas DataFrames), which makes data management and analysis very comfortable
+- comes with thoroughly validated element models of transformers with tap changers, three-winding transformers, switches/breakers, extended ward equivalents and many more    
+- keeps all data in tables ([pandas DataFrames](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html)), which makes data management and analysis very comfortable
 - provides different power system analysis functions, such as a (very fast) power flow, short-circuit calculation, state estimation, graph searches and a plotting library that can be used on the same grid models
 - allows you to do all pre- and postprocessing in Python, which still has a much richer environment of free libraries than Julia (currently 157,755 packages on PyPI vs. 1,906 libraries on Pkg)
 
-So using pandapower to define the grid models and then using PowerModels for the optimization really gives you the best of all worlds - you can use the rich environment of Python libraries, the sophisticated element models of pandapower, the modular optimization framework of PowerModels and the efficient mathematical modeling of JuMP.
+So using [pandapower](https://pandapower.readthedocs.io/en/latest/index.html) to define the grid models and then using [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) for the optimization really gives you the best of all worlds - you can use the rich environment of Python libraries, the sophisticated element models of [pandapower](https://pandapower.readthedocs.io/en/latest/index.html), the modular optimization framework of [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) and the efficient mathematical modeling of JuMP.
 
 ### Let's get started
 

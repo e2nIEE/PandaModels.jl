@@ -2,12 +2,12 @@ using Documenter, PandaModels
 
 makedocs(
     modules = [PandaModels],
-    authors = "MMajidi137",
-    repo = "https://github.com/MMajidi137/PandaModels.jl/blob/{commit}{path}#L{line}",
+    authors = "e2nIEE",
+    # repo = "https://github.com/e2nIEE/PandaModels.jl/blob/{commit}{path}#L{line}",
     sitename = "PandaModels.jl",
     format = Documenter.HTML(
         prettyurls = get(ENV, "CI", nothing) == "true",
-        canonical="https://mmajidi137.github.io/PandaModels.jl/stable/",
+        canonical="https://e2nIEE.github.io/PandaModels.jl/stable/",
         assets = String[],
     ),
     pages = [
@@ -41,6 +41,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/MMajidi137/PandaModels.git",
+    repo = "github.com/e2nIEE/PandaModels.git",
     push_preview = true
 )

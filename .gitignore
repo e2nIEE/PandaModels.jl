@@ -3,7 +3,8 @@
 *.jl.mem
 .DS_Store
 Manifest.toml
-/docs/build
+/docs/build/
+docs/site/
 /docs/Manifest.toml
 /test/__pycache__/
 /test/pycodes

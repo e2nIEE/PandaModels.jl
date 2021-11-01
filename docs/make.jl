@@ -4,12 +4,13 @@ makedocs(
     modules = [PandaModels],
     authors = "e2nIEE",
     # repo = "https://github.com/e2nIEE/PandaModels.jl/blob/{commit}{path}#L{line}",
-    sitename = "PandaModels.jl",
-    format = Documenter.HTML(
-        prettyurls = get(ENV, "CI", nothing) == "true",
-        canonical="https://e2nIEE.github.io/PandaModels.jl/stable/",
-        assets = String[],
-    ),
+    sitename = "PandaModels",
+    format = Documenter.HTML(analytics = "UA-367975-10", mathengine = Documenter.MathJax()),
+    # format = Documenter.HTML(
+    #     prettyurls = get(ENV, "CI", nothing) == "true",
+    #     canonical="https://e2nIEE.github.io/PandaModels.jl/stable/",
+    #     assets = String[],
+    # ),
     pages = [
         "Home" => "index.md",
         "Manual" => ["Getting Started" => "quickguide.md"],
@@ -41,6 +42,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/e2nIEE/PandaModels.git",
-    push_preview = true
+    repo = "github.com/e2nIEE/PandaModels.jl.git",
+    # push_preview = true
 )

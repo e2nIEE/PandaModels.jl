@@ -4,5 +4,6 @@
 .DS_Store
 Manifest.toml
 /docs/build
+/docs/Manifest.toml
 /test/__pycache__/
 /test/pycodes

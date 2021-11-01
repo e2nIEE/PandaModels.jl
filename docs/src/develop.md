@@ -1,18 +1,33 @@
 # Developer Documentation
 
+
+!!! sync develop mode in pandapower
+    Either you are developing a new feature or using the function from develop mode you should set the  option  `pdm_dev_mode=True`, e.g. :
+
+    ```python
+    pp.runpm_vd(net, calculate_voltage_angles=True,
+            trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
+            n_timesteps=96, time_elapsed=0.25, correct_pm_network_data=True,
+            pm_model="ACPPowerModel", pm_time_limits=None, pm_log_level=0,
+            delete_buffer_file=False, pm_file_path=None,
+            pm_tol=1e-8, pdm_dev_mode=True)
+    ```
+
+    this option automatically check the setting and activate the develop mode environment.
+
 ### Develop Mode
 
-To install and develop, as-for-yet unregistered, PandaModels you can use either `Git Bash` or `Python`:
+To install and develop PandaModels you can use either `Git Bash` or `Python`:
 
 #### Git Bash:
-To install and develop, as-for-yet unregistered, PandaModels from `Git Bash`:
+To install and develop, PandaModels from `Git Bash`:
 
 Open `Julia REPL` in `Git Bash`:
 ```bash
 $ julia
 ```
 
-In `Julia REPL`, add the as-for-yet unregistered, package:
+In `Julia REPL`, add the package:
 ```julia
 import Pkg
 # add package
@@ -28,14 +43,10 @@ Check if your package is in develop mode:
 import PandaModels
 pathof(PandaModels)
 ```
-> The result should be:
->```julia
->"~/.julia/dev/PandaModels/src/PandaModels.jl"
->```
 
 #### Python:
 
-To install and develop, as-for-yet unregistered, PandaModels directly from `python`:
+To install and develop, PandaModels directly from `python`:
 
 before running the following codes please set the `Julia/python` interface by following the steps in [here](https://syl1.gitbook.io/julia-language-a-concise-tutorial/language-core/interfacing-julia-with-other-languages).
 
@@ -58,10 +69,6 @@ Check if your package is in develop mode:
 from julia import Base
 Base.find_package("PandaModels")
 ```
-> The result should be:
-> ```python
-> "~/.julia/dev/PandaModels/src/PandaModels.jl"
-> ```
 
 !!! warning "Julia Version"
     [PyJulia](https://pyjulia.readthedocs.io/en/latest/) crashes on Julia new released version 1.6.0, please install the older versions.
@@ -111,6 +118,7 @@ Pkg.add([
 Pkg.build()
 Pkg.resolve()
 ```
+
 
 #### Gurobi Installation:
 

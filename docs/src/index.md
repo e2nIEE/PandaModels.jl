@@ -6,7 +6,7 @@ CurrentModule = PandaModels
 
 ## Overview
 
-[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://github.com/e2nIEE/pandapower) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) to run and calculate steady-state power network optimization. These packages use [JuMP](https://github.com/JuliaOpt/JuMP.jl) as optimization environment which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html).
+[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://pandapower.readthedocs.io/en/latest/index.html) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) to run and calculate steady-state power network optimization. These packages use [JuMP](https://jump.dev/JuMP.jl/stable/) as optimization environment which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html).
 
 ## Installation
 

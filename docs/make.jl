@@ -17,7 +17,7 @@ makedocs(
             "Optimal Power Flow" => "opf.md",
             "Optimal Transmission Switching" => "ots.md",
             # "Timeseries and Multinetwork" => "ts_mn.md",
-            "Optimal MultiNetwork Storage" => "omns.md",
+            # "Optimal MultiNetwork Storage" => "omns.md",
             "Transmission Network Expansion Planning" => "tnep.md",
             "Optimal Voltage Deviation" => "vd.md",
             # "Radial Distribution Network" => "rds.md",

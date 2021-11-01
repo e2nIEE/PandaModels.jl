@@ -1,7 +1,7 @@
 # Developer Documentation
 
 
-!!! sync develop mode in pandapower
+!!! warning "sync develop mode in pandapower"
     Either you are developing a new feature or using the function from develop mode you should set the  option  `pdm_dev_mode=True`, e.g. :
 
     ```python
@@ -14,6 +14,7 @@
     ```
 
     this option automatically check the setting and activate the develop mode environment.
+
 
 ### Develop Mode
 
@@ -70,8 +71,10 @@ from julia import Base
 Base.find_package("PandaModels")
 ```
 
+
 !!! warning "Julia Version"
     [PyJulia](https://pyjulia.readthedocs.io/en/latest/) crashes on Julia new released version 1.6.0, please install the older versions.
+
 
 ### Dependencies
 

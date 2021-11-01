@@ -37,6 +37,6 @@ deploydocs(
     repo = "github.com/e2nIEE/PandaModels.jl.git",
     push_preview = true,
     devbranch = "main",
-    devurl = "dev",
-    versions = ["stable" => "v^", "v#.#", devurl => devurl]
+    # devurl = "dev",
+    # versions = ["stable" => "v^", "v#.#", devurl => devurl]
 )

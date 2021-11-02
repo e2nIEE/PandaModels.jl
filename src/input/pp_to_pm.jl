@@ -11,7 +11,7 @@ function get_solver(
     time_limit::Float64 = Inf,
     nl_time_limit::Float64 = Inf,
     mip_time_limit::Float64 = Inf,
-    ipopt_tol::Float64 = 1e-8,
+    tol::Float64 = 1e-8,
 )
 
     if optimizer == "gurobi"
@@ -19,16 +19,17 @@ function get_solver(
             Gurobi.Optimizer,
             "TimeLimit" => time_limit,
             "OutputFlag" => log_level,
+            "FeasibilityTol" => tol,
+            "OptimalityTol" => tol,
         )
     end
 
     if optimizer == "ipopt"
-        ipopt_tol = 1e-8
         solver = JuMP.optimizer_with_attributes(
             Ipopt.Optimizer,
             "print_level" => log_level,
             "max_cpu_time" => time_limit,
-            "tol" => ipopt_tol,
+            "tol" => tol,
         )
     end
 
@@ -37,11 +38,13 @@ function get_solver(
             Cbc.Optimizer,
             "logLevel" => log_level,
             "seconds" => mip_time_limit,
+            "tol" => tol,
         )
         nl_solver = JuMP.optimizer_with_attributes(
             Ipopt.Optimizer,
             "print_level" => log_level,
             "max_cpu_time" => nl_time_limit,
+            "tol" => tol,
         )
         solver = JuMP.optimizer_with_attributes(
             Juniper.Optimizer,
@@ -49,6 +52,7 @@ function get_solver(
             "mip_solver" => mip_solver,
             "log_levels" => [],
             "time_limit" => time_limit,
+            "atol" => tol,
         )
     end
 
@@ -57,42 +61,61 @@ function get_solver(
             Cbc.Optimizer,
             "logLevel" => log_level,
             "seconds" => mip_time_limit,
+            "tol" => tol,
         )
-        nl_solver =
-            JuMP.optimizer_with_attributes(Gurobi.Optimizer, "TimeLimit" => nl_time_limit)
+        nl_solver = JuMP.optimizer_with_attributes(
+            Gurobi.Optimizer,
+            "TimeLimit" => nl_time_limit,
+            "FeasibilityTol" => tol,
+            "OptimalityTol" => tol,
+        )
         solver = JuMP.optimizer_with_attributes(
             Juniper.Optimizer,
             "nl_solver" => nl_solver,
             "mip_solver" => mip_solver,
             "log_levels" => [],
             "time_limit" => time_limit,
+            "atol" => tol,
         )
     end
 
     if optimizer == "juniper" && nl == "gurobi" && mip == "gurobi"
-        mip_solver =
-            JuMP.optimizer_with_attributes(Gurobi.Optimizer, "TimeLimit" => mip_time_limit)
-        nl_solver =
-            JuMP.optimizer_with_attributes(Gurobi.Optimizer, "TimeLimit" => nl_time_limit)
+        mip_solver = JuMP.optimizer_with_attributes(
+            Gurobi.Optimizer,
+            "TimeLimit" => mip_time_limit,
+            "FeasibilityTol" => tol,
+            "OptimalityTol" => tol,
+        )
+        nl_solver = JuMP.optimizer_with_attributes(
+            Gurobi.Optimizer,
+            "TimeLimit" => nl_time_limit,
+            "FeasibilityTol" => tol,
+            "OptimalityTol" => tol,
+        )
         solver = JuMP.optimizer_with_attributes(
             Juniper.Optimizer,
             "nl_solver" => nl_solver,
             "mip_solver" => mip_solver,
             "log_levels" => [],
             "time_limit" => time_limit,
+            "atol" => tol,
         )
     end
 
     if optimizer == "knitro"
-        solver = JuMP.optimizer_with_attributes(KNITRO.Optimizer)
+        solver = JuMP.optimizer_with_attributes(KNITRO.Optimizer, "tol" => tol)
     end
 
     if optimizer == "cbc"
-        solver = JuMP.optimizer_with_attributes(Cbc.Optimizer, "seconds" => time_limit)
+        solver = JuMP.optimizer_with_attributes(
+            Cbc.Optimizer,
+            "seconds" => time_limit,
+            "tol" => tol,
+        )
     end
 
     if optimizer == "scip"
-        solver = JuMP.optimizer_with_attributes(SCIP.Optimizer)
+        solver = JuMP.optimizer_with_attributes(SCIP.Optimizer, "tol" => tol)
     end
 
     return solver

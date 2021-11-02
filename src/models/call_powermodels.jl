@@ -23,7 +23,7 @@ function run_powermodels_powerflow(json_path)
 end
 
 function run_powermodels_opf(json_path)
-    _PM.silence()
+    # _PM.silence()
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
 
@@ -35,25 +35,28 @@ function run_powermodels_opf(json_path)
         pm["pm_time_limit"],
         pm["pm_nl_time_limit"],
         pm["pm_mip_time_limit"],
+        pm["pm_tol"],
     )
+
 
     if haskey(pm["branch"]["1"], "c_rating_a")
         for (key, value) in pm["gen"]
-            value["pmax"] = value["pmax"] * 0.01
-            value["qmax"] = value["qmax"] * 0.01
-            value["qmin"] = value["qmin"] * 0.01
-            value["pg"] = value["pg"] * 0.01
-            value["qg"] = value["qg"] * 0.01
-            value["cost"] = value["pmax"] * 100
+            # value["pmin"] = 0
+            value["pmax"] *= 0.01
+            value["qmax"] *= 0.01
+            value["qmin"] *= 0.01
+            value["pg"] *= 0.01
+            value["qg"] *= 0.01
+            value["cost"] *= 100
         end
 
         for (key, value) in pm["branch"]
-            value["c_rating_a"] = value["c_rating_a"] * 0.01
+            value["c_rating_a"] *= 0.01
         end
 
         for (key, value) in pm["load"]
-            value["pd"] = value["pd"] * 0.01
-            value["qd"] = value["qd"] * 0.01
+            value["pd"] *= 0.01
+            value["qd"] *= 0.01
         end
 
         result = _PM._run_opf_cl(
@@ -70,22 +73,34 @@ function run_powermodels_opf(json_path)
             setting = Dict("output" => Dict("branch_flows" => true)),
         )
     end
+
+    # result["termination_status"] = string(result["termination_status"])
+    # result["dual_status"] = string(result["dual_status"])
+    # result["primal_status"] = string(result["primal_status"])
     return result
 end
 
 function run_powermodels_custom(json_path)
     _PM.silence()
     pm = load_pm_from_json(json_path)
+    model = get_model(pm["pm_model"])
 
-    _PM.correct_network_data!(pm)
-
-    ipopt_solver = JuMP.optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0)
-
-    result = _PM.run_ac_opf(
-        pm,
-        ipopt_solver,
-        setting = Dict("output" => Dict("branch_flows" => true)),
+    solver = get_solver(
+        pm["pm_solver"],
+        pm["pm_nl_solver"],
+        pm["pm_mip_solver"],
+        pm["pm_log_level"],
+        pm["pm_time_limit"],
+        pm["pm_nl_time_limit"],
+        pm["pm_mip_time_limit"],
+        pm["pm_tol"],
     )
+
+    result = _PM.run_pf(pm, model, solver)
+    # add branch flows
+    _PM.update_data!(pm, result["solution"])
+    flows = _PM.calc_branch_flow_ac(pm)
+    _PM.update_data!(result["solution"], flows)
     return result
 end
 
@@ -102,6 +117,7 @@ function run_powermodels_tnep(json_path)
         pm["pm_time_limit"],
         pm["pm_nl_time_limit"],
         pm["pm_mip_time_limit"],
+        pm["pm_tol"],
     )
 
     result = _PM.run_tnep(
@@ -126,6 +142,7 @@ function run_powermodels_ots(json_path)
         pm["pm_time_limit"],
         pm["pm_nl_time_limit"],
         pm["pm_mip_time_limit"],
+        pm["pm_tol"],
     )
 
     result = _PM.run_ots(
@@ -150,6 +167,7 @@ function run_vd(json_path)
         pm["pm_time_limit"],
         pm["pm_nl_time_limit"],
         pm["pm_mip_time_limit"],
+        pm["pm_tol"],
     )
 
     result = _run_vd(

@@ -1,10 +1,9 @@
 # PandaModels
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue)](https://juliahub.com/docs/PandaModels/lPFae/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue)](https://e2niee.github.io/PandaModels.jl/dev/)
+[![Documentation](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/documentation.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/documentation.yml)
 
 [![CI](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/ci.yml)
-[![Documentation](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/documentation.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/documentation.yml)
 [![CompatHelper](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/CompatHelper.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/CompatHelper.yml)
 [![TagBot](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/TagBot.yml/badge.svg)](https://github.com/e2nIEE/PandaModels.jl/actions/workflows/TagBot.yml)
 

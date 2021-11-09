@@ -5,12 +5,12 @@
                 @test isa(result, Dict{String,Any})
                 @test string(result["termination_status"]) ==
                       "LOCALLY_SOLVED"
-                @test isapprox(result["objective"], 144.85; atol = 1e0)
+                @test isapprox(result["objective"], 8.0298; atol = 0.1)
                 @test result["solve_time"] > 0.0
         end
 
         @testset "test for run_powermodels_powerflow" begin
-                result = run_powermodels_powerflow(case_pf)
+                result = run_powermodels_pf(case_pf)
                 @test isa(result, Dict{String,Any})
                 @test string(result["termination_status"]) ==
                       "LOCALLY_SOLVED"

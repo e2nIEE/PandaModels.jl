@@ -1,4 +1,4 @@
-function run_powermodels_powerflow(json_path)
+function run_powermodels_pf(json_path)
     _PM.silence()
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])
@@ -154,7 +154,7 @@ function run_powermodels_ots(json_path)
     return result
 end
 
-function run_vd(json_path)
+function run_pandamodels_vd(json_path)
     _PM.silence()
     pm = load_pm_from_json(json_path)
     model = get_model(pm["pm_model"])

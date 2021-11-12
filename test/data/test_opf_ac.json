@@ -169,6 +169,7 @@
     "pm_time_limit": Infinity,
     "pm_tol": 1e-08,
     "shunt": {},
+    "silence": true,
     "source_version": "2.0.0",
     "sourcetype": "matpower",
     "storage": {},

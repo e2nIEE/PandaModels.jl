@@ -1,0 +1,182 @@
+{
+    "baseMVA": 1,
+    "branch": {
+        "1": {
+            "angmax": 1.0471975511965976,
+            "angmin": -1.0471975511965976,
+            "b_fr": 2.6389378290154263e-06,
+            "b_to": 2.6389378290154263e-06,
+            "br_r": 2.0062499999999996,
+            "br_status": 1,
+            "br_x": 0.25937499999999997,
+            "f_bus": 2,
+            "g_fr": -0.0,
+            "g_to": -0.0,
+            "index": 1,
+            "rate_a": 250.0,
+            "rate_b": 250.0,
+            "rate_c": 250.0,
+            "shift": 0.0,
+            "t_bus": 3,
+            "tap": 1.0,
+            "transformer": false
+        },
+        "2": {
+            "angmax": 1.0471975511965976,
+            "angmin": -1.0471975511965976,
+            "b_fr": 2.6389378290154263e-06,
+            "b_to": 2.6389378290154263e-06,
+            "br_r": 2.0062499999999996,
+            "br_status": 1,
+            "br_x": 0.25937499999999997,
+            "f_bus": 3,
+            "g_fr": -0.0,
+            "g_to": -0.0,
+            "index": 2,
+            "rate_a": 250.0,
+            "rate_b": 250.0,
+            "rate_c": 250.0,
+            "shift": 0.0,
+            "t_bus": 4,
+            "tap": 1.0,
+            "transformer": false
+        },
+        "3": {
+            "angmax": 1.0471975511965976,
+            "angmin": -1.0471975511965976,
+            "b_fr": -6.868263343252991e-09,
+            "b_to": -6.868263343252991e-09,
+            "br_r": 0.047996851199999996,
+            "br_status": 1,
+            "br_x": 0.15263247010263137,
+            "f_bus": 1,
+            "g_fr": 0.0002999978398583073,
+            "g_to": 0.0002999978398583073,
+            "index": 3,
+            "rate_a": 250.0,
+            "rate_b": 250.0,
+            "rate_c": 250.0,
+            "shift": 0.0,
+            "t_bus": 2,
+            "tap": 1.0,
+            "transformer": true
+        }
+    },
+    "bus": {
+        "1": {
+            "base_kv": 10.0,
+            "bus_i": 1,
+            "bus_type": 3,
+            "index": 1,
+            "va": 0.0,
+            "vm": 1.0,
+            "vmax": 1.00000001,
+            "vmin": 0.99999999,
+            "zone": 1
+        },
+        "2": {
+            "base_kv": 0.4,
+            "bus_i": 2,
+            "bus_type": 1,
+            "index": 2,
+            "va": 0.0,
+            "vm": 1.0,
+            "vmax": 2.0,
+            "vmin": 0.0,
+            "zone": 1
+        },
+        "3": {
+            "base_kv": 0.4,
+            "bus_i": 3,
+            "bus_type": 1,
+            "index": 3,
+            "va": 0.0,
+            "vm": 1.0,
+            "vmax": 2.0,
+            "vmin": 0.0,
+            "zone": 1
+        },
+        "4": {
+            "base_kv": 0.4,
+            "bus_i": 4,
+            "bus_type": 1,
+            "index": 4,
+            "va": 0.0,
+            "vm": 1.0,
+            "vmax": 2.0,
+            "vmin": 0.0,
+            "zone": 1
+        }
+    },
+    "correct_pm_network_data": true,
+    "dcline": {},
+    "gen": {
+        "1": {
+            "cost": [
+                0,
+                1.0,
+                0.0
+            ],
+            "gen_bus": 1,
+            "gen_status": 1,
+            "index": 1,
+            "model": 2,
+            "ncost": 3,
+            "pg": 0.0,
+            "pmax": 1000000000.0,
+            "pmin": -1000000000.0,
+            "qg": 0.0,
+            "qmax": 1000000000.0,
+            "qmin": -1000000000.0,
+            "vg": 1.0
+        }
+    },
+    "load": {
+        "1": {
+            "index": 1,
+            "load_bus": 3,
+            "pd": 0.03,
+            "qd": 0.01,
+            "status": 1
+        },
+        "2": {
+            "index": 2,
+            "load_bus": 4,
+            "pd": 0.03,
+            "qd": 0.01,
+            "status": 1
+        },
+        "3": {
+            "index": 3,
+            "load_bus": 3,
+            "pd": -0.02,
+            "qd": -0.005,
+            "status": 1
+        },
+        "4": {
+            "index": 4,
+            "load_bus": 4,
+            "pd": -0.015,
+            "qd": -0.002,
+            "status": 1
+        }
+    },
+    "name": "",
+    "ne_branch": {},
+    "per_unit": true,
+    "pm_log_level": 0,
+    "pm_mip_solver": "cbc",
+    "pm_mip_time_limit": Infinity,
+    "pm_model": "ACPPowerModel",
+    "pm_nl_solver": "ipopt",
+    "pm_nl_time_limit": Infinity,
+    "pm_solver": "ipopt",
+    "pm_time_limit": Infinity,
+    "pm_tol": 1e-08,
+    "shunt": {},
+    "silence": true,
+    "source_version": "2.0.0",
+    "sourcetype": "matpower",
+    "storage": {},
+    "switch": {}
+}

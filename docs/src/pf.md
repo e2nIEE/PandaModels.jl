@@ -15,7 +15,7 @@ pandapower now has an interface to PowerModels.jl that can be used for efficient
 Because pandapower:
 
 - allows you to easily define power systems with nameplate parameters and standard types
-- comes with thouroughly validated element models of transformers with tap changers, three-winding transformers, switches/breakers, extended ward equivalents and many more    
+- comes with thoroughly validated element models of transformers with tap changers, three-winding transformers, switches/breakers, extended ward equivalents and many more    
 - keeps all data in tables (pandas DataFrames), which makes data management and analysis very comfortable
 - provides different power system analysis functions, such as a (very fast) power flow, short-circuit calculation, state estimation, graph searches and a plotting library that can be used on the same grid models
 - allows you to do all pre- and postprocessing in Python, which still has a much richer environment of free libraries than Julia (currently 157,755 packages on PyPI vs. 1,906 libraries on Pkg)

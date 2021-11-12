@@ -10,15 +10,17 @@
                 model = _PdM.get_model(pm["pm_model"])
                 @test string(model) == "PowerModels.DCPPowerModel"
 
-                solver = _PdM.get_solver(
-                        pm["pm_solver"],
-                        pm["pm_nl_solver"],
-                        pm["pm_mip_solver"],
-                        pm["pm_log_level"],
-                        pm["pm_time_limit"],
-                        pm["pm_nl_time_limit"],
-                        pm["pm_mip_time_limit"],
-                )
+                solver = _PdM.get_solver(pm)
+                # solver = get_solver(
+                #     pm["pm_solver"],
+                #     pm["pm_nl_solver"],
+                #     pm["pm_mip_solver"],
+                #     pm["pm_log_level"],
+                #     pm["pm_time_limit"],
+                #     pm["pm_nl_time_limit"],
+                #     pm["pm_mip_time_limit"],
+                #     pm["pm_tol"],
+                # )
 
                 @test string(solver.optimizer_constructor) == "Ipopt.Optimizer"
         end
@@ -27,8 +29,9 @@
                 pm = _PdM.load_pm_from_json(case_vd)
                 params = _PdM.extract_params!(pm)
 
-                # @test haskey(params, "thereshold_v")
-                # @test keys(params[:thereshold_v])
+                @test haskey(params, :setpoint_v)
+                @test length(params[:setpoint_v]) >= 9
+
         end
 
 end

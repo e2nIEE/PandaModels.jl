@@ -3,16 +3,16 @@ function get_model(model_type)
     return getfield(_PM, s)
 end
 
-function get_solver(
-    optimizer::String,
-    nl::String = "ipopt",
-    mip::String = "cbc",
-    log_level::Int = 0,
-    time_limit::Float64 = Inf,
-    nl_time_limit::Float64 = Inf,
-    mip_time_limit::Float64 = Inf,
-    tol::Float64 = 1e-8,
-)
+function get_solver(pm)
+
+    optimizer = pm["pm_solver"]
+    nl = pm["pm_nl_solver"]
+    mip = pm["pm_mip_solver"]
+    log_level = pm["pm_log_level"]
+    time_limit = pm["pm_time_limit"]
+    nl_time_limit = pm["pm_nl_time_limit"]
+    mip_time_limit = pm["pm_mip_time_limit"]
+    tol = pm["pm_tol"]
 
     if optimizer == "gurobi"
         solver = JuMP.optimizer_with_attributes(
@@ -38,13 +38,12 @@ function get_solver(
             Cbc.Optimizer,
             "logLevel" => log_level,
             "seconds" => mip_time_limit,
-            "tol" => tol,
         )
         nl_solver = JuMP.optimizer_with_attributes(
             Ipopt.Optimizer,
             "print_level" => log_level,
             "max_cpu_time" => nl_time_limit,
-            "tol" => tol,
+            "tol" => 1e-4,
         )
         solver = JuMP.optimizer_with_attributes(
             Juniper.Optimizer,
@@ -52,7 +51,6 @@ function get_solver(
             "mip_solver" => mip_solver,
             "log_levels" => [],
             "time_limit" => time_limit,
-            "atol" => tol,
         )
     end
 
@@ -61,7 +59,6 @@ function get_solver(
             Cbc.Optimizer,
             "logLevel" => log_level,
             "seconds" => mip_time_limit,
-            "tol" => tol,
         )
         nl_solver = JuMP.optimizer_with_attributes(
             Gurobi.Optimizer,
@@ -75,7 +72,6 @@ function get_solver(
             "mip_solver" => mip_solver,
             "log_levels" => [],
             "time_limit" => time_limit,
-            "atol" => tol,
         )
     end
 
@@ -98,7 +94,6 @@ function get_solver(
             "mip_solver" => mip_solver,
             "log_levels" => [],
             "time_limit" => time_limit,
-            "atol" => tol,
         )
     end
 
@@ -131,9 +126,6 @@ function load_pm_from_json(json_path)
         if gen["model"] == 1
             pm["gen"][idx]["cost"] = convert(Array{Float64,1}, gen["cost"])
         end
-    end
-    if pm["correct_pm_network_data"]
-        _PM.correct_network_data!(pm)
     end
     return pm
 end

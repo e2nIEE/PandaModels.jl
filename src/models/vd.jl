@@ -49,5 +49,5 @@ end
 
 function objective_vd(pm::_PM.AbstractPowerModel)
     return JuMP.@objective(pm.model, Min,
-        sum((var(pm, :vm, content["element_index"]) - content["value"])^2 for (i, content) in pm.ext[:threshold_v]))
+        sum((var(pm, :vm, content["element_index"]) - content["value"])^2 for (i, content) in pm.ext[:setpoint_v]))
 end

@@ -7,4 +7,4 @@ Manifest.toml
 docs/site/
 /docs/Manifest.toml
 /test/__pycache__/
-/test/pycodes
+/test/pycodes/

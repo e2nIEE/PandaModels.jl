@@ -132,8 +132,5 @@ function load_pm_from_json(json_path)
             pm["gen"][idx]["cost"] = convert(Array{Float64,1}, gen["cost"])
         end
     end
-    if pm["correct_pm_network_data"]
-        _PM.correct_network_data!(pm)
-    end
     return pm
 end

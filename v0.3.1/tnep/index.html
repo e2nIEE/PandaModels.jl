@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Transmission Network Expansion Planning · PandaModels</title><script data-outdated-warner src="../assets/warner.js"></script><link rel="canonical" href="https://e2nIEE.github.io/PandaModels.jl/stable/tnep/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.039/juliamono-regular.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">PandaModels</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><span class="tocitem">Manual</span><ul><li><a class="tocitem" href="../quickguide/">Getting Started</a></li></ul></li><li><span class="tocitem">Tutorials</span><ul><li><a class="tocitem" href="../opf/">Optimal Power Flow</a></li><li><a class="tocitem" href="../ots/">Optimal Transmission Switching</a></li><li class="is-active"><a class="tocitem" href>Transmission Network Expansion Planning</a></li><li><a class="tocitem" href="../vd/">Optimal Voltage Deviation</a></li></ul></li><li><span class="tocitem">Developer</span><ul><li><a class="tocitem" href="../develop/">Develop Mode</a></li><li><a class="tocitem" href="../test/">Add Test</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Tutorials</a></li><li class="is-active"><a href>Transmission Network Expansion Planning</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Transmission Network Expansion Planning</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/e2nIEE/PandaModels.jl/blob/master/docs/src/tnep.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Run-Transmission-Network-Expansion-Planning"><a class="docs-heading-anchor" href="#Run-Transmission-Network-Expansion-Planning">Run Transmission Network Expansion Planning</a><a id="Run-Transmission-Network-Expansion-Planning-1"></a><a class="docs-heading-anchor-permalink" href="#Run-Transmission-Network-Expansion-Planning" title="Permalink"></a></h1><p>This tutorial describes how to run the <a href="https://lanl-ansi.github.io/PowerModels.jl/stable/specifications/#Transmission-Network-Expansion-Planning-(TNEP)">TNEP</a> feature of PowerModels.jl together with pandapower.</p><h3 id="Choose-Proper-Solver"><a class="docs-heading-anchor" href="#Choose-Proper-Solver">Choose Proper Solver</a><a id="Choose-Proper-Solver-1"></a><a class="docs-heading-anchor-permalink" href="#Choose-Proper-Solver" title="Permalink"></a></h3><p>The TNEP problem is a mixed-integer non-linear problem, which is especially not easy to solve. To be able to solve these kind of problems, you need a suitable solver. Either you use commercial ones (such as Knitro) or the open-source <a href="https://github.com/lanl-ansi/Juniper.jl">Juniper</a> solver which is partly developed by Carleton Coffrin from PowerModels itself. Additionally <a href="https://github.com/JuliaOpt/Cbc.jl">CBC</a> is needed.</p><p>Note that Juniper is a heuristic based solver. Another non-heuristic option would be to use <a href="https://github.com/lanl-ansi/Alpine.jl">Alpine</a></p><h3 id="Prepare-the-Input-Data"><a class="docs-heading-anchor" href="#Prepare-the-Input-Data">Prepare the Input Data</a><a id="Prepare-the-Input-Data-1"></a><a class="docs-heading-anchor-permalink" href="#Prepare-the-Input-Data" title="Permalink"></a></h3><p>To put it simple, the goal of the optimization is to find a set of new lines from a pre-defined set of possible new lines so that not voltage or line loading violations are violated.   </p><p>In order to start the optimization, we have to define certain things:</p><ol><li>The &quot;common&quot; pandapower, or SimBench, grid data with line loading and voltage limits</li><li>The set of available new lines to choose from</li></ol><h4 id="Create-the-grid"><a class="docs-heading-anchor" href="#Create-the-grid">Create the grid</a><a id="Create-the-grid-1"></a><a class="docs-heading-anchor-permalink" href="#Create-the-grid" title="Permalink"></a></h4><p>In this example we use the CIGRE medium voltage grid from pandapower.networks and define the limits for all lines / buses as:</p><ul><li>max line loading limit: 60%</li><li>min voltage magnitude: 0.95 p.u.</li><li>max voltage magnitude: 1.05 p.u.</li></ul><pre><code class="language-python hljs">import pandapower.networks as nw
+from pandapower.converter.powermodels.to_pm import init_ne_line
+
+def cigre_grid():
+    net = nw.create_cigre_network_mv()
+
+    net[&quot;bus&quot;].loc[:, &quot;min_vm_pu&quot;] = 0.95
+    net[&quot;bus&quot;].loc[:, &quot;max_vm_pu&quot;] = 1.05
+
+    net[&quot;line&quot;].loc[:, &quot;max_loading_percent&quot;] = 60.
+    return net
+</code></pre><h4 id="Define-the-new-line-measures-to-choose-from"><a class="docs-heading-anchor" href="#Define-the-new-line-measures-to-choose-from">Define the new line measures to choose from</a><a id="Define-the-new-line-measures-to-choose-from-1"></a><a class="docs-heading-anchor-permalink" href="#Define-the-new-line-measures-to-choose-from" title="Permalink"></a></h4><p>Since we want to solve a line loading problem, we define &quot;parallel&quot; lines to all existing lines to choose from. To define this, two steps are necessary:</p><ol><li>Create new lines in the existing &quot;line&quot; DataFrame and set them out of service</li><li>Create the &quot;ne_line&quot; DataFrame which specifies which lines are the possible ones to be built. This DataFrame is</li></ol><p>similar to the line DataFrame, except that is has an additional column &quot;construction_cost&quot;. These define the costs for the lines to be built.</p><p>Note that it is important to set the lines &quot;out of service&quot; in the line DataFrame. Otherwise, they are already &quot;built&quot;. In the &quot;ne<em>line&quot; DataFrame the lines are set &quot;in service&quot;. The init</em>ne_line() function takes care of this.</p><pre><code class="language-python hljs">import pandas as pd
+import numpy as np
+
+def define_possible_new_lines(net):
+    # Here the possible new lines are a copy of all the lines which are already in the grid
+    max_idx = max(net[&quot;line&quot;].index)
+    net[&quot;line&quot;] = pd.concat([net[&quot;line&quot;]] * 2, ignore_index=True) # duplicate
+    # they must be set out of service in the line DataFrame (otherwise they are already &quot;built&quot;)
+    net[&quot;line&quot;].loc[max_idx + 1:, &quot;in_service&quot;] = False
+    # get the index of the new lines
+    new_lines = net[&quot;line&quot;].loc[max_idx + 1:].index
+
+    # creates the new line DataFrame net[&quot;ne_line&quot;] which defines the measures to choose from. The costs are defined
+    # exemplary as 1. for every line.
+    init_ne_line(net, new_lines, construction_costs=np.ones(len(new_lines)))
+
+    return net
+</code></pre><h3 id="Run-the-optimization"><a class="docs-heading-anchor" href="#Run-the-optimization">Run the optimization</a><a id="Run-the-optimization-1"></a><a class="docs-heading-anchor-permalink" href="#Run-the-optimization" title="Permalink"></a></h3><p>Now we run the optimization and print the results. First we initiate the grid with the new lines and check if some limits are violated (otherwise there is not much to optimize). Then we run <code>runpm_tnep(net)</code> and print the newly built lines and assert the line loading limits with a power flow calculation.</p><p>The newly built lines can be found in the DataFrame net[&quot;res<em>ne</em>line&quot;], which has one column &quot;built&quot;. A newly built line is marked as True, otherwise False.</p><pre><code class="language-python hljs">import pandapower as pp
+
+def pm_tnep_cigre():
+    # get the grid
+    net = cigre_grid()
+    # add the possible new lines
+    define_possible_new_lines(net)
+    # check if max line loading percent is violated (should be)
+    pp.runpp(net)
+    print(&quot;Max line loading prior to optimization:&quot;)
+    print(net.res_line.loading_percent.max())
+    assert np.any(net[&quot;res_line&quot;].loc[:, &quot;loading_percent&quot;] &gt; net[&quot;line&quot;].loc[:, &quot;max_loading_percent&quot;])
+
+    # run power models tnep optimization
+    pp.runpm_tnep(net)
+    # print the information about the newly built lines
+    print(&quot;These lines are to be built:&quot;)
+    print(net[&quot;res_ne_line&quot;])
+
+    # set lines to be built in service
+    lines_to_built = net[&quot;res_ne_line&quot;].loc[net[&quot;res_ne_line&quot;].loc[:, &quot;built&quot;], &quot;built&quot;].index
+    net[&quot;line&quot;].loc[lines_to_built, &quot;in_service&quot;] = True
+
+    # run a power flow calculation again and check if max_loading percent is still violated
+    pp.runpp(net)
+
+    # check max line loading results
+    assert not np.any(net[&quot;res_line&quot;].loc[:, &quot;loading_percent&quot;] &gt; net[&quot;line&quot;].loc[:, &quot;max_loading_percent&quot;])
+
+    print(&quot;Max line loading after the optimization:&quot;)
+    print(net.res_line.loading_percent.max())
+</code></pre><h3 id="Notes"><a class="docs-heading-anchor" href="#Notes">Notes</a><a id="Notes-1"></a><a class="docs-heading-anchor-permalink" href="#Notes" title="Permalink"></a></h3><ol><li>Juniper is based on a heuristic, it does not necessarly find the global optimum. For this use another solver</li><li>In the PowerModels OPF formulation, generator limits are taken into account. This means you have to specify limits for all gens, ext_grids and controllable sgens / loads.</li><li>Optionally costs for these can be defined.</li><li>The CIGRE MV grid has pre-defined limits set for the ext_grid. In other cases you might get an error.</li></ol><p>Here is a code snippet:</p><pre><code class="language-python hljs">def define_ext_grid_limits(net):
+    # define limits
+    net[&quot;ext_grid&quot;].loc[:, &quot;min_p_mw&quot;] = -9999.
+    net[&quot;ext_grid&quot;].loc[:, &quot;max_p_mw&quot;] = 9999.
+    net[&quot;ext_grid&quot;].loc[:, &quot;min_q_mvar&quot;] = -9999.
+    net[&quot;ext_grid&quot;].loc[:, &quot;max_q_mvar&quot;] = 9999.
+    # define costs
+    for i in net.ext_grid.index:
+        pp.create_poly_cost(net, i, &#39;ext_grid&#39;, cp1_eur_per_mw=1)</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../ots/">« Optimal Transmission Switching</a><a class="docs-footer-nextpage" href="../vd/">Optimal Voltage Deviation »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.10 on <span class="colophon-date" title="Monday 15 November 2021 17:16">Monday 15 November 2021</span>. Using Julia version 1.5.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

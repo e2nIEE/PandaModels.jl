@@ -22,6 +22,16 @@ function active_powermodels_silence!(pm)
     end
 end
 
+function check_current_limit!(pm)
+    cl = 0
+    for (i,branch) in pm["branch"]
+        if "c_rating_a" in keys(branch)
+            cl += 1
+        end
+    end
+    return cl
+end
+
 # function calculate_current!(flows)
 # # calculate branch current
 # for (i, l) in flows["branch"]

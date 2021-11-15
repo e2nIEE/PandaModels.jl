@@ -11,16 +11,6 @@
                 @test string(model) == "PowerModels.DCPPowerModel"
 
                 solver = _PdM.get_solver(pm)
-                # solver = get_solver(
-                #     pm["pm_solver"],
-                #     pm["pm_nl_solver"],
-                #     pm["pm_mip_solver"],
-                #     pm["pm_log_level"],
-                #     pm["pm_time_limit"],
-                #     pm["pm_nl_time_limit"],
-                #     pm["pm_mip_time_limit"],
-                #     pm["pm_tol"],
-                # )
 
                 @test string(solver.optimizer_constructor) == "Ipopt.Optimizer"
         end
@@ -32,6 +22,17 @@
                 @test haskey(params, :setpoint_v)
                 @test length(params[:setpoint_v]) >= 9
 
+        end
+
+        @testset "test for current limit" begin
+                pm = _PdM.load_pm_from_json(case_opf_cl)
+                cl = _PdM.check_current_limit!(pm)
+                @test cl == length(pm["branch"])
+                @test cl == 7
+
+                pm = _PdM.load_pm_from_json(case_opf_ac)
+                cl = _PdM.check_current_limit!(pm)
+                @test cl == 0
         end
 
 end

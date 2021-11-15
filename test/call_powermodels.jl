@@ -18,6 +18,15 @@
         @test result["solve_time"] > 0.0
     end
 
+
+    @testset "test for run_powermodels_opf: cl" begin
+        result = run_powermodels_opf(case_opf_cl)
+
+        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+        @test isapprox(result["objective"], 17015.5; atol = 1e0)
+        @test result["solve_time"] > 0.0
+    end
+
     @testset "test for powermodels_tnep: ac" begin
         result = run_powermodels_tnep(case_tnep_ac)
 

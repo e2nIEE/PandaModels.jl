@@ -2,7 +2,7 @@ using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
 
-# _PM.silence()
+_PM.silence()
 
 pdm_path = joinpath(dirname(pathof(PandaModels)), "..")
 data_path = joinpath(pdm_path, "test", "data")

@@ -13,13 +13,14 @@ makedocs(
         "Home" => "index.md",
         "Manual" => ["Getting Started" => "quickguide.md"],
         "Tutorials" => [
+            "Optimazion Problems"  => "pptutorial.md",
             # "Power Flow" => "pf.md",
-            "Optimal Power Flow" => "opf.md",
-            "Optimal Transmission Switching" => "ots.md",
+            # "Optimal Power Flow" => "opf.md",
+            # "Optimal Transmission Switching" => "ots.md",
             # "Timeseries and Multinetwork" => "ts_mn.md",
             # "Optimal MultiNetwork Storage" => "omns.md",
-            "Transmission Network Expansion Planning" => "tnep.md",
-            "Optimal Voltage Deviation" => "vd.md",
+            # "Transmission Network Expansion Planning" => "tnep.md",
+            # "Optimal Voltage Deviation" => "vd.md",
             # "Radial Distribution Network" => "rds.md",
         ],
         "Developer" => [

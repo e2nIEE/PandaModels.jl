@@ -170,7 +170,7 @@
     "pm_log_level": 0,
     "pm_mip_solver": "cbc",
     "pm_mip_time_limit": Infinity,
-    "pm_model": "ACNativ",
+    "pm_model": "ACNative",
     "pm_nl_solver": "ipopt",
     "pm_nl_time_limit": Infinity,
     "pm_solver": "ipopt",

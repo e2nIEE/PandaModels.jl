@@ -10,8 +10,12 @@
 [![codecov](https://codecov.io/gh/e2nIEE/PandaModels.jl/branch/master/graph/badge.svg?label=codecov)](https://codecov.io/gh/e2nIEE/PandaModels.jl)
 [![coveralls](https://coveralls.io/repos/github/e2nIEE/PandaModels.jl/badge.svg?branch=master)](https://coveralls.io/github/e2nIEE/PandaModels.jl?branch=master)
 
-[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://github.com/e2nIEE/pandapower) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) to run and calculate steady-state power network optimization. These packages use [JuMP](https://github.com/JuliaOpt/JuMP.jl) as optimization environment which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html).
+[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://github.com/e2nIEE/pandapower) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://github.com/lanl-ansi/PowerModels.jl) to run and calculate steady-state power network optimization. These packages use [JuMP](https://github.com/JuliaOpt/JuMP.jl) as optimization environment.
 
+## Acknowledgements
+This package has been developed as part of the De­part­ment of En­er­gy Ma­nage­ment and Power Sys­tem Ope­ra­ti­on [(e²n)](https://www.uni-kassel.de/eecs/en/faculties/energy-management-and-power-system-operation/home), University of Kassel and Fraunhofer Institute for Energy Economics and Energy System Technology [(IEE)](https://www.iee.fraunhofer.de/en.html).
+
+The developers thank [Carleton Coffrin](https://www.coffrin.com/), the primary developer of [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/), for his support.
 <!--
 ### Dependencies
 

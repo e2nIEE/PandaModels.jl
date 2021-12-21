@@ -6,7 +6,7 @@ CurrentModule = PandaModels
 
 ## Overview
 
-[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://pandapower.readthedocs.io/en/latest/index.html) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) to run and calculate steady-state power network optimization. These packages use [JuMP](https://jump.dev/JuMP.jl/stable/) as optimization environment which [clearly outperforms the Python alternative Pyomo](http://yetanothermathprogrammingconsultant.blogspot.com/2015/05/model-generation-in-julia.html).
+[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://pandapower.readthedocs.io/en/latest/index.html) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) to run and calculate steady-state power network optimization. These packages use [JuMP](https://jump.dev/JuMP.jl/stable/) as optimization environment.
 
 ## Installation
 
@@ -62,4 +62,6 @@ Otherwise, the package will be automatically installed in pandapower environment
 
 ## Acknowledgements
 
-We acknowledge our support from the De­part­ment of En­er­gy Ma­nage­ment and Power Sys­tem Ope­ra­ti­on [(e²n)](https://www.uni-kassel.de/eecs/en/faculties/energy-management-and-power-system-operation/home), University of Kassel and Fraunhofer Institute for Energy Economics and Energy System Technology [(IEE)](https://www.iee.fraunhofer.de/en.html)
+This package has been developed as part of the De­part­ment of En­er­gy Ma­nage­ment and Power Sys­tem Ope­ra­ti­on [(e²n)](https://www.uni-kassel.de/eecs/en/faculties/energy-management-and-power-system-operation/home), University of Kassel and Fraunhofer Institute for Energy Economics and Energy System Technology [(IEE)](https://www.iee.fraunhofer.de/en.html).
+
+The developers thank [Carleton Coffrin](https://www.coffrin.com/), the primary developer of [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/), for his support.

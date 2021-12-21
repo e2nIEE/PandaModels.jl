@@ -15,13 +15,13 @@ PowerModels = "c36e90e8-916a-50a6-bd94-075b64ef4655"
 
 [compat]
 Cbc = "0.8, 0.9"
-InfrastructureModels = "0.6"
-Ipopt = "0.6, 0.7, 0.8"
+InfrastructureModels = "0.6, 0.7"
+Ipopt = "0.6, 0.7, 0.8, 0.9"
 JSON = "0.21"
-JuMP = "0.21"
-Juniper = "0.7"
+JuMP = "0.21, 0.22"
+Juniper = "0.7, 0.8"
 Memento = "1"
-PowerModels = "0.18"
+PowerModels = "0.18, 0.19"
 julia = "1.1"
 
 [extras]

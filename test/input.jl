@@ -31,8 +31,10 @@
                 @test cl == 7
 
                 pm = _PdM.load_pm_from_json(case_opf_ac)
+                @test pm["ac"] == true
                 cl = _PdM.check_current_limit!(pm)
                 @test cl == 0
+
         end
 
 end

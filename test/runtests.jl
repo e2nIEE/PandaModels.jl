@@ -37,15 +37,26 @@ steps = pm["n_time_steps"]
 mn = _PM.replicate(pm, pm["n_time_steps"])
 
 # if isfile("/tmp/timeseries.json")
-    time_series = _PdM.read_ts_from_json(ts_path)
-    ts_data = time_series["residential"]
-        for step = 1:steps
-            network = mn["nw"]["$(step)"]
-            for idx in keys(ts_data)
-                network["load"][idx]["pd"] =
-                    ts_data[idx]["$(step-1)"] / network["baseMVA"]
-            end
-        end
+# time_series = _PdM.read_ts_from_json(ts_path)
+#
+# for (step, network) in mn["nw"]
+#     for (idx, load) in network
+#         load_data_p = time_series["residential"]
+#         load_data_q = time_series["residential"]
+#         load["pd"] = load_data_p[idx]["$(step-1)"]
+#         load["qd"] = load_data_q[idx]["$(step-1)"]
+#
+#     end
+#
+#     for (idx, gen) in network
+#         sgen_data_p = time_series["pv"]
+#         sgen_data_q = time_series["pv"]
+#         gen["pd"] = sgen_data_p[idx]["$(step-1)"]
+#         gen["pd"] = sgen_data_q[idx]["$(step-1)"]
+#
+#     end
+#
+# end
 
     # mn = set_pq_values_from_timeseries(mn, time_series)
 # else

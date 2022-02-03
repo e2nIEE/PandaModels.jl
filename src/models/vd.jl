@@ -1,4 +1,4 @@
-export _run_vd
+export _run_vd, _run_mn_vd
 
 # mutable struct VDPowerModel <: _PM.AbstractACModel _PM.@pm_fields end
 
@@ -21,6 +21,7 @@ function _build_vd(pm::_PM.AbstractPowerModel)
     _PM.variable_gen_power(pm)
     _PM.variable_branch_power(pm)
     _PM.variable_dcline_power(pm, bounded = false) # TODO: why false?
+
 
     objective_vd(pm)
 
@@ -50,4 +51,62 @@ end
 function objective_vd(pm::_PM.AbstractPowerModel)
     return JuMP.@objective(pm.model, Min,
         sum((var(pm, :vm, content["element_index"]) - content["value"])^2 for (i, content) in pm.ext[:setpoint_v]))
+end
+
+
+"""
+run model for Voltge-Deviation objective with AC Power Flow equations
+"""
+
+function _run_mn_vd(file, model_type::_PM.Type, optimizer; kwargs...)
+    return _PM.run_model(file, model_type, optimizer, _build_mn_vd; multinetwork=true, kwargs...)
+end
+
+"""
+given a JuMP model and a PowerModels network data structure,
+builds an Voltge-Deviation formulation of the given data and returns the JuMP model
+"""
+
+function _build_mn_vd(pm::_PM.AbstractPowerModel)
+
+    for (n, network) in nws(pm)
+            variable_bus_voltage(pm, nw=n)
+            variable_gen_power(pm, nw=n)
+            variable_branch_power(pm, nw=n)
+            variable_dcline_power(pm, nw=n)
+
+            constraint_model_voltage(pm, nw=n)
+
+            for i in ids(pm, :ref_buses, nw=n)
+                constraint_theta_ref(pm, i, nw=n)
+            end
+
+            for i in ids(pm, :bus, nw=n)
+                constraint_power_balance(pm, i, nw=n)
+            end
+
+            for i in ids(pm, :branch, nw=n)
+                constraint_ohms_yt_from(pm, i, nw=n)
+                constraint_ohms_yt_to(pm, i, nw=n)
+
+                constraint_voltage_angle_difference(pm, i, nw=n)
+
+                constraint_thermal_limit_from(pm, i, nw=n)
+                constraint_thermal_limit_to(pm, i, nw=n)
+            end
+
+            for i in ids(pm, :dcline, nw=n)
+                constraint_dcline_power_losses(pm, i, nw=n)
+            end
+        end
+        objective_mn_vd(pm)
+end
+
+function objective_mn_vd(pm::_PM.AbstractPowerModel)
+    timestep_ids = [id for id in _PM.nw_ids(pm) if id != 0]
+    return JuMP.@objective(pm.model, Min,
+        sum(
+        sum((var(pm, nw, :vm, content["element_index"]) - content["value"])^2 for (i, content) in pm.ext[:setpoint_v])
+        for nw in timestep_ids)
+            )
 end

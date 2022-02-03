@@ -1,6 +1,6 @@
 module PandaModels
 
-import JuMP
+using JuMP
 
 import InfrastructureModels
 const _IM = InfrastructureModels
@@ -22,14 +22,21 @@ export run_powermodels_pf,
     run_powermodels_opf,
     run_powermodels_ots,
     run_powermodels_tnep,
-    run_pandamodels_vd
+    run_pandamodels_vd, run_pandamodels_mn_vd,
+    run_pandamodels_vd_test,
+    run_pandamodels_q_flex
 
 include("input/pp_to_pm.jl")
 include("input/tools.jl")
 
 include("models/vd.jl")
+# include("models/q_flex.jl")
 
 include("models/call_pandamodels.jl")
 include("models/call_powermodels.jl")
+include("models/run_pm_voltage_dev.jl")
+include("models/run_pm_q_flex.jl")
+
+
 
 end

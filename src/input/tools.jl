@@ -47,38 +47,48 @@ end
 #     return time_series
 # end
 
-function set_pq_values_from_timeseries(mn, time_series)
+function set_pq_values_from_timeseries(pm)
     # This function iterates over multinetwork entries and sets p, q values
     # of loads and "sgens" (which are loads with negative P and Q values)
+    steps = pm["time_series"]["to_time_step"]-pm["time_series"]["from_time_step"]
+    mn = _PM.replicate(pm, steps)
 
-    # iterate over networks (which represent the time steps)
-    for (t, network) in mn["nw"]
-        t_j = string(parse(Int64,t) - 1)
-        # iterate over all loads for this network
-        for (i, load) in network["load"]
-            # update variables from time series here
-#             print("\nload before: ")
-#             print(load["pd"])
-            load["pd"] = time_series[t_j][parse(Int64,i)] / mn["baseMVA"]
-#             print("\nload after: ")
-#             print(load["pd"])
+    for (step, network) in mn["nw"]
+        step_1=string(parse(Int64,step) - 1)
+        load_ts = pm["time_series"]["load"]
+        for (idx, load) in network["load"]
+            if haskey(load_ts, idx)
+                load["pd"] = load_ts[idx]["p_mw"][step_1]
+                if haskey(load_ts[idx], "q_mvar")
+                    load["qd"] = load_ts[idx]["q_mvar"][step_1]
+                end
+            end
+        end
+
+        gen_ts = pm["time_series"]["gen"]
+        for (idx, gen) in network["gen"]
+            if haskey(gen_ts, idx)
+                gen["pg"] = gen_ts[idx]["p_mw"][step_1]
+                if haskey(gen_ts[idx], "q_mvar")
+                    gen["qg"] = gen_ts[idx]["q_mvar"][step_1]
+                end
+            end
         end
     end
-
     return mn
 end
 #
-function read_ts_from_json(ts_path)
-    if isfile(ts_path)
-        time_series = Dict()
-        open(ts_path, "r") do f
-            time_series = JSON.parse(f)
-        end
-    else
-        @error "no time series data is available at $(ts_path)"
-    end
-    return time_series
-end
+# function read_ts_from_json(ts_path)
+#     if isfile(ts_path)
+#         time_series = Dict()
+#         open(ts_path, "r") do f
+#             time_series = JSON.parse(f)
+#         end
+#     else
+#         @error "no time series data is available at $(ts_path)"
+#     end
+#     return time_series
+# end
 #
 #
 #

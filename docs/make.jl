@@ -12,8 +12,7 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Manual" => ["Getting Started" => "quickguide.md"],
-        "Tutorials" => [
-            "Optimazion Problems"  => "pptutorial.md",
+        "Tutorials" => ["Optimazion Problems"  => "pptutorial.md"
             # "Power Flow" => "pf.md",
             # "Optimal Power Flow" => "opf.md",
             # "Optimal Transmission Switching" => "ots.md",
@@ -30,8 +29,8 @@ makedocs(
             "Add Test" => "test.md",
         ],
     ],
-    doctest = true,
-    linkcheck = true,
+    # doctest = true,
+    # linkcheck = true,
 )
 
 deploydocs(

@@ -7,6 +7,7 @@ The tutorial for application of each optimization models are available in pandap
 
 Problems from PowerModels:
 <!-- * [Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pf_powermodels.ipynb) -->
+* [Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pf_powermodels%20.ipynb)
 * [Optimal Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/opf_powermodels.ipynb)
 * [Optimal Transmission Switching](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/ost_powermodels.ipynb)
 * [Transmission Network Expansion Planning](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/tnep_powermodels.ipynb)

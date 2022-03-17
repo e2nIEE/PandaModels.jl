@@ -1,5 +1,5 @@
 {
-    "ac": true,
+    "ac": false,
     "baseMVA": 1,
     "branch": {
         "1": {
@@ -129,6 +129,8 @@
             "qg": 0.0,
             "qmax": 1000000000.0,
             "qmin": -1000000000.0,
+            "shutdown": 0.0,
+            "startup": 0.0,
             "vg": 1.0
         }
     },
@@ -168,14 +170,23 @@
     "pm_log_level": 0,
     "pm_mip_solver": "cbc",
     "pm_mip_time_limit": Infinity,
-    "pm_model": "ACPPowerModel",
+    "pm_model": "DCNative",
     "pm_nl_solver": "ipopt",
     "pm_nl_time_limit": Infinity,
     "pm_solver": "ipopt",
     "pm_time_limit": Infinity,
     "pm_tol": 1e-08,
-    "shunt": {},
+    "shunt": {
+        "1": {
+            "bs": 0.5,
+            "gs": 0.0,
+            "index": 1,
+            "shunt_bus": 3,
+            "status": true
+        }
+    },
     "silence": true,
+    "simplify_net": false,
     "source_version": "2.0.0",
     "sourcetype": "matpower",
     "storage": {},

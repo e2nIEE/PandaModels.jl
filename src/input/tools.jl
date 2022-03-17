@@ -13,6 +13,13 @@ function check_powermodels_data!(pm)
     if pm["correct_pm_network_data"]
         _PM.correct_network_data!(pm)
     end
+    if haskey(pm, "simplify_net")
+        if pm["simplify_net"]
+            _PM.simplify_network!(pm)
+            _PM.deactivate_isolated_components!(pm)
+            _PM.propagate_topology_status!(pm)
+        end
+    end
     return pm
 end
 

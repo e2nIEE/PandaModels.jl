@@ -1,59 +1,36 @@
-# function run_powermodels_pf_nativ(json_path)
-#
-#     active_powermodels_silence!(pm)
-#
-#     pm = load_pm_from_json(json_path)
-#     model = pm["pm_model"]
-#
-#     # add result to net data
-#     _PM.update_data!(pm, result["solution"])
-#
-#     # calculate branch power flows
-#     if pm["pm_model"] == "ACNativ"
-#         _PM.compute_ac_pf(pm)
-#         # add result to net data
-#         _PM.update_data!(pm, result["solution"])
-#         flows = _PM.calc_branch_flow_ac(pm)
-#     elseif pm["pm_model"] == "DCNativ":
-#         _PM.compute_dc_pf(pm)
-#         # add result to net data
-#         _PM.update_data!(pm, result["solution"])
-#         flows = _PM.calc_branch_flow_dc(pm)
-#     end
-#
-#     # add flow to net and result
-#     _PM.update_data!(result["solution"], flows)
-#     _PM.update_data!(pm, flows)
-#
-#     return result
-# end
-
 function run_powermodels_pf(json_path)
     pm = load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
     pm = check_powermodels_data!(pm)
-    model = get_model(pm["pm_model"])
-    solver = get_solver(pm)
 
-    result = _PM.run_pf(
-        pm,
-        model,
-        solver,
-        setting = Dict("output" => Dict("branch_flows" => true)),
-    )
+    # calculate branch power flows
+    if pm["pm_model"] == "ACNative"
+        result = _PM.compute_ac_pf(pm)
+    elseif pm["pm_model"] == "DCNative"
+        result = _PM.compute_dc_pf(pm)
+    else
+        model = get_model(pm["pm_model"])
+        solver = get_solver(pm)
+        result = _PM.solve_pf(
+            pm,
+            model,
+            solver,
+            setting = Dict("output" => Dict("branch_flows" => true)),
+        )
+    end
 
     # add result to net data
     _PM.update_data!(pm, result["solution"])
     # calculate branch power flows
-    if string(model) == "PowerModels.ACPPowerModel"
+    if pm["ac"]
         flows = _PM.calc_branch_flow_ac(pm)
     else
         flows = _PM.calc_branch_flow_dc(pm)
     end
     # add flow to net and result
     _PM.update_data!(result["solution"], flows)
-    _PM.update_data!(pm, flows)
-
+    # _PM.update_data!(pm, result["solution"])
+    # _PM.update_data!(pm, flows)
     return result
 end
 
@@ -68,7 +45,7 @@ function run_powermodels_opf(json_path)
 
     if cl == 0
         pm = check_powermodels_data!(pm)
-        result = _PM.run_opf(
+        result = _PM.solve_opf(
             pm,
             model,
             solver,
@@ -95,7 +72,7 @@ function run_powermodels_opf(json_path)
            value["qd"] /= pm["baseMVA"]
         end
 
-        result = _PM._run_opf_cl(
+        result = _PM._solve_opf_cl(
             pm,
             model,
             solver,
@@ -131,7 +108,7 @@ function run_powermodels_tnep(json_path)
     model = get_model(pm["pm_model"])
     solver = get_solver(pm)
 
-    result = _PM.run_tnep(
+    result = _PM.solve_tnep(
         pm,
         model,
         solver,
@@ -147,7 +124,7 @@ function run_powermodels_ots(json_path)
     model = get_model(pm["pm_model"])
     solver = get_solver(pm)
 
-    result = _PM.run_ots(
+    result = _PM.solve_ots(
         pm,
         model,
         solver,

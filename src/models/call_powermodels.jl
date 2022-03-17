@@ -11,7 +11,7 @@ function run_powermodels_pf(json_path)
     else
         model = get_model(pm["pm_model"])
         solver = get_solver(pm)
-        result = _PM.run_pf(
+        result = _PM.solve_pf(
             pm,
             model,
             solver,
@@ -45,7 +45,7 @@ function run_powermodels_opf(json_path)
 
     if cl == 0
         pm = check_powermodels_data!(pm)
-        result = _PM.run_opf(
+        result = _PM.solve_opf(
             pm,
             model,
             solver,
@@ -72,7 +72,7 @@ function run_powermodels_opf(json_path)
            value["qd"] /= pm["baseMVA"]
         end
 
-        result = _PM._run_opf_cl(
+        result = _PM._solve_opf_cl(
             pm,
             model,
             solver,
@@ -108,7 +108,7 @@ function run_powermodels_tnep(json_path)
     model = get_model(pm["pm_model"])
     solver = get_solver(pm)
 
-    result = _PM.run_tnep(
+    result = _PM.solve_tnep(
         pm,
         model,
         solver,
@@ -124,7 +124,7 @@ function run_powermodels_ots(json_path)
     model = get_model(pm["pm_model"])
     solver = get_solver(pm)
 
-    result = _PM.run_ots(
+    result = _PM.solve_ots(
         pm,
         model,
         solver,

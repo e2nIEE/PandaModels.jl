@@ -12,25 +12,16 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Manual" => ["Getting Started" => "quickguide.md"],
-        "Tutorials" => ["Optimazion Problems"  => "pptutorial.md"
-            # "Power Flow" => "pf.md",
-            # "Optimal Power Flow" => "opf.md",
-            # "Optimal Transmission Switching" => "ots.md",
-            # "Timeseries and Multinetwork" => "ts_mn.md",
-            # "Optimal MultiNetwork Storage" => "omns.md",
-            # "Transmission Network Expansion Planning" => "tnep.md",
-            # "Optimal Voltage Deviation" => "vd.md",
-            # "Radial Distribution Network" => "rds.md",
-        ],
+        "Tutorials" => ["Optimazion Problems"  => "pptutorial.md"],
         "Developer" => [
             "Develop Mode" => "develop.md",
-            # "Model Guidlines" => "model.md",
-            # "Call Model in pandapower" => "modelpp.md",
+            "Optimization Model Guidlines" => "model.md",
             "Add Test" => "test.md",
+            "Register New Tag" => "version.md",
         ],
     ],
-    # doctest = true,
-    # linkcheck = true,
+    doctest = true,
+    linkcheck = true,
 )
 
 deploydocs(

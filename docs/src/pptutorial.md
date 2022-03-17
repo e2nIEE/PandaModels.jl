@@ -9,7 +9,7 @@ Problems from PowerModels:
 <!-- * [Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pf_powermodels.ipynb) -->
 * [Optimal Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/opf_powermodels.ipynb)
 * [Optimal Transmission Switching](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/ost_powermodels.ipynb)
-* [ransmission Network Expansion Planning](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/tnep_powermodels.ipynb)
+* [Transmission Network Expansion Planning](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/tnep_powermodels.ipynb)
 
 Problems from PandaModels:
 * [Voltage Deviation](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/vd_pandamodels.ipynb)

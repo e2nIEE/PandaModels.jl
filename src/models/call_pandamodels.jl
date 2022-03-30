@@ -30,7 +30,7 @@ function run_pandamodels_mn_vd(json_path)
     else
         print("Running storage without time series")
     end
-    
+
     result = _run_mn_vd(
         pm,
         model,
@@ -42,6 +42,7 @@ function run_pandamodels_mn_vd(json_path)
 end
 
 function run_pandamodels_q_flex(json_path)
+    # json_path="D:\\PROJECTS\\RPC2\\char_curve_calc\\char_curve_calc\\development\\sb_pp_to_pm_wiyny9nw.json"
     pm = load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
     pm = check_powermodels_data!(pm)

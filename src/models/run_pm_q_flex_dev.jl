@@ -117,29 +117,14 @@
 #
 # end
 
-function run_pandamodels_q_flex(json_path)   # before run_poweramodels
-    # time_start = time()
+function run_pandamodels_q_flex_test(json_path)   # before run_poweramodels
+    time_start = time()
     ###############################################################################
     # 0. Initialization
     ###############################################################################
     pm = load_pm_from_json(json_path)
-    active_powermodels_silence!(pm)
-    pm = check_powermodels_data!(pm)
-    model = get_model(pm["pm_model"])
-    solver = get_solver(pm)
-    ##  Load System Data
-    # pm = load_pm_from_json(json_path)
-    # solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
-    # pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
-
-    # if haskey(pm, "user_defined_params")
-    #     params = Dict{Symbol,Dict{String,Any}}()
-    #     for key in keys(pm["user_defined_params"])
-    #         params[Symbol(key)] = pm["user_defined_params"][key]
-    #     end
-    #     delete!(pm, "user_defined_params")
-    # # end
-    
+    solver = get_solver(pm["pm_solver"], pm["pm_nl_solver"], pm["pm_mip_solver"],
+    pm["pm_log_level"], pm["pm_time_limit"], pm["pm_nl_time_limit"], pm["pm_mip_time_limit"])
     if haskey(pm, "user_defined_params")
         user_defined_params = pm["user_defined_params"]
         data = delete!(pm, "user_defined_params")
@@ -162,10 +147,6 @@ function run_pandamodels_q_flex(json_path)   # before run_poweramodels
     # Initialize a JuMP Optimization Model
     #-------------------------------------
     model = Model(solver)
-    #nlp_optimizer = optimizer_with_attributes(Ipopt.Optimizer)
-    #model = Model(nlp_optimizer)
-    # Add Optimization and State Variables
-    # ------------------------------------
 
     # Add voltage angles va for each bus
     @variable(model, va[i in keys(ref[:bus])])
@@ -176,9 +157,9 @@ function run_pandamodels_q_flex(json_path)   # before run_poweramodels
     # note: this vairable also includes the voltage magnitude limits and a starting value
 
     # Add active power generation variable pg for each generator (including limits)
-    @variable(model, ref[:gen][i]["pmin"] <= pg[i in keys(ref[:gen])] <= ref[:gen][i]["pmax"])
+    @variable(model, ref[:gen][i]["pmin"] <= pg[i in keys(ref[:gen])] <= ref[:gen][i]["pmax"], start=ref[:gen][i]["pg"])
     # Add reactive power generation variable qg for each generator (including limits)
-    @variable(model, ref[:gen][i]["qmin"] <= qg[i in keys(ref[:gen])] <= ref[:gen][i]["qmax"])
+    @variable(model, ref[:gen][i]["qmin"] <= qg[i in keys(ref[:gen])] <= ref[:gen][i]["qmax"], start=ref[:gen][i]["qg"])
 
     # Add power flow variables p to represent the active power flow for each branch
     @variable(model, -ref[:branch][l]["rate_a"] <= p[(l,i,j) in ref[:arcs]] <= ref[:branch][l]["rate_a"])
@@ -195,9 +176,6 @@ function run_pandamodels_q_flex(json_path)   # before run_poweramodels
                             for (i, content) in user_defined_params["setpoint_q"]))
 
     # Add Constraints
-    # ---------------
-
-    # Fix the voltage angle to zero at the reference bus ## why?
     for (i,bus) in ref[:ref_buses]
         @constraint(model, va[i] == 0)
     end
@@ -280,9 +258,8 @@ function run_pandamodels_q_flex(json_path)   # before run_poweramodels
     ###############################################################################
     # 3. Solve the Optimal Power Flow Model and Review the Results
     ###############################################################################
-
-    # Solve the optimization problem
     optimize!(model)
+
     ###############################################################################
     # 4. Create Result Dictionary such that the PowerModels Results can be used by pandapower
     ###############################################################################

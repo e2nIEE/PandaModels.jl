@@ -25,6 +25,9 @@ if __name__ == "__main__":
     grid_code = "1-HV-urban--0-sw"
     net_sb = sb.get_simbench_net(grid_code)
     net = pp.from_json("D:\PROJECTS\RPC2\char_curve_calc\char_curve_calc\pm_test\cigre_mv.json")
+    net.bus["pm_param/setpoint_v"] = net.bus["pm_param/threshold_v"]
+    net.bus.drop(columns=["pm_param/threshold_v"], inplace=True)
+    
     net.profiles = net_sb.profiles
     net.load["profile"] = "mv_rural"
     net.sgen["profile"] = "WP5"

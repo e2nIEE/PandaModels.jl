@@ -37,7 +37,6 @@ function _build_q_flex(pm::_PM.AbstractPowerModel)
     for (i, branch) in _PM.ref(pm, :branch)
         _PM.constraint_ohms_yt_from(pm, i)
         _PM.constraint_ohms_yt_to(pm, i)
-
         _PM.constraint_thermal_limit_from(pm, i)
         _PM.constraint_thermal_limit_to(pm, i)
     end

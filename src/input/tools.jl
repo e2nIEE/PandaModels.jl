@@ -56,6 +56,7 @@ function set_pq_values_from_timeseries(pm)
     for (step, network) in mn["nw"]
         step_1=string(parse(Int64,step) - 1)
         load_ts = pm["time_series"]["load"]
+        network = delete!(network, "user_defined_params")
         for (idx, load) in network["load"]
             if haskey(load_ts, idx)
                 load["pd"] = load_ts[idx]["p_mw"][step_1]

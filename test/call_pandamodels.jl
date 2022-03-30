@@ -38,6 +38,25 @@
         @test isapprox(result["objective_lb"], -Inf)
         @test result["solve_time"] > 0.0
     end
+
+    @testset "case_v_stab_ts: cigre mv" begin
+        result = run_pandamodels_v_stab_ts(case_v_stab_ts)
+        pm = _PdM.load_pm_from_json(case_v_stab_ts)
+        params = _PdM.extract_params!(pm)
+
+        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+        @test string(result["dual_status"]) == "FEASIBLE_POINT"
+        @test string(result["primal_status"]) == "FEASIBLE_POINT"
+
+        # bus = result["solution"]["bus"]
+        # for (idx, bus) in result["solution"]["bus"]
+        #     if idx in keys(params[:setpoint_v])
+        #         @test isapprox(bus["vm"], params[:setpoint_v][idx]["value"], atol=1e-1)
+        #     end
+        # end
+
+        @test result["solve_time"] > 0.0
+    end
 end
 
 

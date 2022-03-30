@@ -20,9 +20,8 @@ case_tnep_ac = joinpath(data_path, "test_tnep_ac.json")
 case_ots_dc = joinpath(data_path, "test_ots_dc.json")
 
 case_vd = joinpath(data_path, "test_vd.json")
-case_mn_vd = joinpath(data_path, "test_mn_vd.json")
 case_q_flex = joinpath(data_path, "test_q_flex.json")
-cast_ts = joinpath(data_path, "cigre_with_timeseries.json")
+case_v_stab_ts = joinpath(data_path, "cigre_with_timeseries.json")
 
 @testset "PandaModels.jl" begin
 
@@ -56,14 +55,3 @@ end
 #         #@test isapprox(br["qf"], params[:setpoint_v][idx]["value"], atol=1e-1)
 #     end
 # end
-
-
-# mn = set_pq_values_from_timeseries(pm)
-
-# result = _run_mn_vd(
-#     pm,
-#     model,
-#     solver,
-#     setting = Dict("output" => Dict("branch_flows" => true)),
-#     ext = extract_params!(pm),
-# )

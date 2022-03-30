@@ -17,7 +17,9 @@ export run_powermodels_pf,
     run_powermodels_ots,
     run_powermodels_tnep,
     run_pandamodels_vd,
-    run_pandamodels_q_flex
+    run_pandamodels_q_flex,
+    run_pandamodels_v_stab_ts
+
     # run_pandamodels_mn_vd,
     # run_pandamodels_vd_test,
     # run_pandamodels_q_flex_test

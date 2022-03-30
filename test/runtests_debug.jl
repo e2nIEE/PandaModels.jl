@@ -8,42 +8,89 @@ _PM.silence()
 
 pdm_path = joinpath(dirname(pathof(PandaModels)), "..")
 data_path = joinpath(pdm_path, "test", "data")
-ts_path = joinpath(data_path, "cigre_timeseries_15min.json")
-
-case_pm = joinpath(data_path, "test_pm.json")
-case_pf_ac = joinpath(data_path, "test_pf_ac.json")
-case_opf_ac = joinpath(data_path, "test_opf_ac.json")
-case_opf_cl = joinpath(data_path, "test_opf_cl.json")
-case_tnep_ac = joinpath(data_path, "test_tnep_ac.json")
-case_ots_dc = joinpath(data_path, "test_ots_dc.json")
-case_vd = joinpath(data_path, "test_vd.json")
-case_mn_vd = joinpath(data_path, "test_mn_vd.json")
-case_q_flex = joinpath(data_path, "test_q_flex_2.json")
 cast_ts = joinpath(data_path, "cigre_with_timeseries.json")
 
-# @testset "PandaModels.jl" begin
-#
-#         include("input.jl")
-#         include("call_powermodels.jl")
-#         include("call_pandamodels.jl")
-#
-# end
-json_path="D:\\PROJECTS\\RPC2\\char_curve_calc\\char_curve_calc\\development\\sb_pp_to_pm_wiyny9nw.json"
-pm = _PdM.load_pm_from_json(json_path)
+##
+pm2 = _PdM.load_pm_from_json(cast_ts)
+param = _PdM.extract_params!(pm2)
 
-# pm = _PdM.load_pm_from_json(cast_ts)
-
-# _PdM.active_powermodels_silence!(pm)
+##
+pm = _PdM.load_pm_from_json(cast_ts)
+_PdM.active_powermodels_silence!(pm)
 pm = _PdM.check_powermodels_data!(pm)
+# params = _PdM.extract_params!(pm)
+# pm = delete!(pm, "user_defined_params")
 model = _PdM.get_model(pm["pm_model"])
 solver = _PdM.get_solver(pm)
-result = _PdM._run_q_flex(
-    pm,
+mn = _PdM.set_pq_values_from_timeseries(pm)
+# pm_mn = _PM.instantiate_model(mn, model, _PM.build_mn_opf, multinetwork=true)
+
+result = _PdM._run_v_stab_ts(
+    mn,
     model,
     solver,
     setting = Dict("output" => Dict("branch_flows" => true)),
     ext = _PdM.extract_params!(pm),
 )
+
+
+# using InfrastructureModels; const _IM = InfrastructureModels
+#
+# for (n, network) in _IM.nws(mn)
+#         variable_bus_voltage(pm, nw=n)
+#         variable_gen_power(pm, nw=n)
+#         variable_branch_power(pm, nw=n)
+#         variable_dcline_power(pm, nw=n)
+#
+#         constraint_model_voltage(pm, nw=n)
+#
+#         for i in ids(pm, :ref_buses, nw=n)
+#             constraint_theta_ref(pm, i, nw=n)
+#         end
+#
+#         for i in ids(pm, :bus, nw=n)
+#             constraint_power_balance(pm, i, nw=n)
+#         end
+#
+#         for i in ids(pm, :branch, nw=n)
+#             constraint_ohms_yt_from(pm, i, nw=n)
+#             constraint_ohms_yt_to(pm, i, nw=n)
+#
+#             constraint_voltage_angle_difference(pm, i, nw=n)
+#
+#             constraint_thermal_limit_from(pm, i, nw=n)
+#             constraint_thermal_limit_to(pm, i, nw=n)
+#         end
+#
+#         for i in ids(pm, :dcline, nw=n)
+#             constraint_dcline_power_losses(pm, i, nw=n)
+#         end
+#     end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# _PdM.active_powermodels_silence!(pm)
+# pm = _PdM.check_powermodels_data!(pm)
+# model = _PdM.get_model(pm["pm_model"])
+# solver = _PdM.get_solver(pm)
+# result = _PdM._run_q_flex(
+#     pm,
+#     model,
+#     solver,
+#     setting = Dict("output" => Dict("branch_flows" => true)),
+#     ext = _PdM.extract_params!(pm),
+# )
 # mn = set_pq_values_from_timeseries(pm)
 
 

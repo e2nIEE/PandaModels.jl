@@ -1,3 +1,5 @@
+using PandaModels; const _PdM = PandaModels
+
 function run_powermodels_pf(json_path)
     pm = load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
@@ -35,7 +37,7 @@ function run_powermodels_pf(json_path)
 end
 
 function run_powermodels_opf(json_path)
-    pm = load_pm_from_json(json_path)
+    pm = _PdM.load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
 
     model = get_model(pm["pm_model"])
@@ -102,7 +104,7 @@ end
 # end
 
 function run_powermodels_tnep(json_path)
-    pm = load_pm_from_json(json_path)
+    pm = _PdM.load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
     pm = check_powermodels_data!(pm)
     model = get_model(pm["pm_model"])
@@ -118,7 +120,7 @@ function run_powermodels_tnep(json_path)
 end
 
 function run_powermodels_ots(json_path)
-    pm = load_pm_from_json(json_path)
+    pm = _PdM.load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
     pm = check_powermodels_data!(pm)
     model = get_model(pm["pm_model"])

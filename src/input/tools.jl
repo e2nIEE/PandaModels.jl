@@ -70,6 +70,22 @@ function set_pq_values_from_timeseries(pm)
         for (idx, gen) in network["gen"]
             if haskey(gen_ts, idx)
                 gen["pg"] = gen_ts[idx]["p_mw"][step_1]
+                if haskey(gen_ts[idx], "max_p_mw")
+                    gen["pmax"] = gen_ts[idx]["max_p_mw"][step_1]
+                else
+                    gen["pmax"] = gen_ts[idx]["p_mw"][step_1]
+                end
+                if haskey(gen_ts[idx], "min_p_mw")
+                    gen["pmin"] = gen_ts[idx]["min_p_mw"][step_1]
+                else
+                    gen["pmin"] = gen_ts[idx]["p_mw"][step_1]
+                end
+                if haskey(gen_ts[idx], "max_q_mvar")
+                    gen["qmax"] = gen_ts[idx]["max_q_mvar"][step_1]
+                end
+                if haskey(gen_ts[idx], "min_q_mvar")
+                    gen["qmin"] = gen_ts[idx]["min_q_mvar"][step_1]
+                end
                 if haskey(gen_ts[idx], "q_mvar")
                     gen["qg"] = gen_ts[idx]["q_mvar"][step_1]
                 end

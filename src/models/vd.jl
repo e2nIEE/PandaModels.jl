@@ -61,7 +61,7 @@ run model for Voltge-Deviation objective with AC Power Flow equations
 """
 
 function _run_v_stab_ts(file, model_type::_PM.Type, optimizer; kwargs...)
-    return _PM.run_model(file, model_type, optimizer, _build_v_stab_st; multinetwork=true, kwargs...)
+    return _PM.run_model(file, model_type, optimizer, _build_v_stab_ts; multinetwork=true, kwargs...)
 end
 
 """
@@ -69,7 +69,7 @@ given a JuMP model and a PowerModels network data structure,
 builds an Voltge-Deviation formulation of the given data and returns the JuMP model
 """
 
-function _build_v_stab_st(pm::_PM.AbstractPowerModel)
+function _build_v_stab_ts(pm::_PM.AbstractPowerModel)
     for (n, network) in _PM.nws(pm)
             _PM.variable_bus_voltage(pm, nw=n)
             _PM.variable_gen_power(pm, nw=n)
@@ -105,7 +105,6 @@ end
 
 function objective_v_stab_st(pm::_PM.AbstractPowerModel)
     timestep_ids = [id for id in _PM.nw_ids(pm) if id != 0]
-    println(timestep_ids)
     return JuMP.@objective(pm.model, Min,
         sum(
         sum((var(pm, nw, :vm, content["element_index"]) - content["value"])^2 for (i, content) in pm.ext[:setpoint_v])

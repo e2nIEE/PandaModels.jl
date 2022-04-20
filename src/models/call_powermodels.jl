@@ -83,24 +83,6 @@ function run_powermodels_opf(json_path)
     return result
 end
 
-# function run_powermodels_custom(json_path)
-#
-#     pm = load_pm_from_json(json_path)
-#
-#     active_powermodels_silence!(pm)
-#     pm = check_powermodels_data!(pm)
-#
-#     model = get_model(pm["pm_model"])
-#     solver = get_solver(pm)
-#
-#     result = _PM.run_pf(pm, model, solver)
-#     # add branch flows
-#     _PM.update_data!(pm, result["solution"])
-#     flows = _PM.calc_branch_flow_ac(pm)
-#     _PM.update_data!(result["solution"], flows)
-#     return result
-# end
-
 function run_powermodels_tnep(json_path)
     pm = _PdM.load_pm_from_json(json_path)
     active_powermodels_silence!(pm)

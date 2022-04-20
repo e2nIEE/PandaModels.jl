@@ -8,7 +8,6 @@ run model for Voltge-Deviation objective with AC Power Flow equations
 
 function _run_vstab(file, model_type::_PM.Type, optimizer; kwargs...)
     return _PM.solve_model(file, model_type, optimizer, _build_vstab; kwargs...)
-    # _PM.solve_model
 end
 
 """

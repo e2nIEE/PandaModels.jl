@@ -39,14 +39,6 @@ function check_current_limit!(pm)
     return cl
 end
 
-# function read_time_series(ts_path)
-#     time_series = Dict()
-#     open(ts_path, "r") do f
-#         time_series = JSON.parse(f)  # parse and transform data
-#     end
-#     return time_series
-# end
-
 function set_pq_values_from_timeseries(pm)
     # This function iterates over multinetwork entries and sets p, q values
     # of loads and "sgens" (which are loads with negative P and Q values)
@@ -94,36 +86,3 @@ function set_pq_values_from_timeseries(pm)
     end
     return mn
 end
-#
-# function read_ts_from_json(ts_path)
-#     if isfile(ts_path)
-#         time_series = Dict()
-#         open(ts_path, "r") do f
-#             time_series = JSON.parse(f)
-#         end
-#     else
-#         @error "no time series data is available at $(ts_path)"
-#     end
-#     return time_series
-# end
-#
-#
-#
-# function set_pq_from_timeseries!(mn, ts_data, variable)
-#     for step = 1:steps
-#         network = mn["nw"]["$(step)"]
-#         for idx in keys(ts_data)
-#             network["load"][idx][variable] =
-#                 ts_data[idx]["$(step-1)"] / network["baseMVA"]
-#         end
-#     end
-#     return mn
-# end
-
-# function calculate_current!(flows)
-# # calculate branch current
-# for (i, l) in flows["branch"]
-#     flows["branch"][i]["if"] = abs(flows["branch"][i]["pt"] / 1 / sqrt(3))
-#     flows["branch"][i]["it"] = abs(flows["branch"][i]["pf"] / 1 / sqrt(3))
-#     flows["branch"][i]["i_ka"] = max.(flows["branch"][i]["if"], flows["branch"][i]["it"])
-# end

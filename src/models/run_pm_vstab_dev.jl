@@ -172,12 +172,3 @@ function run_pandamodels_vstab_test(json_path)   # before run_poweramodels
 
     return result
 end
-
-
-# json_path = "C:/Users/fmeier/pandapower/pandapower/test/opf/case5_clm_matfile_va.json"
-# # #@enter run_powermodels(json_path)
-# #
-# result = run_powermodels(json_path)
-# println(result["termination_status"] == LOCALLY_SOLVED)
-# println(isapprox(result["objective"], 17015.5; atol = 1e0))
-# mit eingeschränkter slack spannung: 17082.819507648066

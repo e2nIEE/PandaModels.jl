@@ -1,7 +1,3 @@
-# import Pkg  #only for local test
-# Pkg.activate(".")  #only for local test
-# Pkg.update()  # only for local test
-# Pkg.resolve()  #only for local test
 using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
@@ -30,28 +26,3 @@ case_multi_vstab = joinpath(data_path, "cigre_with_timeseries.json")
         include("call_pandamodels.jl")
 
 end
-# json_path="D:\\PROJECTS\\RPC2\\char_curve_calc\\char_curve_calc\\development\\sb_pp_to_pm_wiyny9nw.json"
-# pm = _PdM.load_pm_from_json(case_q_flex)
-# pm2 = _PdM.load_pm_from_json(case_q_flex)
-# params = _PdM.extract_params!(pm2)
-# # # pm = _PdM.load_pm_from_json(cast_ts)
-# #
-# _PdM.active_powermodels_silence!(pm)
-# pm = _PdM.check_powermodels_data!(pm)
-# model = _PdM.get_model(pm["pm_model"])
-# solver = _PdM.get_solver(pm)
-# result = _PdM._run_q_flex(
-#     pm,
-#     model,
-#     solver,
-#     setting = Dict("output" => Dict("branch_flows" => true)),
-#     ext = _PdM.extract_params!(pm),
-# )
-
-
-# for (idx, br) in result["solution"]["branch"]
-#     if idx in keys(params[:setpoint_q])
-#         println(br["qf"])
-#         #@test isapprox(br["qf"], params[:setpoint_v][idx]["value"], atol=1e-1)
-#     end
-# end

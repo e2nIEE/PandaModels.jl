@@ -128,13 +128,13 @@ if __name__ == "__main__":
     print("ts opt:", time.time()-time_start)
     
     #%% evaluation
-    df = pd.DataFrame(columns=["sgen_p", "sgen_q", "load_p", "load_q", "vm_pu"])
-    for t in range(50):
-        df.loc[t] = [(net_ts.res_ts_opt[str(t)].res_sgen.p_mw.values - loop_res[str(t)]["res_sgen"].p_mw.values).max(),
-                     (net_ts.res_ts_opt[str(t)].res_sgen.q_mvar.values - loop_res[str(t)]["res_sgen"].q_mvar.values).max(),
-                     (net_ts.res_ts_opt[str(t)].res_load.p_mw.values - loop_res[str(t)]["res_load"].p_mw.values).max(),
-                     (net_ts.res_ts_opt[str(t)].res_load.q_mvar.values - loop_res[str(t)]["res_load"].q_mvar.values).max(),
-                     (net_ts.res_ts_opt[str(t)].res_bus.vm_pu.values - loop_res[str(t)]["res_bus"].vm_pu.values).max()] 
+    # df = pd.DataFrame(columns=["sgen_p", "sgen_q", "load_p", "load_q", "vm_pu"])
+    # for t in range(50):
+    #     df.loc[t] = [(net_ts.res_ts_opt[str(t)].res_sgen.p_mw.values - loop_res[str(t)]["res_sgen"].p_mw.values).max(),
+    #                  (net_ts.res_ts_opt[str(t)].res_sgen.q_mvar.values - loop_res[str(t)]["res_sgen"].q_mvar.values).max(),
+    #                  (net_ts.res_ts_opt[str(t)].res_load.p_mw.values - loop_res[str(t)]["res_load"].p_mw.values).max(),
+    #                  (net_ts.res_ts_opt[str(t)].res_load.q_mvar.values - loop_res[str(t)]["res_load"].q_mvar.values).max(),
+    #                  (net_ts.res_ts_opt[str(t)].res_bus.vm_pu.values - loop_res[str(t)]["res_bus"].vm_pu.values).max()] 
     
     # a=net_ts.res_ts_opt
     # b=loop_res

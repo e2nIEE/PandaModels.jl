@@ -1,5 +1,5 @@
 module PandaModels
-using JuMP
+import JuMP
 import InfrastructureModels
 const _IM = InfrastructureModels
 import PowerModels

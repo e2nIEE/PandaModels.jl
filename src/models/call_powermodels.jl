@@ -74,7 +74,7 @@ function run_powermodels_opf(json_path)
            value["qd"] /= pm["baseMVA"]
         end
 
-        result = _PM._run_opf_cl(
+        result = _PM._solve_opf_cl(
             pm,
             model,
             solver,

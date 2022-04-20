@@ -1,3 +1,4 @@
+# export run_pandamodels_qflex_test
 # import JSON
 # import Cbc
 # import Juniper
@@ -118,7 +119,7 @@
 # end
 import JuMP
 
-function run_pandamodels_q_flex_test(json_path)   # before run_poweramodels
+function run_pandamodels_qflex_test(json_path)   # before run_poweramodels
     time_start = time()
     ###############################################################################
     # 0. Initialization

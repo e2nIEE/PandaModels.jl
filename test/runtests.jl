@@ -19,9 +19,9 @@ case_opf_ac = joinpath(data_path, "test_opf_ac.json")
 case_opf_cl = joinpath(data_path, "test_opf_cl.json")
 case_tnep_ac = joinpath(data_path, "test_tnep_ac.json")
 case_ots_dc = joinpath(data_path, "test_ots_dc.json")
-case_vd = joinpath(data_path, "test_vd.json")
-case_q_flex = joinpath(data_path, "test_q_flex.json")
-case_v_stab_ts = joinpath(data_path, "cigre_with_timeseries.json")
+case_vstab = joinpath(data_path, "test_vstab.json")
+case_qflex = joinpath(data_path, "test_qflex.json")
+case_multi_vstab = joinpath(data_path, "cigre_with_timeseries.json")
 
 @testset "PandaModels.jl" begin
 

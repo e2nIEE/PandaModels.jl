@@ -16,7 +16,7 @@
         end
 
         @testset "test for pandapower parameters" begin
-                pm = _PdM.load_pm_from_json(case_vd)
+                pm = _PdM.load_pm_from_json(case_vstab)
                 params = _PdM.extract_params!(pm)
 
                 @test haskey(params, :setpoint_v)

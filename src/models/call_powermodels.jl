@@ -1,5 +1,3 @@
-using PandaModels; const _PdM = PandaModels
-
 function run_powermodels_pf(json_path)
     pm = load_pm_from_json(json_path)
     active_powermodels_silence!(pm)

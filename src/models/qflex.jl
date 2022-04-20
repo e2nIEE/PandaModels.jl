@@ -1,31 +1,26 @@
-const _PM = PowerModels
-export _run_vd, _run_v_stab_ts
-
-# mutable struct VDPowerModel <: _PM.AbstractACModel _PM.@pm_fields end
+export _run_qflex, _run_multi_qflex
 
 """
-run model for Voltge-Deviation objective with AC Power Flow equations
+run model for Q flexibility objective with AC Power Flow equations
 """
 
-function _run_vd(file, model_type::_PM.Type, optimizer; kwargs...)
-    return _PM.run_model(file, model_type, optimizer, _build_vd; kwargs...)
-    # _PM.solve_model
+function _run_qflex(file, model_type::_PM.Type, optimizer; kwargs...)
+    return _PM.solve_model(file, model_type, optimizer, _build_qflex; kwargs...)
 end
 
 """
 given a JuMP model and a PowerModels network data structure,
-builds an Voltge-Deviation formulation of the given data and returns the JuMP model
+builds an "reactive power flexibility" formulation of the given data and returns the JuMP model
 """
 
-function _build_vd(pm::_PM.AbstractPowerModel)
+function _build_qflex(pm::_PM.AbstractPowerModel)
 
     _PM.variable_bus_voltage(pm)
     _PM.variable_gen_power(pm)
     _PM.variable_branch_power(pm)
     _PM.variable_dcline_power(pm, bounded = false) # TODO: why false?
 
-
-    objective_vd(pm)
+    objective_qflex(pm)
 
     _PM.constraint_model_voltage(pm)
 
@@ -40,7 +35,6 @@ function _build_vd(pm::_PM.AbstractPowerModel)
     for (i, branch) in _PM.ref(pm, :branch)
         _PM.constraint_ohms_yt_from(pm, i)
         _PM.constraint_ohms_yt_to(pm, i)
-
         _PM.constraint_thermal_limit_from(pm, i)
         _PM.constraint_thermal_limit_to(pm, i)
     end
@@ -50,26 +44,24 @@ function _build_vd(pm::_PM.AbstractPowerModel)
     end
 end
 
-function objective_vd(pm::_PM.AbstractPowerModel)
+function objective_qflex(pm::_PM.AbstractPowerModel)
+
     return JuMP.@objective(pm.model, Min,
-        sum((var(pm, :vm, content["element_index"]) - content["value"])^2 for (i, content) in pm.ext[:setpoint_v]))
+    sum((var(pm, :q, (content["element_index"], content["f_bus"], content["t_bus"])) - content["value"])^2
+        for (i, content) in pm.ext[:setpoint_q]))
 end
 
 
-"""
-run model for Voltge-Deviation objective with AC Power Flow equations
-"""
-
-function _run_v_stab_ts(file, model_type::_PM.Type, optimizer; kwargs...)
-    return _PM.run_model(file, model_type, optimizer, _build_v_stab_ts; multinetwork=true, kwargs...)
+function _run_multi_qflex(file, model_type::_PM.Type, optimizer; kwargs...)
+    return _PM.solve_model(file, model_type, optimizer, _build_multi_qflex; kwargs...)
 end
 
 """
 given a JuMP model and a PowerModels network data structure,
-builds an Voltge-Deviation formulation of the given data and returns the JuMP model
+builds an "reactive power flexibility" formulation of the given data and returns the JuMP model
 """
 
-function _build_v_stab_ts(pm::_PM.AbstractPowerModel)
+function _build_multi_qflex(pm::_PM.AbstractPowerModel)
     for (n, network) in _PM.nws(pm)
             _PM.variable_bus_voltage(pm, nw=n)
             _PM.variable_gen_power(pm, nw=n)
@@ -100,14 +92,15 @@ function _build_v_stab_ts(pm::_PM.AbstractPowerModel)
                 _PM.constraint_dcline_power_losses(pm, i, nw=n)
             end
         end
-        objective_v_stab_st(pm)
+        objective_multi_qflex(pm)
 end
 
-function objective_v_stab_st(pm::_PM.AbstractPowerModel)
+
+function objective_multi_qflex(pm::_PM.AbstractPowerModel)
     timestep_ids = [id for id in _PM.nw_ids(pm) if id != 0]
     return JuMP.@objective(pm.model, Min,
         sum(
-        sum((var(pm, nw, :vm, content["element_index"]) - content["value"])^2 for (i, content) in pm.ext[:setpoint_v])
+        sum((var(pm, nw, :q, (content["element_index"], content["f_bus"], content["t_bus"])) - content["value"])^2 for (i, content) in pm.ext[:setpoint_q])
         for nw in timestep_ids)
             )
 end

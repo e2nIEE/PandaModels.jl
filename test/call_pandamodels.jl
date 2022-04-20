@@ -1,7 +1,7 @@
 @testset "test for voltage deviation" begin
-    @testset "case_vd: cigre mv" begin
-        result = run_pandamodels_vd(case_vd)
-        pm = _PdM.load_pm_from_json(case_vd)
+    @testset "case_vstab: cigre mv" begin
+        result = run_pandamodels_vstab(case_vstab)
+        pm = _PdM.load_pm_from_json(case_vstab)
         params = _PdM.extract_params!(pm)
 
         @test string(result["termination_status"]) == "LOCALLY_SOLVED"
@@ -21,9 +21,9 @@
 
     end
 
-    @testset "case_q_flex: cigre mv" begin
-        result = run_pandamodels_q_flex(case_q_flex)
-        pm = _PdM.load_pm_from_json(case_q_flex)
+    @testset "case_qflex: cigre mv" begin
+        result = run_pandamodels_qflex(case_qflex)
+        pm = _PdM.load_pm_from_json(case_qflex)
         params = _PdM.extract_params!(pm)
 
         @test string(result["termination_status"]) == "LOCALLY_SOLVED"
@@ -39,9 +39,9 @@
         @test result["solve_time"] > 0.0
     end
 
-    @testset "case_v_stab_ts: cigre mv" begin
-        result = run_pandamodels_v_stab_ts(case_v_stab_ts)
-        pm = _PdM.load_pm_from_json(case_v_stab_ts)
+    @testset "case_multi_vstab: cigre mv" begin
+        result = run_pandamodels_multi_vstab(case_multi_vstab)
+        pm = _PdM.load_pm_from_json(case_multi_vstab)
         params = _PdM.extract_params!(pm)
 
         @test string(result["termination_status"]) == "LOCALLY_SOLVED"
@@ -58,19 +58,3 @@
         @test result["solve_time"] > 0.0
     end
 end
-
-
-# @testset "case_mn_vd: cigre mv" begin
-#     result = run_pandamodels_q_flex(case_q_flex)
-#     pm = _PdM.load_pm_from_json(case_vd)
-#     params = _PdM.extract_params!(pm)
-#
-#     @test string(result["termination_status"]) == "LOCALLY_SOLVED"
-#     @test string(result["dual_status"]) == "FEASIBLE_POINT"
-#     @test string(result["primal_status"]) == "FEASIBLE_POINT"
-#     @test isapprox(result["objective_lb"], -Inf)
-#     @test isapprox(result["objective"], 89.6598; atol = 1e-8)
-
-    # @test result["solve_time"] > 0.0
-# end
-# end

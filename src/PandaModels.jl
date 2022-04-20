@@ -10,6 +10,7 @@ import Ipopt
 import Juniper
 const _IM = InfrastructureModels
 const _PM = PowerModels
+const _PdM = PandaModels
 const LOGGER = Memento.getlogger(PowerModels)
 
 export run_powermodels_pf,

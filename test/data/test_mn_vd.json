@@ -877,12 +877,14 @@
     "pm_time_limit": Infinity,
     "pm_tol": 1e-08,
     "shunt": {},
+    "silence": true,
     "source_version": "2.0.0",
     "sourcetype": "matpower",
     "storage": {},
     "switch": {},
+	"n_time_steps": 5,
     "user_defined_params": {
-        "threshold_v": {
+        "setpoint_v": {
             "4": {
                 "element": "bus",
                 "element_index": 4,

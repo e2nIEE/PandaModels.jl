@@ -13,7 +13,7 @@
         @test result["termination_status"]
         @test string(result["optimizer"]) == "NLsolve"
         @test isapprox(result["objective"], 0.0; atol = 1e0)
-        @test result["solve_time"] > 0.0
+        @test result["solve_time"] >= 0.0
     end
 
     @testset "test for run_powermodels_opf: ac" begin

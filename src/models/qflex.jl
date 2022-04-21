@@ -53,7 +53,7 @@ end
 
 
 function _run_multi_qflex(file, model_type::_PM.Type, optimizer; kwargs...)
-    return _PM.solve_model(file, model_type, optimizer, _build_multi_qflex; kwargs...)
+    return _PM.solve_model(file, model_type, optimizer, _build_multi_qflex; multinetwork=true, kwargs...)
 end
 
 """

@@ -21,7 +21,7 @@ function _build_qflex(pm::_PM.AbstractPowerModel)
     _PM.variable_dcline_power(pm, bounded = false) # TODO: why false?
 
     objective_qflex(pm)
-
+    # println("qflex objective function:", JuMP.objective_function(pm.model))
     _PM.constraint_model_voltage(pm)
 
     for i in _PM.ids(pm, :ref_buses)
@@ -53,7 +53,7 @@ end
 
 
 function _run_multi_qflex(file, model_type::_PM.Type, optimizer; kwargs...)
-    return _PM.solve_model(file, model_type, optimizer, _build_multi_qflex; kwargs...)
+    return _PM.solve_model(file, model_type, optimizer, _build_multi_qflex; multinetwork=true, kwargs...)
 end
 
 """
@@ -91,8 +91,11 @@ function _build_multi_qflex(pm::_PM.AbstractPowerModel)
             for i in ids(pm, :dcline, nw=n)
                 _PM.constraint_dcline_power_losses(pm, i, nw=n)
             end
-        end
-        objective_multi_qflex(pm)
+    end
+
+    objective_multi_qflex(pm)
+    # println("multi_qflex objective function:", JuMP.objective_function(pm.model))
+
 end
 
 

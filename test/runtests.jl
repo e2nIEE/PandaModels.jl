@@ -1,3 +1,7 @@
+# import Pkg  #only for local test
+# Pkg.activate(".")  #only for local test
+# Pkg.update()  # only for local test
+# Pkg.resolve()  #only for local test
 using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels

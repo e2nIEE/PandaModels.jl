@@ -72,6 +72,7 @@ function set_pq_values_from_timeseries(pm)
                 else
                     gen["pmin"] = gen_ts[idx]["p_mw"][step_1]
                 end
+
                 if haskey(gen_ts[idx], "max_q_mvar")
                     gen["qmax"] = gen_ts[idx]["max_q_mvar"][step_1]
                 end

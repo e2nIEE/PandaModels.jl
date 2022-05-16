@@ -1,5 +1,5 @@
-import Pkg
-Pkg.activate(".")
+# import Pkg
+# Pkg.activate(".")
 using Test
 using PandaModels; const _PdM = PandaModels
 import PowerModels; const _PM = PowerModels
@@ -8,24 +8,59 @@ _PM.silence()
 
 pdm_path = joinpath(dirname(pathof(PandaModels)), "..")
 data_path = joinpath(pdm_path, "test", "data")
-cast_ts = joinpath(data_path, "cigre_with_timeseries.json")
+case_ts = joinpath(data_path, "cigre_with_timeseries.json")
+case_ts = joinpath(data_path, "test_mn_qflex.json")
+
 
 ##
-pm2 = _PdM.load_pm_from_json(cast_ts)
-param = _PdM.extract_params!(pm2)
-
-##
-pm = _PdM.load_pm_from_json(cast_ts)
+pm = _PdM.load_pm_from_json(case_ts)
 _PdM.active_powermodels_silence!(pm)
 pm = _PdM.check_powermodels_data!(pm)
-# params = _PdM.extract_params!(pm)
-# pm = delete!(pm, "user_defined_params")
 model = _PdM.get_model(pm["pm_model"])
 solver = _PdM.get_solver(pm)
 mn = _PdM.set_pq_values_from_timeseries(pm)
-# pm_mn = _PM.instantiate_model(mn, model, _PM.build_mn_opf, multinetwork=true)
 
-result = _PdM._run_v_stab_ts(
+# for (n, network) in _PM.nws(model)
+#         _PM.variable_bus_voltage(pm, nw=n)
+#         _PM.variable_gen_power(pm, nw=n)
+#         _PM.variable_branch_power(pm, nw=n)
+#         _PM.variable_dcline_power(pm, nw=n)
+#
+#         _PM.constraint_model_voltage(pm, nw=n)
+#
+#         for i in ids(pm, :ref_buses, nw=n)
+#             _PM.constraint_theta_ref(pm, i, nw=n)
+#         end
+#
+#         for i in ids(pm, :bus, nw=n)
+#             _PM.constraint_power_balance(pm, i, nw=n)
+#         end
+#
+#         for i in ids(pm, :branch, nw=n)
+#             _PM.constraint_ohms_yt_from(pm, i, nw=n)
+#             _PM.constraint_ohms_yt_to(pm, i, nw=n)
+#
+#             _PM.constraint_voltage_angle_difference(pm, i, nw=n)
+#
+#             _PM.constraint_thermal_limit_from(pm, i, nw=n)
+#             _PM.constraint_thermal_limit_to(pm, i, nw=n)
+#         end
+#
+#         for i in ids(pm, :dcline, nw=n)
+#             _PM.constraint_dcline_power_losses(pm, i, nw=n)
+#         end
+# end
+#
+#
+# timestep_ids = [id for id in _PM.nw_ids(pm) if id != 0]
+# JuMP.@objective(mn.model, Min,
+#     sum(
+#     sum((var(mn, nw, :q, (content["element_index"], content["f_bus"], content["t_bus"])) - content["value"])^2 for (i, content) in pm.ext[:setpoint_q])
+#     for nw in timestep_ids)
+#         )
+# println(JuMP.objective_function(pm.model))
+
+result_mn = _PdM._run_multi_qflex(
     mn,
     model,
     solver,
@@ -33,6 +68,24 @@ result = _PdM._run_v_stab_ts(
     ext = _PdM.extract_params!(pm),
 )
 
+
+pm = _PdM.load_pm_from_json(case_ts)
+_PdM.active_powermodels_silence!(pm)
+pm = _PdM.check_powermodels_data!(pm)
+# params = _PdM.extract_params!(pm)
+# pm = delete!(pm, "user_defined_params")
+model = _PdM.get_model(pm["pm_model"])
+solver = _PdM.get_solver(pm)
+
+result = _PdM._run_qflex(
+    pm,
+    model,
+    solver,
+    setting = Dict("output" => Dict("branch_flows" => true)),
+    ext = _PdM.extract_params!(pm),
+)
+printf("mn_objective: %0.20f", result_mn["objective"])
+printf("objective: %0.20f", result["objective"])
 
 # using InfrastructureModels; const _IM = InfrastructureModels
 #

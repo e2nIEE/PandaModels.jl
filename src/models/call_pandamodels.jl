@@ -56,9 +56,10 @@ function run_pandamodels_multi_qflex(json_path)
     pm = check_powermodels_data!(pm)
     model = get_model(pm["pm_model"])
     solver = get_solver(pm)
+    mn = set_pq_values_from_timeseries(pm)
 
     result = _run_multi_qflex(
-        pm,
+        mn,
         model,
         solver,
         setting = Dict("output" => Dict("branch_flows" => true)),

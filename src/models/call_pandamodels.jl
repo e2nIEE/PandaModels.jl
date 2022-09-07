@@ -15,6 +15,23 @@ function run_pandamodels_vstab(json_path)
     return result
 end
 
+function run_pandamodels_vstab_limq(json_path)
+    pm = load_pm_from_json(json_path)
+    active_powermodels_silence!(pm)
+    pm = check_powermodels_data!(pm)
+    model = get_model(pm["pm_model"])
+    solver = get_solver(pm)
+
+    result = _run_vstab_limq(
+        pm,
+        model,
+        solver,
+        setting = Dict("output" => Dict("branch_flows" => true)),
+        ext = extract_params!(pm),
+    )
+    return result
+end
+
 function run_pandamodels_multi_vstab(json_path)
     pm = load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
@@ -58,8 +75,25 @@ function run_pandamodels_multi_qflex(json_path)
     solver = get_solver(pm)
     mn = set_pq_values_from_timeseries(pm)
 
-    result = _run_multi_qflex(
+    result = _run_ploss(
         mn,
+        model,
+        solver,
+        setting = Dict("output" => Dict("branch_flows" => true)),
+        ext = extract_params!(pm),
+    )
+    return result
+end
+
+function run_pandamodels_ploss(json_path)
+    pm = load_pm_from_json(json_path)
+    active_powermodels_silence!(pm)
+    pm = check_powermodels_data!(pm)
+    model = get_model(pm["pm_model"])
+    solver = get_solver(pm)
+
+    result = _run_ploss(
+        pm,
         model,
         solver,
         setting = Dict("output" => Dict("branch_flows" => true)),

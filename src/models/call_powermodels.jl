@@ -114,3 +114,17 @@ function run_powermodels_ots(json_path)
     )
     return result
 end
+
+function run_powermodels_multi_storage(json_path)
+    pm = _PdM.load_pm_from_json(json_path)
+    active_powermodels_silence!(pm)
+    pm = check_powermodels_data!(pm)
+    model = get_model(pm["pm_model"])
+    solver = get_solver(pm)
+    mn = set_pq_values_from_timeseries(pm)
+
+    result = _PM.solve_mn_opf_strg(mn, model, solver,
+        setting = Dict("output" => Dict("branch_flows" => true)),
+    )
+    return result
+end

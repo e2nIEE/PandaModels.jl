@@ -22,6 +22,8 @@ case_ots_dc = joinpath(data_path, "test_ots_dc.json")
 case_vstab = joinpath(data_path, "test_vstab.json")
 case_qflex = joinpath(data_path, "test_qflex.json")
 case_multi_vstab = joinpath(data_path, "cigre_with_timeseries.json")
+case_multi_storage = joinpath(data_path, "test_mn_storage.json")
+
 
 @testset "PandaModels.jl" begin
 

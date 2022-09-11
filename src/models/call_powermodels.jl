@@ -2,7 +2,6 @@ function run_powermodels_pf(json_path)
     pm = load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
     pm = check_powermodels_data!(pm)
-
     # calculate branch power flows
     if pm["pm_model"] == "ACNative"
         result = _PM.compute_ac_pf(pm)
@@ -37,7 +36,7 @@ end
 function run_powermodels_opf(json_path)
     pm = _PdM.load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
-
+    pm = remove_extract_params!(pm)
     model = get_model(pm["pm_model"])
     solver = get_solver(pm)
 
@@ -87,6 +86,7 @@ function run_powermodels_tnep(json_path)
     pm = _PdM.load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
     pm = check_powermodels_data!(pm)
+    pm = remove_extract_params!(pm)
     model = get_model(pm["pm_model"])
     solver = get_solver(pm)
 
@@ -103,6 +103,7 @@ function run_powermodels_ots(json_path)
     pm = _PdM.load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
     pm = check_powermodels_data!(pm)
+    pm = remove_extract_params!(pm)
     model = get_model(pm["pm_model"])
     solver = get_solver(pm)
 

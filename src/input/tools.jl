@@ -9,6 +9,17 @@ function extract_params!(pm)
     return params
 end
 
+function remove_extract_params!(pm)
+    if haskey(pm, "user_defined_params")
+        params = Dict{Symbol,Dict{String,Any}}()
+        for key in keys(pm["user_defined_params"])
+            params[Symbol(key)] = pm["user_defined_params"][key]
+        end
+        delete!(pm, "user_defined_params")
+    end
+    return pm
+end
+
 function check_powermodels_data!(pm)
     if pm["correct_pm_network_data"]
         _PM.correct_network_data!(pm)

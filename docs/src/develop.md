@@ -118,6 +118,7 @@ Pkg.add([
     Pkg.PackageSpec(;name="Ipopt"),
     Pkg.PackageSpec(;name="Juniper"),
     Pkg.PackageSpec(;name="Cbc"),
+	Pkg.PackageSpec(;name="Gurobi")
     ])
 Pkg.build()
 Pkg.resolve()

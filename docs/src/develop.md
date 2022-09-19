@@ -97,6 +97,7 @@ solvers:
 * [Ipopt.jl](https://github.com/jump-dev/Ipopt.jl)
 * [Juniper.jl](https://github.com/lanl-ansi/Juniper.jl)
 * [Cbc.jl](https://github.com/jump-dev/Cbc.jl)
+* [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
 
 
 Open `Julia REPL` in `Git Bash`:

@@ -7,7 +7,7 @@ import Memento
 import JSON
 import Cbc
 import Ipopt
-using Gurobi
+import Gurobi
 import Juniper
 const _IM = InfrastructureModels
 const _PM = PowerModels

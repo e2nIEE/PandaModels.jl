@@ -60,7 +60,7 @@ function objective_qflex(pm::_PM.AbstractPowerModel)
     fac1 * sum((var(pm, :q, (content["element_index"], content["f_bus"], content["t_bus"])) - content["value"])^2
         for (i, content) in pm.ext[:setpoint_q])
     +
-    fac1 * sum((var(pm, :qg, content)-0)^2 for (i, content) in pm.ext[:gen_and_controllable_sgen]))
+    fac2 * sum((var(pm, :qg, content)-0)^2 for (i, content) in pm.ext[:gen_and_controllable_sgen]))
 end
 
 

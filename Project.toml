@@ -1,7 +1,7 @@
 name = "PandaModels"
 uuid = "2dbab86a-7cbf-476f-9afe-75ffd3079e7c"
 authors = ["e2nIEE"]
-version = "0.6.0"
+version = "0.6.1"
 
 [deps]
 Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"

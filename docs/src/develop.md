@@ -97,7 +97,6 @@ solvers:
 * [Ipopt.jl](https://github.com/jump-dev/Ipopt.jl)
 * [Juniper.jl](https://github.com/lanl-ansi/Juniper.jl)
 * [Cbc.jl](https://github.com/jump-dev/Cbc.jl)
-* [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
 
 
 Open `Julia REPL` in `Git Bash`:
@@ -117,8 +116,7 @@ Pkg.add([
     Pkg.PackageSpec(;name="JSON"),
     Pkg.PackageSpec(;name="Ipopt"),
     Pkg.PackageSpec(;name="Juniper"),
-    Pkg.PackageSpec(;name="Cbc"),
-	Pkg.PackageSpec(;name="Gurobi")
+    Pkg.PackageSpec(;name="Cbc")
     ])
 Pkg.build()
 Pkg.resolve()

@@ -54,7 +54,6 @@ function set_pq_values_from_timeseries(pm)
     # This function iterates over multinetwork entries and sets p, q values
     # of loads and "sgens" (which are loads with negative P and Q values)
     steps = pm["time_series"]["to_time_step"]-pm["time_series"]["from_time_step"]
-    baseMVA = pm["baseMVA"]
     mn = _PM.replicate(pm, steps)
 
     for (step, network) in mn["nw"]
@@ -63,9 +62,9 @@ function set_pq_values_from_timeseries(pm)
         network = delete!(network, "user_defined_params")
         for (idx, load) in network["load"]
             if haskey(load_ts, idx)
-                load["pd"] = load_ts[idx]["p_mw"][step_1] / baseMVA
+                load["pd"] = load_ts[idx]["p_mw"][step_1]
                 if haskey(load_ts[idx], "q_mvar")
-                    load["qd"] = load_ts[idx]["q_mvar"][step_1] / baseMVA
+                    load["qd"] = load_ts[idx]["q_mvar"][step_1]
                 end
             end
         end
@@ -73,16 +72,16 @@ function set_pq_values_from_timeseries(pm)
         gen_ts = pm["time_series"]["gen"]
         for (idx, gen) in network["gen"]
             if haskey(gen_ts, idx)
-                gen["pg"] = gen_ts[idx]["p_mw"][step_1] / baseMVA
+                gen["pg"] = gen_ts[idx]["p_mw"][step_1]
                 if haskey(gen_ts[idx], "max_p_mw")
-                    gen["pmax"] = gen_ts[idx]["max_p_mw"][step_1] / baseMVA
+                    gen["pmax"] = gen_ts[idx]["max_p_mw"][step_1]
                 else
-                    gen["pmax"] = gen_ts[idx]["p_mw"][step_1] / baseMVA
+                    gen["pmax"] = gen_ts[idx]["p_mw"][step_1]
                 end
                 if haskey(gen_ts[idx], "min_p_mw")
-                    gen["pmin"] = gen_ts[idx]["min_p_mw"][step_1] / baseMVA
+                    gen["pmin"] = gen_ts[idx]["min_p_mw"][step_1]
                 else
-                    gen["pmin"] = gen_ts[idx]["p_mw"][step_1] / baseMVA
+                    gen["pmin"] = gen_ts[idx]["p_mw"][step_1]
                 end
 
                 if haskey(gen_ts[idx], "max_q_mvar")

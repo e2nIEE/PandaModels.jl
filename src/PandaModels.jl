@@ -7,8 +7,14 @@ import Memento
 import JSON
 import Cbc
 import Ipopt
-import Gurobi
 import Juniper
+try
+    import Gurobi
+catch e
+    if isa(e, LoadError)
+        println("Cannot import Gurobi. That's find if you do not plan to use it")
+    end
+end    
 const _IM = InfrastructureModels
 const _PM = PowerModels
 const _PdM = PandaModels

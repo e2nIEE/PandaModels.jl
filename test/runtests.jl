@@ -20,9 +20,16 @@ data_path = joinpath(pdm_path, "test", "data")
 # case_tnep_ac = joinpath(data_path, "test_tnep_ac.json")
 # case_ots_dc = joinpath(data_path, "test_ots_dc.json")
 case_vstab = joinpath(data_path, "test_vstab.json")
+<<<<<<< HEAD
 result = run_pandamodels_vstab(case_vstab)
 # case_qflex = joinpath(data_path, "test_qflex.json")
 # case_multi_vstab = joinpath(data_path, "cigre_with_timeseries.json")
+=======
+case_qflex = joinpath(data_path, "test_qflex.json")
+case_multi_vstab = joinpath(data_path, "cigre_with_timeseries.json")
+case_multi_storage = joinpath(data_path, "test_mn_storage.json")
+
+>>>>>>> 95881f421e36f778621ad9e55f7c57a0bc68f5d1
 
 # @testset "PandaModels.jl" begin
 #

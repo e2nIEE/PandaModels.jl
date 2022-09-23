@@ -75,4 +75,13 @@
             @test result["solve_time"] > 0.0
     end
 
+    @testset "test for run_powermodels_multi_storage: ac" begin
+            result = run_powermodels_multi_storage(case_multi_storage)
+            @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+            @test string(result["dual_status"]) == "FEASIBLE_POINT"
+            @test string(result["primal_status"]) == "FEASIBLE_POINT"
+            @test string(result["optimizer"]) == "Juniper"
+            @test result["solve_time"] > 0.0
+    end
+
 end

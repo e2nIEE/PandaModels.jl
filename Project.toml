@@ -1,7 +1,7 @@
 name = "PandaModels"
 uuid = "2dbab86a-7cbf-476f-9afe-75ffd3079e7c"
 authors = ["e2nIEE"]
-version = "0.5.0"
+version = "0.7.0"
 
 [deps]
 Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"
@@ -12,6 +12,7 @@ JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
 Juniper = "2ddba703-00a4-53a7-87a5-e8b9971dde84"
 Memento = "f28f55f0-a522-5efc-85c2-fe41dfb9b2d9"
 PowerModels = "c36e90e8-916a-50a6-bd94-075b64ef4655"
+#Gurobi = "2e9cd046-0924-5485-92f1-d5272153d98b"
 
 [compat]
 Cbc = "0.8, 0.9"

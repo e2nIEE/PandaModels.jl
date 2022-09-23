@@ -1,7 +1,7 @@
 export _run_qflex, _run_multi_qflex
 
 """
-run model for Q flexibility objective with AC Power Flow equations
+run optimization for maintaining power setpoints
 """
 
 function _run_qflex(file, model_type::_PM.Type, optimizer; kwargs...)
@@ -9,8 +9,7 @@ function _run_qflex(file, model_type::_PM.Type, optimizer; kwargs...)
 end
 
 """
-given a JuMP model and a PowerModels network data structure,
-builds an "reactive power flexibility" formulation of the given data and returns the JuMP model
+give a JuMP model with PowerModels network data structur and build opitmization model
 """
 
 function _build_qflex(pm::_PM.AbstractPowerModel)
@@ -69,8 +68,7 @@ function _run_multi_qflex(file, model_type::_PM.Type, optimizer; kwargs...)
 end
 
 """
-given a JuMP model and a PowerModels network data structure,
-builds an "reactive power flexibility" formulation of the given data and returns the JuMP model
+run multi-timestep optimization for maintaining power setpoints
 """
 
 function _build_multi_qflex(pm::_PM.AbstractPowerModel)
@@ -106,7 +104,6 @@ function _build_multi_qflex(pm::_PM.AbstractPowerModel)
     end
 
     objective_multi_qflex(pm)
-    # println("multi_qflex objective function:", JuMP.objective_function(pm.model))
 
 end
 

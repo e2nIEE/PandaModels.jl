@@ -116,7 +116,7 @@ Pkg.add([
     Pkg.PackageSpec(;name="JSON"),
     Pkg.PackageSpec(;name="Ipopt"),
     Pkg.PackageSpec(;name="Juniper"),
-    Pkg.PackageSpec(;name="Cbc"),
+    Pkg.PackageSpec(;name="Cbc")
     ])
 Pkg.build()
 Pkg.resolve()

@@ -8,6 +8,13 @@ import JSON
 import Cbc
 import Ipopt
 import Juniper
+try
+    import Gurobi
+catch e
+    if isa(e, LoadError)
+        println("Cannot import Gurobi. That's fine if you do not plan to use it")
+    end
+end    
 const _IM = InfrastructureModels
 const _PM = PowerModels
 const _PdM = PandaModels
@@ -18,6 +25,7 @@ export run_powermodels_pf,
     run_powermodels_ots,
     run_powermodels_tnep,
     run_pandamodels_vstab,
+    run_powermodels_multi_storage,
     run_pandamodels_multi_vstab,
     run_pandamodels_qflex,
     run_pandamodels_multi_qflex,

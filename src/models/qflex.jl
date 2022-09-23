@@ -46,9 +46,21 @@ end
 
 function objective_qflex(pm::_PM.AbstractPowerModel)
 
+    if haskey(pm.ext, :obj_factors)
+        if length(pm.ext[:obj_factors]) == 2
+            fac1 = pm.ext[:obj_factors]["fac_1"]
+            fac2 = pm.ext[:obj_factors]["fac_2"]
+        end
+    else
+        fac1 = 1.0
+        fac2 = 0
+    end
+
     return JuMP.@objective(pm.model, Min,
-    sum((var(pm, :q, (content["element_index"], content["f_bus"], content["t_bus"])) - content["value"])^2
-        for (i, content) in pm.ext[:setpoint_q]))
+    fac1 * sum((var(pm, :q, (content["element_index"], content["f_bus"], content["t_bus"])) - content["value"])^2
+        for (i, content) in pm.ext[:setpoint_q])
+    +
+    fac2 * sum((var(pm, :qg, content)-0)^2 for (i, content) in pm.ext[:gen_and_controllable_sgen]))
 end
 
 

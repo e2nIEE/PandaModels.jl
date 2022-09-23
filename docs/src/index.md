@@ -6,7 +6,10 @@ CurrentModule = PandaModels
 
 ## Overview
 
-[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://pandapower.readthedocs.io/en/latest/index.html) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) to run and calculate steady-state power network optimization. These packages use [JuMP](https://jump.dev/JuMP.jl/stable/) as optimization environment.
+[PandaModels.jl](https://github.com/e2nIEE/PandaModels.jl) (**panda**power + Power**Models**) is a [Julia](https://julialang.org/) package which containing supplementary data and codes to prepare [pandapower](https://pandapower.readthedocs.io/en/latest/index.html) networks in a compatible format for Julia packages which are based on [InfrastructureModels](https://lanl-ansi.github.io/InfrastructureModels.jl/dev/), such as [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/) to run and calculate steady-state power network optimization. These packages use [JuMP](https://jump.dev/JuMP.jl/stable/) as an optimization environment.
+
+As the figure blow illustrates,  with help of **PandaModels**, **pandapower** and **PowerModels.jl** are connected in a functional way. The pandapower-PowerModels (PM-PP) converter enables a conversion from the pandapower format and the PowerModels format
+
 
 ## Installation
 

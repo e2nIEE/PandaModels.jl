@@ -67,3 +67,20 @@ function run_pandamodels_multi_qflex(json_path)
     )
     return result
 end
+
+function run_pandamodels_ploss(json_path)
+    pm = load_pm_from_json(json_path)
+    active_powermodels_silence!(pm)
+    pm = check_powermodels_data!(pm)
+    model = get_model(pm["pm_model"])
+    solver = get_solver(pm)
+
+    result = _run_ploss(
+        pm,
+        model,
+        solver,
+        setting = Dict("output" => Dict("branch_flows" => true)),
+        ext = extract_params!(pm),
+    )
+    return result
+end

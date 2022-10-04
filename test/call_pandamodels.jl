@@ -57,4 +57,22 @@
 
         @test result["solve_time"] > 0.0
     end
+
+    @testset "case_ploss: cigre mv" begin
+        result = run_pandamodels_ploss(case_ploss)
+        pm = _PdM.load_pm_from_json(case_ploss)
+        params = _PdM.extract_params!(pm)
+
+        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+        @test string(result["dual_status"]) == "FEASIBLE_POINT"
+        @test string(result["primal_status"]) == "FEASIBLE_POINT"
+
+        @test sum(result["solution"]["branch"][string(content["element_index"])]["pf"] +
+                    result["solution"]["branch"][string(content["element_index"])]["pt"]
+                        for (i, content) in params[:target_branch]) < 0.07
+
+        @test isapprox(result["objective_lb"], -Inf)
+        @test result["solve_time"] > 0.0
+    end
+
 end

@@ -1,9 +1,7 @@
 export _run_vstab, _run_multi_vstab, _run_vstab_limq
 
-# mutable struct VDPowerModel <: _PM.AbstractACModel _PM.@pm_fields end
-
 """
-run model for Voltge-Deviation objective with AC Power Flow equations
+run optimization for maintaining voltage setpoints
 """
 
 function _run_vstab(file, model_type::_PM.Type, optimizer; kwargs...)
@@ -11,8 +9,7 @@ function _run_vstab(file, model_type::_PM.Type, optimizer; kwargs...)
 end
 
 """
-given a JuMP model and a PowerModels network data structure,
-builds an Voltge-Deviation formulation of the given data and returns the JuMP model
+give a JuMP model with PowerModels network data structur and build opitmization model
 """
 
 function _build_vstab(pm::_PM.AbstractPowerModel)
@@ -85,7 +82,7 @@ function objective_vstab(pm::_PM.AbstractPowerModel)
 end
 
 """
-run model for Voltge-Deviation objective with AC Power Flow equations
+run multi-timestep optimization for maintaining voltage setpoints
 """
 
 function _run_multi_vstab(file, model_type::_PM.Type, optimizer; kwargs...)
@@ -93,8 +90,7 @@ function _run_multi_vstab(file, model_type::_PM.Type, optimizer; kwargs...)
 end
 
 """
-given a JuMP model and a PowerModels network data structure,
-builds an Voltge-Deviation formulation of the given data and returns the JuMP model
+give a JuMP model with PowerModels network data structur and build opitmization model
 """
 
 function _build_multi_vstab(pm::_PM.AbstractPowerModel)

@@ -5,12 +5,11 @@
     Either you are developing a new feature or using the function from develop mode you should set the  option  `pdm_dev_mode=True`, e.g. :
 
     ```python
-    pp.runpm_vd(net, calculate_voltage_angles=True,
-            trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
-            n_timesteps=96, time_elapsed=0.25, correct_pm_network_data=True,
-            pm_model="ACPPowerModel", pm_time_limits=None, pm_log_level=0,
-            delete_buffer_file=False, pm_file_path=None,
-            pm_tol=1e-8, pdm_dev_mode=True)
+    pp.runpm_vstab(net, pp_to_pm_callback=None, calculate_voltage_angles=True,
+                    trafo_model="t", delta=1e-8, trafo3w_losses="hv", check_connectivity=True,
+                    pm_model="ACPPowerModel", pm_solver="ipopt", correct_pm_network_data=True, silence=True,
+                    pm_time_limits=None, pm_log_level=0, pm_file_path = None, delete_buffer_file=True,
+                    opf_flow_lim="S", pm_tol=1e-8, pdm_dev_mode=True)
     ```
 
     this option automatically check the setting and activate the develop mode environment.

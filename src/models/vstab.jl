@@ -45,24 +45,6 @@ function _build_vstab(pm::_PM.AbstractPowerModel)
     end
 end
 
-function objective_vstab_debug(pm::_PM.AbstractPowerModel)
-    # my_case = pm.ref
-    # println(pm.ref[:it])
-    # println("#####################################################################")
-    # println(pm.ref[:it][:pm][:nw][0][:gen])
-    # println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    # open("pm_test999.json","w") do f
-    #     JSON.print(f, pm.ref)
-    # end
-    #       sum((var(pm, :qg, i))^2 for (i, content) in pm.ref[:it][:pm][:nw][0][:gen]))
-    fac1 = 0.9
-    fac2 = 1-fac1
-    return JuMP.@objective(pm.model, Max,
-       # fac1*sum((var(pm, :vm, content["element_index"]) - content["value"])^2 for (i, content) in pm.ext[:setpoint_v]) +
-       sum((var(pm, :qg, content)-0)^2 for (i, content) in pm.ext[:gen_and_controllable_sgen]))
-end
-
-
 function objective_vstab(pm::_PM.AbstractPowerModel)
 
     if haskey(pm.ext, :obj_factors)

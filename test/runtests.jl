@@ -37,6 +37,3 @@ case_multi_storage = joinpath(data_path, "test_mn_storage.json")
         include("call_pandamodels.jl")
 
 end
-
-
-result = run_pandamodels_multi_qflex(case_multi_qflex)

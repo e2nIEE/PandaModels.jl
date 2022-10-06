@@ -127,8 +127,5 @@ function load_pm_from_json(json_path)
             pm["gen"][idx]["cost"] = convert(Array{Float64,1}, gen["cost"])
         end
     end
-    # The pp2pm converter in pandapower has modified the data according to baseMVA=1.0.
-    # Thus, the baseMVA hier is set to 1.0
-    pm["baseMVA"] = 1.0
     return pm
 end

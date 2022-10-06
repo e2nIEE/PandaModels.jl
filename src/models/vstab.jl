@@ -63,7 +63,6 @@ function objective_vstab(pm::_PM.AbstractPowerModel)
         fac2 * sum((var(pm, :qg, content)-0)^2 for (i, content) in pm.ext[:gen_and_controllable_sgen]))
 end
 
-
 """
 run multi-timestep optimization for maintaining voltage setpoints
 """

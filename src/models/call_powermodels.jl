@@ -52,24 +52,24 @@ function run_powermodels_opf(json_path)
         )
     else
 
-        for (key, value) in pm["gen"]
-           value["pmin"] /= pm["baseMVA"]
-           value["pmax"] /= pm["baseMVA"]
-           value["qmax"] /= pm["baseMVA"]
-           value["qmin"] /= pm["baseMVA"]
-           value["pg"] /= pm["baseMVA"]
-           value["qg"] /= pm["baseMVA"]
-           value["cost"] *= pm["baseMVA"]
-        end
-
-        for (key, value) in pm["branch"]
-           value["c_rating_a"] /= pm["baseMVA"]
-        end
-
-        for (key, value) in pm["load"]
-           value["pd"] /= pm["baseMVA"]
-           value["qd"] /= pm["baseMVA"]
-        end
+        # for (key, value) in pm["gen"]
+        #    value["pmin"] /= pm["baseMVA"]
+        #    value["pmax"] /= pm["baseMVA"]
+        #    value["qmax"] /= pm["baseMVA"]
+        #    value["qmin"] /= pm["baseMVA"]
+        #    value["pg"] /= pm["baseMVA"]
+        #    value["qg"] /= pm["baseMVA"]
+        #    value["cost"] *= pm["baseMVA"]
+        # end
+        #
+        # for (key, value) in pm["branch"]
+        #    value["c_rating_a"] /= pm["baseMVA"]
+        # end
+        #
+        # for (key, value) in pm["load"]
+        #    value["pd"] /= pm["baseMVA"]
+        #    value["qd"] /= pm["baseMVA"]
+        # end
 
         result = _PM._solve_opf_cl(
             pm,

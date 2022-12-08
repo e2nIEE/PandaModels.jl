@@ -30,10 +30,24 @@ case_multi_vstab = joinpath(data_path, "cigre_with_timeseries.json")
 case_multi_qflex = joinpath(data_path, "test_mn_qflex.json")
 case_multi_storage = joinpath(data_path, "test_mn_storage.json")
 
-@testset "PandaModels.jl" begin
+# @testset "PandaModels.jl" begin
+#
+#         include("input.jl")
+#         include("call_powermodels.jl")
+#         include("call_pandamodels.jl")
+#
+# end
 
-        include("input.jl")
-        include("call_powermodels.jl")
-        include("call_pandamodels.jl")
+pm = _PdM.load_pm_from_json(case_ploss)
+_PdM.active_powermodels_silence!(pm)
+pm = _PdM.check_powermodels_data!(pm)
+model = _PdM.get_model(pm["pm_model"])
+solver = _PdM.get_solver(pm)
 
-end
+result = _PdM._run_loading(
+    pm,
+    model,
+    solver,
+    setting = Dict("output" => Dict("branch_flows" => true)),
+    ext = _PdM.extract_params!(pm),
+)

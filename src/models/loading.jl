@@ -1,7 +1,7 @@
 export _run_loading
 
 """
-run optimization for (active) loss reuduction
+run optimization for loading reuduction
 """
 
 function _run_loading(file, model_type::_PM.Type, optimizer; kwargs...)

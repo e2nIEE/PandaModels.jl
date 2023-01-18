@@ -32,7 +32,8 @@ export run_powermodels_pf,
     run_pandamodels_ploss,
     run_pandamodels_vstab_test,
     run_pandamodels_qflex_test,
-    run_pandamodels_ploss_test
+    run_pandamodels_ploss_test,
+    run_pandamodels_loading
 
 include("input/pp_to_pm.jl")
 include("input/tools.jl")
@@ -43,4 +44,5 @@ include("models/call_pandamodels.jl")
 include("models/call_powermodels.jl")
 include("models/run_pm_vstab_dev.jl")
 include("models/run_pm_qflex_dev.jl")
+include("models/loading.jl")
 end

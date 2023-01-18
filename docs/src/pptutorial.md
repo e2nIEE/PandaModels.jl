@@ -14,6 +14,7 @@ Functions from PowerModels:
 * [Storage Optimization](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_storage.ipynb)
 
 Functions from PandaModels:
-* [Reactive Optimization - maintaining voltage setpoints](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_reactive%20power%20optimization.ipynb)
-* [Reactive Optimization - maintaining reactive power setpoints](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_reactive%20power%20optimization.ipynb)
-* [Reactive Optimization - active power loss reduction](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_reactive%20power%20optimization.ipynb)
+* [Reactive Power Optimization - maintaining voltage setpoints](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_reactive%20power%20optimization.ipynb)
+* [Reactive Power Optimization - maintaining reactive power setpoints](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_reactive%20power%20optimization.ipynb)
+* [Reactive Power Optimization - active power loss reduction](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_reactive%20power%20optimization.ipynb)
+* [Reactive Power Optimization - branch loading reduction](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_reactive%20power%20optimization.ipynb)

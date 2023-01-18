@@ -85,4 +85,15 @@
         @test result["solve_time"] > 0.0
     end
 
+
+    @testset "case_loading: cigre mv" begin
+        result = run_pandamodels_loading(case_loading)
+        pm = _PdM.load_pm_from_json(case_loading)
+        params = _PdM.extract_params!(pm)
+
+        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+        @test string(result["dual_status"]) == "FEASIBLE_POINT"
+        @test string(result["primal_status"]) == "FEASIBLE_POINT"
+    end
+
 end

@@ -112,7 +112,7 @@ function objective_multi_pflex(pm::_PM.AbstractPowerModel)
     timestep_ids = [id for id in _PM.nw_ids(pm) if id != 0]
     return JuMP.@objective(pm.model, Min,
         sum(
-        sum((var(pm, nw, :q, (content["element_index"], content["f_bus"], content["t_bus"])) - content["value"])^2 for (i, content) in pm.ext[:setpoint_q])
+        sum((var(pm, nw, :p, (content["element_index"], content["f_bus"], content["t_bus"])) - content["value"])^2 for (i, content) in pm.ext[:setpoint_p])
         for nw in timestep_ids)
             )
 end

@@ -28,6 +28,7 @@ export run_powermodels_pf,
     run_powermodels_multi_storage,
     run_pandamodels_multi_vstab,
     run_pandamodels_qflex,
+    run_pandamodels_pflex,
     run_pandamodels_multi_qflex,
     run_pandamodels_ploss,
     run_pandamodels_vstab_test,
@@ -39,6 +40,7 @@ include("input/pp_to_pm.jl")
 include("input/tools.jl")
 include("models/vstab.jl")
 include("models/qflex.jl")
+include("models/pflex.jl")
 include("models/ploss.jl")
 include("models/call_pandamodels.jl")
 include("models/call_powermodels.jl")

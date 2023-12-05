@@ -39,6 +39,24 @@
         @test result["solve_time"] > 0.0
     end
 
+    @testset "case_pflex: cigre mv" begin
+        result = run_pandamodels_pflex(case_pflex)
+        pm = _PdM.load_pm_from_json(case_pflex)
+        params = _PdM.extract_params!(pm)
+        print(params[:setpoint_p])
+        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+        @test string(result["dual_status"]) == "FEASIBLE_POINT"
+        @test string(result["primal_status"]) == "FEASIBLE_POINT"
+
+        for (idx, br) in result["solution"]["branch"]
+            if idx in keys(params[:setpoint_p])
+                @test isapprox(br["pf"], params[:setpoint_p][idx]["value"], atol=1e-1)
+            end
+        end
+        @test isapprox(result["objective_lb"], -Inf)
+        @test result["solve_time"] > 0.0
+    end
+
     @testset "case_multi_qflex: cigre mv" begin
         result = run_pandamodels_multi_qflex(case_multi_qflex)
         pm = _PdM.load_pm_from_json(case_multi_qflex)

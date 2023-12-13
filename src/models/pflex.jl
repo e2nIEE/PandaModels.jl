@@ -1,7 +1,7 @@
 export _run_pflex, _run_multi_pflex
 
 """
-run optimization for maintaining power setpoints
+run optimization for maintaining active power setpoints p_setpoint
 """
 
 function _run_pflex(file, model_type::_PM.Type, optimizer; kwargs...)

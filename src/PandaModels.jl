@@ -8,6 +8,7 @@ import JSON
 import Cbc
 import Ipopt
 import Juniper
+import HiGHS
 try
     import Gurobi
 catch e

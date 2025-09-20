@@ -30,6 +30,7 @@ solvers:
 * [Juniper.jl](https://github.com/lanl-ansi/Juniper.jl)
 * [Cbc.jl](https://github.com/jump-dev/Cbc.jl)
 * [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl)
+* [HiGHS.jl](https://github.com/jump-dev/HiGHS.jl)
 
 #### Gurobi Installation
 

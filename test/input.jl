@@ -12,7 +12,7 @@
 
                 solver = _PdM.get_solver(pm)
 
-                @test string(solver.optimizer_constructor) == "Ipopt.Optimizer"
+                @test string(solver.optimizer_constructor) == "IpoptMathOptInterfaceExt.Optimizer"
         end
 
         @testset "test for pandapower parameters" begin

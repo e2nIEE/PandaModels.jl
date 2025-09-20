@@ -3,4 +3,4 @@ Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 PandaModels = "2dbab86a-7cbf-476f-9afe-75ffd3079e7c"
 
 [compat]
-Documenter = "0.27"
+Documenter = "1.14"

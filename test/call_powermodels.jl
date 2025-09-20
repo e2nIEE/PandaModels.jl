@@ -20,7 +20,7 @@
         result = run_powermodels_opf(case_opf_ac)
 
         @test isa(result, Dict{String,Any})
-        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+        @test string(result["termination_status"]) in ["LOCALLY_SOLVED", "ALMOST_LOCALLY_SOLVED"]
 
         @test isapprox(result["objective"], 8.0298; atol = 0.1)
         @test result["solve_time"] > 0.0

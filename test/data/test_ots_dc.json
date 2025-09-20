@@ -305,7 +305,7 @@
     "ne_branch": {},
     "per_unit": true,
     "pm_log_level": 0,
-    "pm_mip_solver": "cbc",
+    "pm_mip_solver": "highs",
     "pm_mip_time_limit": Infinity,
     "pm_model": "DCPPowerModel",
     "pm_nl_solver": "ipopt",

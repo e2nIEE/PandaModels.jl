@@ -7,10 +7,10 @@ The tutorial for the application of each optimization model is available in [pan
 
 Functions from PowerModels:
 
-* [Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pf_powermodels%20.ipynb)
-* [Optimal Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/opf_powermodels.ipynb)
-* [Optimal Transmission Switching](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/ost_powermodels.ipynb)
-* [Transmission Network Expansion Planning](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/tnep_powermodels.ipynb)
+* [Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_pf%20.ipynb)
+* [Optimal Power Flow](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_opf.ipynb)
+* [Optimal Transmission Switching](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_ost.ipynb)
+* [Transmission Network Expansion Planning](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_tnep.ipynb)
 * [Storage Optimization](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/pandamodels_storage.ipynb)
 
 Functions from PandaModels:

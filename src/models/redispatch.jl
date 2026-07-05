@@ -9,7 +9,9 @@ generators close to a base dispatch pg0.
 
 The base dispatch and (in cost mode) the up/down redispatch costs are passed from pandapower in
 pm.ext:
-    - pm.ext[:base_pg]              : Dict(pm_gen_index_str => pg0)  (per unit)
+    - pm.ext[:base_pg]              : Dict(pm_gen_index_str => pg0)  (participating gens, per unit)
+    - pm.ext[:fixed_pg]             : Dict(pm_gen_index_str => pg0)  (controllable but non-priced
+                                      gens that are pinned to their base dispatch)
     - pm.ext[:redispatch_cost_up]   : Dict(pm_gen_index_str => cost_up)    (cost mode only)
     - pm.ext[:redispatch_cost_down] : Dict(pm_gen_index_str => cost_down)  (cost mode only)
 
@@ -31,6 +33,13 @@ function _build_redispatch(pm::_PM.AbstractPowerModel)
     _PM.variable_dcline_power(pm, bounded = false)
 
     objective_redispatch(pm)
+
+    # pin controllable-but-non-participating generators to their base dispatch
+    if haskey(pm.ext, :fixed_pg)
+        for (k, v) in pm.ext[:fixed_pg]
+            JuMP.@constraint(pm.model, var(pm, :pg, parse(Int, k)) == v)
+        end
+    end
 
     _PM.constraint_model_voltage(pm)
 

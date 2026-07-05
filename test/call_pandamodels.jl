@@ -114,4 +114,40 @@
         @test string(result["primal_status"]) == "FEASIBLE_POINT"
     end
 
+    @testset "case_redispatch: deviation" begin
+        result = run_pandamodels_redispatch(case_redispatch)
+        pm = _PdM.load_pm_from_json(case_redispatch)
+
+        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+        @test string(result["primal_status"]) == "FEASIBLE_POINT"
+
+        # the congested branch must respect its thermal limit
+        for (i, br) in result["solution"]["branch"]
+            rate_a = pm["branch"][i]["rate_a"]
+            s = sqrt(br["pf"]^2 + br["qf"]^2)
+            @test s <= rate_a + 1e-4
+        end
+
+        # base case was infeasible -> a non-zero deviation is needed
+        @test result["objective"] > 0.0
+        @test result["solve_time"] >= 0.0
+    end
+
+    @testset "case_redispatch: cost" begin
+        result = run_pandamodels_redispatch(case_redispatch_cost)
+        pm = _PdM.load_pm_from_json(case_redispatch_cost)
+
+        @test string(result["termination_status"]) == "LOCALLY_SOLVED"
+        @test string(result["primal_status"]) == "FEASIBLE_POINT"
+
+        for (i, br) in result["solution"]["branch"]
+            rate_a = pm["branch"][i]["rate_a"]
+            s = sqrt(br["pf"]^2 + br["qf"]^2)
+            @test s <= rate_a + 1e-4
+        end
+
+        @test result["objective"] >= 0.0
+        @test result["solve_time"] >= 0.0
+    end
+
 end

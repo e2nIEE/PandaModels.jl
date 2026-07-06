@@ -31,6 +31,8 @@ case_multi_vstab = joinpath(data_path, "cigre_with_timeseries.json")
 case_multi_qflex = joinpath(data_path, "test_mn_qflex.json")
 case_multi_storage = joinpath(data_path, "test_mn_storage.json")
 case_pflex = joinpath(data_path, "test_pflex.json")
+case_redispatch = joinpath(data_path, "test_redispatch.json")
+case_redispatch_cost = joinpath(data_path, "test_redispatch_cost.json")
 
 
 

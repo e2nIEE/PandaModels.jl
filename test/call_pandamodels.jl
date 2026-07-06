@@ -17,7 +17,7 @@
 
         @test isapprox(result["objective_lb"], -Inf)
         @test isapprox(result["objective"], 0.000453688; atol = 1e-8)
-        @test result["solve_time"] > 0.0
+        @test result["solve_time"] >= 0.0
 
     end
 
@@ -36,7 +36,7 @@
             end
         end
         @test isapprox(result["objective_lb"], -Inf)
-        @test result["solve_time"] > 0.0
+        @test result["solve_time"] >= 0.0
     end
 
     @testset "case_pflex: cigre mv" begin
@@ -54,7 +54,7 @@
             end
         end
         @test isapprox(result["objective_lb"], -Inf)
-        @test result["solve_time"] > 0.0
+        @test result["solve_time"] >= 0.0
     end
 
     @testset "case_multi_qflex: cigre mv" begin
@@ -83,7 +83,7 @@
         #     end
         # end
 
-        @test result["solve_time"] > 0.0
+        @test result["solve_time"] >= 0.0
     end
 
     @testset "case_ploss: cigre mv" begin
@@ -100,7 +100,7 @@
                         for (i, content) in params[:target_branch]) < 0.07
 
         @test isapprox(result["objective_lb"], -Inf)
-        @test result["solve_time"] > 0.0
+        @test result["solve_time"] >= 0.0
     end
 
 

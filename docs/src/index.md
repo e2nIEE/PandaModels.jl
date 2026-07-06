@@ -10,16 +10,14 @@ CurrentModule = PandaModels
 
 As the figure below illustrates,  with the help of **PandaModels**, **pandapower** and **PowerModels.jl** are connected in a functional way. The pandapower-PowerModels (PM-PP) converter enables conversion from the **pandapower** format to the **PowerModels** format. After the optimization in **PowerModels**, the PP-PM converter transforms the optimization results back to the original **pandapower** grid model, which can be used for further analysis. In addition to the existing **PowerModels** optimization models, **pandamodels** enables adding custom optimization models. Presently, reactive power optimizations can be down with **pandamodels** to maintain voltage setpoints, maintain reactive power setpoints, and minimize active power losses.
 
-![Alt text](/pic/schema_pandamodels.jpg?raw=true "Optional Title")
-
 ## Installation
 
 ### Install Julia
-If you are not yet using Julia, install it. Note that you need a version that is supported PowerModels, PyCall and pyjulia for the interface to work. Currently, [Julia 1.5](https://julialang.org/downloads/)  is the most recent stable version of Julia that supports all these packages.
+If you are not yet using Julia, install it. Note that you need a version that is supported PowerModels, PyCall and pyjulia for the interface to work. Currently, [Julia 1.10](https://julialang.org/downloads/)  is the most recent stable version of Julia that supports all these packages.
 
-You don't necessarily need a Julia IDE if you are using PowerModels through pandapower, but it might help for debugging to install an IDE such as [Juno](http://docs.junolab.org/latest/man/installation). Also, [PyCharm](https://www.jetbrains.com/pycharm/) has a Julia Plugin.
+You don't necessarily need a Julia IDE if you are using PowerModels through pandapower, but it might help for debugging to install an IDE such as [Juno](https://docs.junolab.org/latest/man/installation/). Also, [PyCharm](https://www.jetbrains.com/pycharm/) has a Julia Plugin.
 
-Add the Julia binary folder (e.g. /Julia-1.5.0/bin) to the [system variable PATH](https://www.computerhope.com/issues/ch000549.htm) Providing the path is correct, you can now enter the `Julia` prompt by executing:
+Add the Julia binary folder (e.g. /Julia-1.10.0/bin) to the system variable PATH providing the path is correct, you can now enter the `Julia` prompt by executing:
 
 ```bash
 $ julia
@@ -66,6 +64,6 @@ Otherwise, the package will be automatically installed in pandapower environment
 
 ## Acknowledgements
 
-This package has been developed as part of the De­part­ment of En­er­gy Ma­nage­ment and Power Sys­tem Ope­ra­ti­on [(e²n)](https://www.uni-kassel.de/eecs/en/faculties/energy-management-and-power-system-operation/home), University of Kassel and Fraunhofer Institute for Energy Economics and Energy System Technology [(IEE)](https://www.iee.fraunhofer.de/en.html).
+This package has been developed as part of the De­part­ment of En­er­gy Ma­nage­ment and Power Sys­tem Ope­ra­ti­on [(e²n)](https://www.uni-kassel.de/eecs/en/sections/sustainable-electrical-energy-systems/home.html), University of Kassel and Fraunhofer Institute for Energy Economics and Energy System Technology [(IEE)](https://www.iee.fraunhofer.de/en.html).
 
 The developers thank [Carleton Coffrin](https://www.coffrin.com/), the primary developer of [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/), for his support.

@@ -80,7 +80,7 @@ Base.find_package("PandaModels")
 In develop-mode you need to add the following dependencies:
 
 optimization environment:
-* [JuMP.jl](https://github.com/JuliaOpt/JuMP.jl)
+* [JuMP.jl](https://github.com/jump-dev/JuMP.jl)
 
 infrastructure-based packages:
 * [InfrastructureModels.jl](https://github.com/lanl-ansi/InfrastructureModels.jl)
@@ -124,7 +124,7 @@ Pkg.resolve()
 
 #### Gurobi Installation:
 
-To use [Gurobi](https://www.gurobi.com/), download and install from [Gurobi Download Center](https://www.gurobi.com/downloads/), then get the license, activate it and add its path to the local PATH environment variables by following the steps from [Gurobi License Center](https://www.gurobi.com/downloads/licenses/).
+To use [Gurobi](https://www.gurobi.com/), download and install from [Gurobi Download Center](https://www.gurobi.com/downloads/), then get the license, activate it and add its path to the local PATH environment variables by following the steps from [Gurobi License Center](https://portal.gurobi.com/iam/licenses/list).
 
 !!! note "Linux Users"
     for `linux` users: open `.bashrc` file with , e.g., `nano .bashrc` in your home folder and add:

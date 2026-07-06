@@ -19,4 +19,4 @@ Finally, you need to add `run_pandamodels_<your_model>` function into export lis
 
 ## Application of New optimization Model in pandapower
 
-Please check [here](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/new_optimization_model_pandamodels.ipynb) to find out how call the new model in pandapower.
+Please check [here](https://github.com/e2nIEE/pandapower/blob/develop/tutorials/run_powermodels_custom.jl) to find out how call the new model in pandapower.

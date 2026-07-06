@@ -10,7 +10,7 @@ CurrentModule = PandaModels
 
 As the figure below illustrates,  with the help of **PandaModels**, **pandapower** and **PowerModels.jl** are connected in a functional way. The pandapower-PowerModels (PM-PP) converter enables conversion from the **pandapower** format to the **PowerModels** format. After the optimization in **PowerModels**, the PP-PM converter transforms the optimization results back to the original **pandapower** grid model, which can be used for further analysis. In addition to the existing **PowerModels** optimization models, **pandamodels** enables adding custom optimization models. Presently, reactive power optimizations can be down with **pandamodels** to maintain voltage setpoints, maintain reactive power setpoints, and minimize active power losses.
 
-![Alt text](/pic/schema_pandamodels.jpg?raw=true "Optional Title")
+![Alt text](pic/schema_pandamodels.jpg)
 
 ## Installation
 

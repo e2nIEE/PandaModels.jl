@@ -1,7 +1,7 @@
 name = "PandaModels"
 uuid = "2dbab86a-7cbf-476f-9afe-75ffd3079e7c"
 authors = ["e2nIEE"]
-version = "0.8.0"
+version = "0.9.0"
 
 [deps]
 Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"
@@ -24,7 +24,7 @@ JuMP = "0.21, 0.22, 1"
 Juniper = "0.7, 0.8, 0.9"
 Memento = "1"
 PowerModels = "0.19.2, 0.20, 0.21"
-julia = "1.1"
+julia = "1.10, 1.11, 1.12"
 HiGHS = "1"
 
 [extras]

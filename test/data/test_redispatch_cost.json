@@ -1,0 +1,199 @@
+{
+    "ac": true,
+    "baseMVA": 1,
+    "branch": {
+        "1": {
+            "angmax": 1.0471975511965976,
+            "angmin": -1.0471975511965976,
+            "b_fr": 0.1663080610994097,
+            "b_to": 0.1663080610994097,
+            "br_r": 0.00016033057851239668,
+            "br_status": 1,
+            "br_x": 0.00033884297520661154,
+            "f_bus": 2,
+            "g_fr": 0.0,
+            "g_to": 0.0,
+            "index": 1,
+            "rate_a": 22.386756687827734,
+            "rate_b": 0.0,
+            "rate_c": 0.0,
+            "shift": 0.0,
+            "t_bus": 3,
+            "tap": 1.0,
+            "transformer": false
+        },
+        "2": {
+            "angmax": 1.0471975511965976,
+            "angmin": -1.0471975511965976,
+            "b_fr": 0.1663080610994097,
+            "b_to": 0.1663080610994097,
+            "br_r": 0.00016033057851239668,
+            "br_status": 1,
+            "br_x": 0.00033884297520661154,
+            "f_bus": 1,
+            "g_fr": 0.0,
+            "g_to": 0.0,
+            "index": 2,
+            "rate_a": 89.54702675131094,
+            "rate_b": 0.0,
+            "rate_c": 0.0,
+            "shift": 0.0,
+            "t_bus": 2,
+            "tap": 1.0,
+            "transformer": false
+        }
+    },
+    "bus": {
+        "1": {
+            "base_kv": 110.0,
+            "bus_i": 1,
+            "bus_type": 3,
+            "index": 1,
+            "va": 0.0,
+            "vm": 1.0,
+            "vmax": 1.00000001,
+            "vmin": 0.99999999,
+            "zone": 1
+        },
+        "2": {
+            "base_kv": 110.0,
+            "bus_i": 2,
+            "bus_type": 2,
+            "index": 2,
+            "va": -0.00029652465270375573,
+            "vm": 1.0,
+            "vmax": 1.1,
+            "vmin": 0.9,
+            "zone": 1
+        },
+        "3": {
+            "base_kv": 110.0,
+            "bus_i": 3,
+            "bus_type": 2,
+            "index": 3,
+            "va": -0.025329793812359266,
+            "vm": 1.0,
+            "vmax": 1.1,
+            "vmin": 0.9,
+            "zone": 1
+        }
+    },
+    "correct_pm_network_data": true,
+    "dcline": {},
+    "gen": {
+        "1": {
+            "cost": [
+                0,
+                0.0,
+                0.0
+            ],
+            "gen_bus": 1,
+            "gen_status": 1,
+            "index": 1,
+            "model": 2,
+            "ncost": 3,
+            "pg": 0.0,
+            "pg_start": 0.715072704958402,
+            "pmax": 100.00000001,
+            "pmin": -100.00000001,
+            "qg": 0.0,
+            "qg_start": -0.5045297903811843,
+            "qmax": 100.00000001,
+            "qmin": -100.00000001,
+            "shutdown": 0.0,
+            "startup": 0.0,
+            "vg": 1.0
+        },
+        "2": {
+            "cost": [
+                0,
+                1.0,
+                0.0
+            ],
+            "gen_bus": 2,
+            "gen_status": 1,
+            "index": 2,
+            "model": 2,
+            "ncost": 3,
+            "pg": 60.0,
+            "pg_start": 60.0,
+            "pmax": 100.00000001,
+            "pmin": -1e-08,
+            "qg": 0.0,
+            "qg_start": -27.798066222608206,
+            "qmax": 50.00000001,
+            "qmin": -50.00000001,
+            "shutdown": 0.0,
+            "startup": 0.0,
+            "vg": 1.0
+        },
+        "3": {
+            "cost": [
+                0,
+                1.0,
+                0.0
+            ],
+            "gen_bus": 3,
+            "gen_status": 1,
+            "index": 3,
+            "model": 2,
+            "ncost": 3,
+            "pg": 0.0,
+            "pg_start": 0.0,
+            "pmax": 100.00000001,
+            "pmin": -1e-08,
+            "qg": 0.0,
+            "qg_start": 39.148599897626525,
+            "qmax": 50.00000001,
+            "qmin": -50.00000001,
+            "shutdown": 0.0,
+            "startup": 0.0,
+            "vg": 1.0
+        }
+    },
+    "load": {
+        "1": {
+            "index": 1,
+            "load_bus": 3,
+            "pd": 60.0,
+            "qd": 10.0,
+            "status": 1
+        }
+    },
+    "name": "",
+    "ne_branch": {},
+    "per_unit": true,
+    "pm_log_level": 0,
+    "pm_mip_solver": "cbc",
+    "pm_mip_time_limit": Infinity,
+    "pm_model": "ACPPowerModel",
+    "pm_nl_solver": "ipopt",
+    "pm_nl_time_limit": Infinity,
+    "pm_solver": "ipopt",
+    "pm_time_limit": Infinity,
+    "pm_tol": 1e-08,
+    "shunt": {},
+    "silence": true,
+    "source_version": "2.0.0",
+    "sourcetype": "matpower",
+    "storage": {},
+    "switch": {},
+    "user_defined_params": {
+        "base_pg": {
+            "2": 60.0,
+            "3": 0.0
+        },
+        "gen_and_controllable_sgen": {
+            "2": 2,
+            "3": 3
+        },
+        "redispatch_cost_down": {
+            "2": 10.0,
+            "3": 50.0
+        },
+        "redispatch_cost_up": {
+            "2": 10.0,
+            "3": 50.0
+        }
+    }
+}

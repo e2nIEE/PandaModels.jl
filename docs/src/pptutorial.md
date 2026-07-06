@@ -1,4 +1,4 @@
-# Run Optimiyation Problems from pandapower
+# Run Optimization Problems from pandapower
 
 
 Now, by using PandaModels, [pandapower](https://github.com/e2nIEE/pandapower) has an interface to [PowerModels.jl](https://lanl-ansi.github.io/PowerModels.jl/stable/), also pandapower's users has access to some extra optimization models, e.g. some reactive power optimization models are callable directly in [pandapower](https://github.com/e2nIEE/pandapower).

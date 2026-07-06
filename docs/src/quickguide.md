@@ -54,4 +54,4 @@ net = nw.example_simple()
 pp.runpm_ac_opf(net)
 ```
 
-for more  details about the settings please see [here](https://pandapower.readthedocs.io/en/latest/opf/pandamodels.html#usage).
+for more  details about the settings please see [here](https://pandapower.readthedocs.io/en/latest/opf/pandamodels.html#usage), also the detailed tutorial is available in [Run Optimization Problems from pandapower](@ref).

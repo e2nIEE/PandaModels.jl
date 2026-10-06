@@ -139,5 +139,5 @@ function load_pm_from_json(json_path)
             pm["gen"][idx]["cost"] = convert(Array{Float64,1}, gen["cost"])
         end
     end
-    return pm
+    return mixed_units_to_per_unit!(pm)
 end

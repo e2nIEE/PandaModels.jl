@@ -2,6 +2,8 @@ function run_powermodels_pf(json_path)
     pm = load_pm_from_json(json_path)
     active_powermodels_silence!(pm)
     pm = check_powermodels_data!(pm)
+    # user_defined_params (e.g. controllable gens) are not used by the power flow
+    pm = remove_extract_params!(pm)
     # calculate branch power flows
     if pm["pm_model"] == "ACNative"
         result = _PM.compute_ac_pf(pm)
@@ -30,7 +32,7 @@ function run_powermodels_pf(json_path)
     _PM.update_data!(result["solution"], flows)
     # _PM.update_data!(pm, result["solution"])
     # _PM.update_data!(pm, flows)
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_powermodels_opf(json_path)
@@ -79,7 +81,7 @@ function run_powermodels_opf(json_path)
         )
     end
 
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_powermodels_tnep(json_path)
@@ -96,7 +98,7 @@ function run_powermodels_tnep(json_path)
         solver,
         setting = Dict("output" => Dict("branch_flows" => true)),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_powermodels_ots(json_path)
@@ -113,7 +115,7 @@ function run_powermodels_ots(json_path)
         solver,
         setting = Dict("output" => Dict("branch_flows" => true)),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_powermodels_multi_storage(json_path)
@@ -127,5 +129,5 @@ function run_powermodels_multi_storage(json_path)
     result = _PM.solve_mn_opf_strg(mn, model, solver,
         setting = Dict("output" => Dict("branch_flows" => true)),
     )
-    return result
+    return finalize_result!(result, pm)
 end

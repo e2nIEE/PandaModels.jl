@@ -23,12 +23,13 @@ makedocs(
     ],
     doctest = true,
     linkcheck = true,
-    # Some external hosts block/rate-limit the CI link checker (GitHub returns 429 for the tutorial
-    # links, and a few external sites answer 403/404 to the bot user agent even though the pages
-    # exist). Ignore those so the link check does not fail on network-side responses we do not
-    # control; internal cross references are still checked.
+    # Some external hosts block/rate-limit the CI link checker (GitHub returns 429 for links into the
+    # e2nIEE repositories, e.g. the pandapower tutorials and PandaModels' own test files, and a few
+    # external sites answer 403/404 to the bot user agent even though the pages exist). Ignore those
+    # so the link check does not fail on network-side responses we do not control; internal cross
+    # references are still checked.
     linkcheck_ignore = [
-        r"https://github\.com/e2nIEE/pandapower/blob/.*",
+        r"https://github\.com/e2nIEE/.*",
         r"https://www\.computerhope\.com/.*",
         r"https://www\.uni-kassel\.de/.*",
         r"https://www\.gurobi\.com/.*",

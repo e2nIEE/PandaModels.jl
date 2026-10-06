@@ -2,6 +2,9 @@
 
 ## [upcoming release] - 2026-..-..
 
+## [0.10.2] - 2026-10-06
+- Fixed docs and updated pipeline.
+
 ## [0.10.0] - 2026-10-06
 
 ### Added

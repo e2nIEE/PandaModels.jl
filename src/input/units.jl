@@ -1,4 +1,4 @@
-# Unit handling for data in MATPOWER units ("per_unit" => false), as sent by pandapower >= 3.6.
+# Unit handling for data in MATPOWER units ("per_unit" => false), as sent by pandapower since PandaModels 0.10.
 #
 # Network data follows the PowerModels/MATPOWER convention (MW, MVAr, MWh, degrees, impedances in
 # per unit on baseMVA). Besides the network, pandapower sends values PowerModels' make_per_unit!

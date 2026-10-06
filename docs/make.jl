@@ -11,7 +11,7 @@ makedocs(
     ),
     pages = [
         "Home" => "index.md",
-        "Manual" => ["Getting Started" => "quickguide.md"],
+        "Manual" => ["Getting Started" => "quickguide.md", "Units and Results" => "units.md"],
         "Tutorials" => ["Optimazion Problems"  => "pptutorial.md"],
         "Models" => ["Redispatch" => "redispatch.md"],
         "Developer" => [

@@ -56,8 +56,10 @@ function set_pq_values_from_timeseries(pm)
     steps = pm["time_series"]["to_time_step"]-pm["time_series"]["from_time_step"]
     mn = _PM.replicate(pm, steps)
 
+    # time series are keyed by the absolute (0-based) pandapower time step, network "1" is the first
+    offset = pm["time_series"]["from_time_step"] - 1
     for (step, network) in mn["nw"]
-        step_1=string(parse(Int64,step) - 1)
+        step_1=string(parse(Int64,step) - 1 + offset)
         load_ts = pm["time_series"]["load"]
         network = delete!(network, "user_defined_params")
         for (idx, load) in network["load"]

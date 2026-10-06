@@ -12,7 +12,7 @@ function run_pandamodels_vstab(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_pandamodels_multi_vstab(json_path)
@@ -30,7 +30,7 @@ function run_pandamodels_multi_vstab(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_pandamodels_qflex(json_path)
@@ -47,7 +47,7 @@ function run_pandamodels_qflex(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_pandamodels_pflex(json_path)
@@ -64,7 +64,7 @@ function run_pandamodels_pflex(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 
@@ -83,7 +83,7 @@ function run_pandamodels_multi_qflex(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_pandamodels_ploss(json_path)
@@ -100,7 +100,7 @@ function run_pandamodels_ploss(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 function run_pandamodels_loading(json_path)
@@ -117,7 +117,7 @@ function run_pandamodels_loading(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 
@@ -135,7 +135,7 @@ function run_pandamodels_redispatch(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end
 
 
@@ -153,5 +153,5 @@ function run_pandamodels_custom(json_path)
         setting = Dict("output" => Dict("branch_flows" => true)),
         ext = extract_params!(pm),
     )
-    return result
+    return finalize_result!(result, pm)
 end

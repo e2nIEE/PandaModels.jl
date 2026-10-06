@@ -2,6 +2,8 @@
 
 ## [upcoming release] - 2026-..-..
 
+## [0.10.0] - 2026-10-06
+
 ### Added
 - Data in MATPOWER units (`"per_unit" => false`) is accepted: network data is converted with
   PowerModels' `make_per_unit!` on load, independent of `correct_pm_network_data`. Time series,
